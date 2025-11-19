@@ -38,26 +38,32 @@ In der folgenden Semesterarbeit wird das Konzept der Agilen Projektmanagementmet
 Das Scrum-Konzept verfolgt einen immer wiederkehrenden und inkrementellen Ansatz in der Projektentwicklung. In dieser Arbeit übernimmt der Projektabnehmer alle Scrum-Rollen selbst, was in der Regel nicht im eigentlichen Sinne des Konzepts vorgedacht ist. Nichtsdestotrotz kann es bei einer Einzelarbeit, wie dieser vorkommen, dass alle Rollen selbst vom Autor getragen werden. Die Organisation sieht wie folgt aus:
 
 ### SCRUM Master/Product Owner/Developer
+```
 Taher Al Saegh
 Bertastrasse 2
 8003 Zürich
 Gitlab: taher.alsaegh
+```
 
 ### Endbenutzer
+```
 Kubinet AG
 Musterstrasse 10
 3001 Bern
+```
 
 ### Dozenten
-
+```
 Vor-/Nachname: Patrick Morgenegg
 Funktion: Fachexperte DevOps
 E-Mail: patrick.morgenegg@tbz.ch
 Github: patrickmorgeneggtbz
-
+```
+```
 Vor-/Nachname: Florian Huber
 Funktion: Fachexperte Projektmanagement
 E-Mail: florian.huber@tbz.ch
+```
 
 ## Projektziele
 Im folgenden Abschnitt werden die Ziele dieser Semesterarbeit definiert. Ausgangslange bildet die Analyse des aktuellen Zustands (IST-Zustand), aus dem anschliessend der gewünschte Soll-Zustand sowie die konkreten Projektziele abgeleitet werden.
@@ -103,7 +109,35 @@ Das Projekt wird nach der agilen Projektmanagementmethode Scrum umgesetzt. Es is
 
 ### Definition of Done (DoD)
 
+Die Definition of Done (DoD) beschreibt eine klare Vereinbarung innerhalb des Teams, welche
+Kriterien erfüllt sein müssen, damit das Product Backlog Item oder ein Sprint als fertig gilt. (Gärtner, 2020)
+
+In den unten beschriebenen Punkten werden die nötigen Schritte definiert, welche dafür sorgen, dass
+dieses Projekt als erledigt gilt. Neben den Akzeptanzkriterien, die jeweils in den User-Stories definiert
+sind, gilt die DoD generell zur Erledigung des Projekts.
+
+- **Inhaltliche Vollständigkeit**: Alle beschriebenen Anforderungen der Story oder Aufgabe wurden umgesetzt.
+- **Dokumentation erstellt oder aktualisiert:**: Relevante Inhalte sind in der Semesterarbeit, im Architekturdiagramm oder in technischen Dokumenten nachvollziehbar dokumentiert.
+- **Zeremonien eingehalten**: Alle in SCRUM beinhalteten Zeremonien sind eingeplant und werden durgefürht.
+- **Qualitätsanforderungen eingehalten**: Verständliche Formulierung, korrekte Struktur und keine Rechtschreib- oder Grammatikfehler.
+- **Testing durchgeführt**: Die Implemtierung ist erfolgreich getestet und läuft durch alle CI/CD Steps durch.
+
 ### Meilensteine
+1. Meilenstein: Initialisierungsphase
+   Ziel: Projektstart, Definition von Zielen, Rahmenbedingungen und Rollen
+   Erledigt: XX
+
+2. Meilenstein: Konzeptionsphase
+   Ziel: Ausarbeitung der Systemarchitektur, Schnittstellen, Ressourcen- und Risikoplanung
+   Erledigt: XX
+
+3. Meilenstein: Realisierungsphase
+   Ziel: Technsiche Umsetzung des GitOps-Workflows, Deployment auf K8s, Security Tests und Validation sicherstellen
+   Erledigt: XX
+
+4. Meilenstein: Einführungsphase
+   Ziel: Fazit, Reflextion, Lessons Learned,
+   Erledigt: XX
 
 ## Roadmap / Releases-Planning
 
