@@ -146,7 +146,7 @@ sind, gilt die DoD generell zur Erledigung des Projekts.
 ## Releases-Planning --> Zeitplan?
 Beachte diesen Punkt mit dem GitOps Workflow Konzept. MVP zusammen mit Git Tags/Versionierung der Branches
 
-<iframe width="768" height="640" src="https://miro.com/app/live-embed/uXjVJmXoHPw=/?focusWidget=3458764643760229810&embedMode=view_only_without_ui&embedId=766182720376" frameborder="0" scrolling="no" allow="fullscreen; clipboard-read; clipboard-write" allowfullscreen></iframe>
+![release_planung](image/release_planung.png)
 
 ### 1. Sprint vom xx.xx - xx.xx.2025
 
