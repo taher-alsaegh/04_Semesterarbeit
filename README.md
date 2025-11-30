@@ -187,10 +187,34 @@ Als Table mit den Stories/Tasks und Akzepttanzkriterien
 Als Table mit den Stories/Tasks und Akzepttanzkriterien
 
 ## Anforderungsdefinition
+Eine Anforderung beschreibt die Eigenschaften oder Leistungen, welches von einem Produkt erwartet wird, um den End-Benutzer zufrieden zu stellen. (Rohde & Pfetzing, 2020, S. 171)
+
+In der unteren Grafik ist ein Anforderungsportfolio zu erkennen, welches die Prioritäten aller Anforderungen visuell veranschaulicht. Die Anforderungen werden als funktional und nicht-funktional unterschieden. Funktionale Anforderungen beschreiben die konkreten Anforderungen ans System, wie beispeilsweise Kernfunktionen des Produkts. Nicht funktionale Anforderungen beschreiben sogenante Qualitätsmerkmale, wie gut oder uneter welchen Bedingungen das System funktionert. Jede Anforderung ist mit einer Nummer vermerkt und ist der Priorisierung im Gitter entsprechend zugeordnet.
+
+Die Grafik teilt uns mit, dass die Anforderungen für den Kunden eine grosse Beduetung für den Nutzen beiträgt und das Projekt mittelschwer umsetzbar ist. Somit veranschaulicht uns die Grafik den Nutzen und Ertrag des gesamten Projekts und eine Einschätzung der Machbarkeit, die während der Arbeit durch Prioritäten unterschieden wird.
+
+![anforderungsportfolio](image/anforderungsportfolio.drawio.png)
 
 ### Funktionale Anforderung
 
+Hier ist die Auflistung aller funktionalen Anforderungen:
+
+- GitOps Workflow erstellen
+- Erstellen der CI/CD Pipeline
+- Deployment mittels ArgoCD auf Kubnernetes
+- Security Integration implementieren 
+- Secrets & RBAC realisieren als Least Privilege Ansatz
+- Testing
+
 ### Nicht-funktionale Anforderungen
+
+Hier ist die Auflistung aller nicht-funktionalen Anforderungen:
+
+- Sicherheit
+- Nachvollziehbarkeit
+- Reproduzierbarkeit
+- Erweiterbarkeit
+- Dokumentationsqualität
 
 # Konzeptionsphase
 
