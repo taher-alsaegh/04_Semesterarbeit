@@ -193,7 +193,7 @@ In der unteren Grafik ist ein Anforderungsportfolio zu erkennen, welches die Pri
 
 Die Grafik teilt uns mit, dass die Anforderungen für den Kunden eine grosse Beduetung für den Nutzen beiträgt und das Projekt mittelschwer umsetzbar ist. Somit veranschaulicht uns die Grafik den Nutzen und Ertrag des gesamten Projekts und eine Einschätzung der Machbarkeit, die während der Arbeit durch Prioritäten unterschieden wird.
 
-![anforderungsportfolio](image/anforderungsportfolio.drawio.png)
+![Anforderungsportfolio](image/anforderungsportfolio.drawio.png)
 
 ### Funktionale Anforderung
 
@@ -219,20 +219,62 @@ Hier ist die Auflistung aller nicht-funktionalen Anforderungen:
 # Konzeptionsphase
 
 ## Theoretische Grundlagen
+Im folgenden Abschnitt werden die wichtigsten Begriffe kurz und präzise erläutert, um ein einheitliches Verständnis der verwendeten Konzepte sicherzustellen.
 
-- CI/CD
-- Kubnernetes & ArgoCD
-- Security Aspekte (Trivy & DevSecOps)
-- GitHub Actions
-- Flask
+### CI/CD
+Ziel von CI/CD, kurz für Continuous Integration und Continuous Delivery/Deployment, ist die Optimierung und Beschleunigung des Softwareentwicklungs-Lifecycles.
+
+Continuous Integration (CI) bezieht sich auf die Praktik, Codeänderungen automatisch und regelmäßig in ein gemeinsames Quellcode-Repository zu integrieren. Continuous Delivery und/oder Continuous Deployment (CD) ist ein zweiteiliger Prozess, der die Integration, das Testen und die Bereitstellung der Codeänderungen umfasst. Continuous Delivery beinhaltet kein automatisches Produktiv-Deployment, während beim Continuous Deployment Update-Releases automatisch in die Produktivumgebung übergeben werden. [Quelle](https://www.redhat.com/de/topics/devops/what-is-ci-cd)
+
+### Kubnernetes
+Das Ziel von Kubernetes, kurz K8s ist die Automatisierung und Vereinfachung der Bereitstellung, Skalierung und Verwaltung von containerisierten Anwendungen über mehrere Computer hinweg.
+
+Kubernetes ist eine portable, erweiterbare Open-Source-Plattform zur Verwaltung von containerisierten Arbeitslasten und Services, die sowohl die deklarative Konfiguration als auch die Automatisierung erleichtert. [Quelle](https://kubernetes.io/de/docs/concepts/overview/what-is-kubernetes/)
+
+### ArgoCD
+Argo CD ist ein deklaratives CD-Tool (Continuous Delivery) für Kubernetes. Sie können es als eigenständiges Tool oder als Teil Ihres CI/CD-Workflows einsetzen, um Ihren Clustern die erforderlichen Ressourcen bereitzustellen.
+
+Damit das Management Ihrer Infrastruktur- und Anwendungskonfigurationen auf GitOps abgestimmt werden kann, muss Ihr Git Repository die Single Source of Truth sein. Der gewünschte Zustand Ihres Systems sollte ein versionierter, deklarativ definierter Zustand sein, der automatisch abgerufen wird. Hier kommt Argo CD ins Spiel. [Quelle](https://www.redhat.com/de/topics/devops/what-is-argocd)
+
+### DevSecOps
+DevSecOps steht für „Development, Security and Operations“. Es ist ein Ansatz für Unternehmenskultur, Automatisierung und Plattformdesign, bei dem die Sicherheit als eine gemeinsame Verantwortung im gesamten IT-Lifecycle integriert ist.
+
+Bei DevSecOps geht es nicht nur um die Entwicklungs- und Operations-Teams. Wenn Sie die Agilität und Reaktionsfähigkeit von DevOps vollständig ausschöpfen möchten, muss auch die IT-Sicherheit im gesamten Lifecycle Ihrer Apps integriert sein. [Quelle](http://redhat.com/de/topics/devops/what-is-devsecops)
+
+### GtiHub Actions
+GitHub Actions ist eine Plattform für Continuous Integration und Continuous Delivery (CI/CD), mit der du deine Build-, Test- und Bereitstellungspipeline automatisieren kannst. Du kannst Workflows erstellen, mit denen du alle Pull Requests für dein Repository erstellen und testen sowie gemergte Pull Requests für die Produktion bereitstellen kannst. [Quelle](http://docs.github.com/de/actions/get-started/understand-github-actions)
 
 ## Systemgrenzen
 
 ### SEUSAG
+Ein System ist im organisatorischen Sinn eine gegenüber der Umwelt abgegrenzte Gesamtheit von Elementen (in einer Unternehmung z.B. die Elemente Einkauf, Entwicklung, Verwaltung, Verkauf) zwischen denen Beziehungen bestehen. (B.Jenny, 2019, S. 77)
+
+![Seusag](image/system-seusag.drawio.png)
 
 #### Interne-Schnittstellen
 
+| IS  | Definition                                                                                                                          |
+| :-- | :---------------------------------------------------------------------------------------------------------------------------------- |
+| IS1 | Die Kubnerentes Manifest Files sind auf Github abgelegt. Damit ist sichergestellt das der Code einheitlich und zentral abgelegt ist |
+| IS2 | Der Kubnernetes Cluster wird über Argo CD deployed                                                                                  |
+| IS3 | Das Docker Image wird in der CI Pipeline auf Schwachstellen und Sicherheitslücken geprüft                                           |
+| IS4 | Die Security Features werden auf die Web-Applikation angewendet und prüft die App auf Herz und Nieren                               |
+| IS5 | Der GitHub Workflow ist in GitHub zentral abgelegt und steuert die Ausführung der CI Pipeline                                       |
+| IS6 | Argo CD ist mit dem GitHub Repo verlinkt. Nur so kann ein sauberer GitOps Prozess funktionieren                                     |
+| IS7 | Der Quellcode der Web-Applikation ist im GitHub Repo abgelegt                                                                       |
+| IS8 | Die Applikation läuft schlussendlich auf einem Kubnernets Cluster                                                                   |
+
 #### Externe-Schnittstellen
+
+| IS  | Definition                                                                                                                |
+| :-- | :------------------------------------------------------------------------------------------------------------------------ |
+| ES1 | Die aus dem Internet bezogene Applikation bietet eine Dokumentation an, welche für den Nutzung und Weiterarbeit nötig ist |
+| ES2 | Alle Security Tests von Drittanbietern werden auf der Webapplikaton angewendet                                            |
+| ES3 | Die Security Tests sind als Security Features bzw. im Github Workflow definiert                                           |
+| ES4 | Argo CD läuft lokal auf dem Computer                                                                                      |
+| ES5 | Kubernetes wird lokal mittels minikube ausgerollt                                                                         |
+| ES6 | Der Endbenutzer kann die Applikation nutzen und erkennt dabei die Schwachstellen                                          |
+| ES7 | Die Securtiy Features werden vollständig dokumentiert                                                                     |
 
 ## Ressourcen
 
