@@ -164,7 +164,7 @@ Beachte diesen Punkt mit dem GitOps Workflow Konzept. MVP zusammen mit Git Tags/
 ![Sprint Board](image/01sprint_board.png)
 
 | Story                               | Akzeptanzkriterium                    | Points |
-| :---------------------------------- | :------------------------------------ | :----- |
+|:------------------------------------|:--------------------------------------|:-------|
 | Einfürhung schreiben                | [SEM04-5](https://shorturl.at/voJ7B)  | 1      |
 | Projektmanagement erläutern         | [SEM04-6](https://shorturl.at/nkYM0)  | 1      |
 | Ziele definieren und beschreiben    | [SEM04-7](https://shorturl.at/MJHTs)  | 3      |
@@ -254,7 +254,7 @@ Ein System ist im organisatorischen Sinn eine gegenüber der Umwelt abgegrenzte 
 #### Interne-Schnittstellen
 
 | IS  | Definition                                                                                                                          |
-| :-- | :---------------------------------------------------------------------------------------------------------------------------------- |
+|:----|:------------------------------------------------------------------------------------------------------------------------------------|
 | IS1 | Die Kubnerentes Manifest Files sind auf Github abgelegt. Damit ist sichergestellt das der Code einheitlich und zentral abgelegt ist |
 | IS2 | Der Kubnernetes Cluster wird über Argo CD deployed                                                                                  |
 | IS3 | Das Docker Image wird in der CI Pipeline auf Schwachstellen und Sicherheitslücken geprüft                                           |
@@ -266,27 +266,64 @@ Ein System ist im organisatorischen Sinn eine gegenüber der Umwelt abgegrenzte 
 
 #### Externe-Schnittstellen
 
-| IS  | Definition                                                                                                                |
-| :-- | :------------------------------------------------------------------------------------------------------------------------ |
-| ES1 | Die aus dem Internet bezogene Applikation bietet eine Dokumentation an, welche für den Nutzung und Weiterarbeit nötig ist |
-| ES2 | Alle Security Tests von Drittanbietern werden auf der Webapplikaton angewendet                                            |
-| ES3 | Die Security Tests sind als Security Features bzw. im Github Workflow definiert                                           |
-| ES4 | Argo CD läuft lokal auf dem Computer                                                                                      |
-| ES5 | Kubernetes wird lokal mittels minikube ausgerollt                                                                         |
-| ES6 | Der Endbenutzer kann die Applikation nutzen und erkennt dabei die Schwachstellen                                          |
-| ES7 | Die Securtiy Features werden vollständig dokumentiert                                                                     |
+| ES  | Definition                                                                                                                    |
+|:----|:------------------------------------------------------------------------------------------------------------------------------|
+| ES1 | Die aus dem Internet bezogene Applikation bietet eine Dokumentation an, welche für die hier verwendete Weiterarbeit nötig ist |
+| ES2 | Alle Security Tests von Drittanbietern werden auf die Webapplikaton angewendet                                                |
+| ES3 | Die Security Tests beinhalten die bereits implemtierten Security Features, welche zuvor in der CI Pipeline definiert sind     |
+| ES4 | Argo CD läuft lokal auf dem Computer                                                                                          |
+| ES5 | Kubernetes wird lokal mittels minikube ausgerollt                                                                             |
+| ES6 | Der Endbenutzer kann die Applikation nutzen und erkennt dabei die Schwachstellen                                              |
+| ES7 | Die Securtiy Features werden vollständig dokumentiert                                                                         |
 
 ## Ressourcen
+«Ressourcen sind nach DIN69902 Personal und Sachmittel, die zur von Vorgängen, Arbeitspaketen und Projekten benötigt werden. Sie können wiederholt oder nur einmal einsetzbar sein. Sie können in wert- oder Mengeneinheiten beschrieben und für einen Zeitpunkt oder Zeitraum disponiert werden.» 
+(Rohde & Pfetzing, 2020, S.219)
 
 ### Ressourcenplanung
+Die Ressourcenplanung wird in nicht-verzehrbare und verzehrbare Einsatzmittel unterschieden. Die nicht-verzehrbare Mittel sind Personal und Sachmittel, welche nicht verbraucht werden, sondern eher in Leistungen und Dauer abgerechnet und eingeplant werden.
+
+Die verzehrbaren Einsatzmittel sind hingegen alle Materialien und auch Geldmittel, die während dem Projekt verbraucht werden. Bei diesen Mittel sind neben der Bereitstellung auch wichtig zu planen, wann und wie diese neu beschlaft werden können.
 
 ### Nicht-verzehrbare Mittel
 
+- SCRUM Master
+- Product Owner
+- Developer
+- Kubernetes (minikube)
+- ArgoCD
+- Computer
+- GitHub
+- SonarQube
+- Trivy
+- Snyk
+
 ### Verzehrbare Mittel
 
+- Storage 
+- GitHub Runner
+- Strom
+- Lizenzen
+- Zeit
+
 ## Risikomanagement
+Risikomanagement beschreibt die systematische Identifikation, Analyse, Bewertung und Überwachung von Risiken in Projekten oder Organisationen. Ziel ist es, die negativen Folgen in einem Projekt zu minimieren oder gar zu beseitigen. (ChatGPT, persönliche Kommunikation, 16. Dez. 2024)
 
 ### Risikoregister
+
+| Nr. | Risiko                                           | Hauptursache                                                             | Erste Massnahme                              | Eintritt | Auswirkungen | Risikostufe |
+| :-- | ------------------------------------------------ | ------------------------------------------------------------------------ | -------------------------------------------- | -------- | ------------ | ----------- |
+| 1   | K8s falsch aufgesetzt                            | Deployments, RBAC, Secrets sind falsch konfiguriert                      | mit kubectl cmd troubleshooten               | Mittel   | Hoch         | Hoch        |
+| 2   | ArgoCD synchronisiert nicht (Out-of-Sync Fehler) | Fehlende Manifeste oder Berechtigung                                     | ArgoCD Logs prüfen                           | Hoch     | Hoch         | Hoch        |
+| 3   | CI-Pipeline schlägt unerwartet fehl              | Syntaxfehler, falsche Tags, Build-Fehler oder fehlende Secretes          | Pipeline schrittweise testen                 | Hoch     | Mittel       | Hoch        |
+| 4   | Image Scanner blockiert Workflow Chain           | DVWA deployment wird blockiert, weil es voll mit Schwachstellen ist      | Schwellwerte richtig setzen                  | Hoch     | Niedrig      | Mittel      |
+| 5   | Zeitliche Verzögerungen                          | Implementierung & Planung dauert länger als geplant                      | Backlog reduzieren                           | Mittel   | Hoch         | Hoch        |
+| 6   | Technische Probleme                              | Unerwartete Probleme tauchen auf                                         | Ressourcen überprüfen & minikube reseten     | Hoch     | Mittel       | Hoch        |
+| 7   | Fehlende Dokumentation (nicht aktualisiert)      | Zu starker Fokus auf Realisierung als Dokumentation                      | Dokumentation als DoD überprüfen             | Mittel   | Mitel        | Mittel      |
+| 8   | Git Konfilikte                                   | Mehrere Developer arbeiten am gleichen Codeabschnitt                     | Häufig Mergen und kleine Branchen erstellen  | Niedrig  | Mittel       | Mittel      |
+| 9   | Ausfall externer Dienste                         | GitHub ist nicht erreichbar                                              | Lokale Tests fortsetzen oder Doku verbessern | Niedirg  | Hoch         | Hoch        |
+| 10  | Architekturdiagramm ist unvollständig            | Zu ungenaue Vorbereitung des Architekur und fehlendes Check mit Dozenten | Architekturdiagramm                          | Mittel   | Hoch         | Hoch        |
+
 
 ### Risikoportfolio
 
