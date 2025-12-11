@@ -147,6 +147,9 @@ sind, gilt die DoD generell zur Erledigung des Projekts.
    Ziel: Fazit, Reflextion, Lessons Learned,
    Erledigt: XX
 
+### Story Point Schätzung
+https://clickup.com/de/blog/222797/punkte-der-fibonacci-geschichte
+
 ## Releases-Planning --> Zeitplan?
 
 Beachte diesen Punkt mit dem GitOps Workflow Konzept. MVP zusammen mit Git Tags/Versionierung der Branches
@@ -330,7 +333,15 @@ Das Risikoportfolio veranschaulicht die Einflussgrössen der Risiken auf das ges
 Aus dem Portfolio ist zu erkennen, dass die Risiken im Projekt mittel bis hoch eingeschätzt werden. Die vielen technischen Komponenten bilden eine grosse Abhängigkeit in Bezug der Umsetzung und Machbarkeit des Projkets.
 
 Des Weiteren zeigt das Portfolio, dass insbesondere technische Fehlkonfigurationen und Zeitverzug das grösste Risiko für den Projekterfolg darstellen. Diese Risiken müssen daher frühzeitig adressiert werden, um den erfolgreichen Abschluss des Proof of Concepts sicherzustellen. 
+<br>
+
 ![Risikoportfolio](image/Risikoportfolio.drawio.png)
+
+#### Resultierende Nacharbeiten
+- Dokumentation zum Einrichten und Aufsetzen des K8s Clusters: [Link](https://kubernetes.io/docs/concepts/overview/)
+- Lernvideos zu K8s von KodeKloud: [Link](https://shorturl.at/RRXJS)
+- Weitere Recherchen zu ArgoCD tätigen: [Link](https://argo-cd.readthedocs.io/en/stable/)
+- Weniger Stories im nächsten Sprint assignen.
 
 ## GitOps Konzepts
 
