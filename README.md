@@ -326,10 +326,13 @@ Risikomanagement beschreibt die systematische Identifikation, Analyse, Bewertung
 
 
 ### Risikoportfolio
+Das Risikoportfolio veranschaulicht die Einflussgrössen der Risiken auf das gesamte Projekt hinweg. Sinn und Zweck ist es dabei eine Einschätzung, der Risikoherde bildlich darzustellen und die Abschätzung zwischen der Eintrittswahrscheinlichkeit und der Schadenshöhe beim Eintreffen des Risikos vorherzusehen.
+Aus dem Portfolio ist zu erkennen, dass die Risiken im Projekt mittel bis hoch eingeschätzt werden. Die vielen technischen Komponenten bilden eine grosse Abhängigkeit in Bezug der Umsetzung und Machbarkeit des Projkets.
 
+Des Weiteren zeigt das Portfolio, dass insbesondere technische Fehlkonfigurationen und Zeitverzug das grösste Risiko für den Projekterfolg darstellen. Diese Risiken müssen daher frühzeitig adressiert werden, um den erfolgreichen Abschluss des Proof of Concepts sicherzustellen. 
 ![Risikoportfolio](image/Risikoportfolio.drawio.png)
 
-## GitOps Konzept
+## GitOps Konzepts
 
 ## Security Konzept
 
