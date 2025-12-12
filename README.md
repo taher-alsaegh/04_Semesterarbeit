@@ -230,7 +230,7 @@ Im folgenden Abschnitt werden die wichtigsten Begriffe kurz und präzise erläut
 
 Ziel von CI/CD, kurz für Continuous Integration und Continuous Delivery/Deployment, ist die Optimierung und Beschleunigung des Softwareentwicklungs-Lifecycles.
 
-Continuous Integration (CI) bezieht sich auf die Praktik, Codeänderungen automatisch und regelmäßig in ein gemeinsames Quellcode-Repository zu integrieren. Continuous Delivery und/oder Continuous Deployment (CD) ist ein zweiteiliger Prozess, der die Integration, das Testen und die Bereitstellung der Codeänderungen umfasst. Continuous Delivery beinhaltet kein automatisches Produktiv-Deployment, während beim Continuous Deployment Update-Releases automatisch in die Produktivumgebung übergeben werden. [Quelle](https://www.redhat.com/de/topics/devops/what-is-ci-cd)
+Continuous Integration (CI) bezieht sich auf die Praktik, Codeänderungen automatisch und regelmässig in ein gemeinsames Quellcode-Repository zu integrieren. Continuous Delivery und/oder Continuous Deployment (CD) ist ein zweiteiliger Prozess, der die Integration, das Testen und die Bereitstellung der Codeänderungen umfasst. Continuous Delivery beinhaltet kein automatisches Produktiv-Deployment, während beim Continuous Deployment Update-Releases automatisch in die Produktivumgebung übergeben werden. [Quelle](https://www.redhat.com/de/topics/devops/what-is-ci-cd)
 
 ### Kubnernetes
 
@@ -358,11 +358,13 @@ Des Weiteren zeigt das Portfolio, dass insbesondere technische Fehlkonfiguration
 ## Architekturdiagramm
 
 In meinem Architekturdiagramm wird dargestellt, wie der Security-GitOps-Workflow funktioniert und welche Komponenten daran beteiligt sind. 
-Im Mittelpunkt stehen zwei Repositories, die den zentralen Ablauf steuern: das Applikations-Repository für Build- und Security-Prüfungen sowie das GitOps-Repository als „Single Source of Truth“ für den gewünschten Deployment-Zustand.
-Über GitHub Actions werden Build und Security-Checks (SonarCloud, Snyk, Trivy) ausgeführt und anschließend die Kubernetes-Manifeste im GitOps-Repository aktualisiert. ArgoCD überwacht das GitOps-Repository und synchronisiert Änderungen automatisiert in den Kubernetes-Cluster, wodurch die neue Version der Applikation ausgerollt wird.
+Im Mittelpunkt stehen zwei Repositories, die den zentralen Ablauf steuern: Das Applikation-Repository für den Build-Stage und die Security-Prüfungen sowie das GitOps-Repository als „Single Source of Truth“ für den gewünschten Deployment-Zustand.
+Über GitHub Actions werden Build und Security-Checks ausgeführt und anschliessend die Kubernetes-Manifeste im GitOps-Repository aktualisiert. ArgoCD überwacht das GitOps-Repository und synchronisiert Änderungen automatisiert in den Kubernetes-Cluster, wodurch die neue Version der Applikation ausgerollt wird.
+
+Der Best-Practice-Ansatz mit zwei separaten Repositories entspricht dem Prinzip der GitOps Manifest Segregation und bietet durch die konsequente Isolation des Deployment-Prozesses einen zusätzlichen Schutz. 
+Durch diese Trennung kann das Deployment unabhängig vom aktuellen Zustand der Codebasis kontrolliert und nachvollziehbar gesteuert werden. Änderungen am Applikationscode führen somit nicht automatisch zu einem Deployment, sondern erst dann, wenn die Kubernetes-Manifeste im GitOps-Repository bewusst aktualisiert werden. Dadurch wird verhindert, dass jede kleinere Codeänderung unmittelbar einen Deployment-Prozess auslöst, und es entsteht ein kontrollierter, stabiler und sicherer Bereitstellungsablauf.
 
 ![GitOps Konzept](image/architekturV2.drawio.png)
-
 
 ## Security Konzept
 
