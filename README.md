@@ -166,10 +166,10 @@ Beachte diesen Punkt mit dem GitOps Workflow Konzept. MVP zusammen mit Git Tags/
 
 ![Sprint Board](image/01sprint_board.png)
 
-| Story                               | Akzeptanzkriterium                    | Points |
-|:------------------------------------|:--------------------------------------|:-------|
-| Einfürhung schreiben                | [SEM04-5](https://shorturl.at/voJ7B)  | 1      |
-| Projektmanagement erläutern         | [SEM04-6](https://shorturl.at/nkYM0)  | 1      |
+| Story                               | Akzeptanzkriterium                 | Points |
+| :---------------------------------- | :--------------------------------- | :----- |
+| Einfürhung schreiben               | [SEM04-5](https://shorturl.at/voJ7B)  | 1      |
+| Projektmanagement erläutern        | [SEM04-6](https://shorturl.at/nkYM0)  | 1      |
 | Ziele definieren und beschreiben    | [SEM04-7](https://shorturl.at/MJHTs)  | 3      |
 | Sprint planen                       | [SEM04-8](https://shorturl.at/CMeLD)  | 3      |
 | Anforderungsdefinition beschreiben  | [SEM04-9](https://shorturl.at/fGoiQ)  | 1      |
@@ -190,6 +190,7 @@ Als Table mit den Stories/Tasks und Akzepttanzkriterien
 Als Table mit den Stories/Tasks und Akzepttanzkriterien
 
 ## Anforderungsdefinition
+
 Eine Anforderung beschreibt die Eigenschaften oder Leistungen, welches von einem Produkt erwartet wird, um den End-Benutzer zufrieden zu stellen. (Rohde & Pfetzing, 2020, S. 171)
 
 In der unteren Grafik ist ein Anforderungsportfolio zu erkennen, welches die Prioritäten aller Anforderungen visuell veranschaulicht. Die Anforderungen werden als funktional und nicht-funktional unterschieden. Funktionale Anforderungen beschreiben die konkreten Anforderungen ans System, wie beispeilsweise Kernfunktionen des Produkts. Nicht funktionale Anforderungen beschreiben sogenante Qualitätsmerkmale, wie gut oder uneter welchen Bedingungen das System funktionert. Jede Anforderung ist mit einer Nummer vermerkt und ist der Priorisierung im Gitter entsprechend zugeordnet.
@@ -205,7 +206,7 @@ Hier ist die Auflistung aller funktionalen Anforderungen:
 - GitOps Workflow erstellen
 - Erstellen der CI/CD Pipeline
 - Deployment mittels ArgoCD auf Kubnernetes
-- Security Integration implementieren 
+- Security Integration implementieren
 - Secrets & RBAC realisieren als Least Privilege Ansatz
 - Testing
 
@@ -222,34 +223,41 @@ Hier ist die Auflistung aller nicht-funktionalen Anforderungen:
 # Konzeptionsphase
 
 ## Theoretische Grundlagen
+
 Im folgenden Abschnitt werden die wichtigsten Begriffe kurz und präzise erläutert, um ein einheitliches Verständnis der verwendeten Konzepte sicherzustellen.
 
 ### CI/CD
+
 Ziel von CI/CD, kurz für Continuous Integration und Continuous Delivery/Deployment, ist die Optimierung und Beschleunigung des Softwareentwicklungs-Lifecycles.
 
 Continuous Integration (CI) bezieht sich auf die Praktik, Codeänderungen automatisch und regelmäßig in ein gemeinsames Quellcode-Repository zu integrieren. Continuous Delivery und/oder Continuous Deployment (CD) ist ein zweiteiliger Prozess, der die Integration, das Testen und die Bereitstellung der Codeänderungen umfasst. Continuous Delivery beinhaltet kein automatisches Produktiv-Deployment, während beim Continuous Deployment Update-Releases automatisch in die Produktivumgebung übergeben werden. [Quelle](https://www.redhat.com/de/topics/devops/what-is-ci-cd)
 
 ### Kubnernetes
+
 Das Ziel von Kubernetes, kurz K8s ist die Automatisierung und Vereinfachung der Bereitstellung, Skalierung und Verwaltung von containerisierten Anwendungen über mehrere Computer hinweg.
 
 Kubernetes ist eine portable, erweiterbare Open-Source-Plattform zur Verwaltung von containerisierten Arbeitslasten und Services, die sowohl die deklarative Konfiguration als auch die Automatisierung erleichtert. [Quelle](https://kubernetes.io/de/docs/concepts/overview/what-is-kubernetes/)
 
 ### ArgoCD
+
 Argo CD ist ein deklaratives CD-Tool (Continuous Delivery) für Kubernetes. Sie können es als eigenständiges Tool oder als Teil Ihres CI/CD-Workflows einsetzen, um Ihren Clustern die erforderlichen Ressourcen bereitzustellen.
 
 Damit das Management Ihrer Infrastruktur- und Anwendungskonfigurationen auf GitOps abgestimmt werden kann, muss Ihr Git Repository die Single Source of Truth sein. Der gewünschte Zustand Ihres Systems sollte ein versionierter, deklarativ definierter Zustand sein, der automatisch abgerufen wird. Hier kommt Argo CD ins Spiel. [Quelle](https://www.redhat.com/de/topics/devops/what-is-argocd)
 
 ### DevSecOps
+
 DevSecOps steht für „Development, Security and Operations“. Es ist ein Ansatz für Unternehmenskultur, Automatisierung und Plattformdesign, bei dem die Sicherheit als eine gemeinsame Verantwortung im gesamten IT-Lifecycle integriert ist.
 
 Bei DevSecOps geht es nicht nur um die Entwicklungs- und Operations-Teams. Wenn Sie die Agilität und Reaktionsfähigkeit von DevOps vollständig ausschöpfen möchten, muss auch die IT-Sicherheit im gesamten Lifecycle Ihrer Apps integriert sein. [Quelle](http://redhat.com/de/topics/devops/what-is-devsecops)
 
 ### GtiHub Actions
+
 GitHub Actions ist eine Plattform für Continuous Integration und Continuous Delivery (CI/CD), mit der du deine Build-, Test- und Bereitstellungspipeline automatisieren kannst. Du kannst Workflows erstellen, mit denen du alle Pull Requests für dein Repository erstellen und testen sowie gemergte Pull Requests für die Produktion bereitstellen kannst. [Quelle](http://docs.github.com/de/actions/get-started/understand-github-actions)
 
 ## Systemgrenzen
 
 ### SEUSAG
+
 Ein System ist im organisatorischen Sinn eine gegenüber der Umwelt abgegrenzte Gesamtheit von Elementen (in einer Unternehmung z.B. die Elemente Einkauf, Entwicklung, Verwaltung, Verkauf) zwischen denen Beziehungen bestehen. (B.Jenny, 2019, S. 77)
 
 ![Seusag](image/system-seusag.drawio.png)
@@ -257,33 +265,35 @@ Ein System ist im organisatorischen Sinn eine gegenüber der Umwelt abgegrenzte 
 #### Interne-Schnittstellen
 
 | IS  | Definition                                                                                                                          |
-|:----|:------------------------------------------------------------------------------------------------------------------------------------|
+| :-- | :---------------------------------------------------------------------------------------------------------------------------------- |
 | IS1 | Die Kubnerentes Manifest Files sind auf Github abgelegt. Damit ist sichergestellt das der Code einheitlich und zentral abgelegt ist |
-| IS2 | Der Kubnernetes Cluster wird über Argo CD deployed                                                                                  |
-| IS3 | Das Docker Image wird in der CI Pipeline auf Schwachstellen und Sicherheitslücken geprüft                                           |
-| IS4 | Die Security Features werden auf die Web-Applikation angewendet und prüft die App auf Herz und Nieren                               |
-| IS5 | Der GitHub Workflow ist in GitHub zentral abgelegt und steuert die Ausführung der CI Pipeline                                       |
+| IS2 | Der Kubnernetes Cluster wird über Argo CD deployed                                                                                 |
+| IS3 | Das Docker Image wird in der CI Pipeline auf Schwachstellen und Sicherheitslücken geprüft                                         |
+| IS4 | Die Security Features werden auf die Web-Applikation angewendet und prüft die App auf Herz und Nieren                              |
+| IS5 | Der GitHub Workflow ist in GitHub zentral abgelegt und steuert die Ausführung der CI Pipeline                                      |
 | IS6 | Argo CD ist mit dem GitHub Repo verlinkt. Nur so kann ein sauberer GitOps Prozess funktionieren                                     |
 | IS7 | Der Quellcode der Web-Applikation ist im GitHub Repo abgelegt                                                                       |
-| IS8 | Die Applikation läuft schlussendlich auf einem Kubnernets Cluster                                                                   |
+| IS8 | Die Applikation läuft schlussendlich auf einem Kubnernets Cluster                                                                  |
 
 #### Externe-Schnittstellen
 
-| ES  | Definition                                                                                                                    |
-|:----|:------------------------------------------------------------------------------------------------------------------------------|
+| ES  | Definition                                                                                                                      |
+| :-- | :------------------------------------------------------------------------------------------------------------------------------ |
 | ES1 | Die aus dem Internet bezogene Applikation bietet eine Dokumentation an, welche für die hier verwendete Weiterarbeit nötig ist |
-| ES2 | Alle Security Tests von Drittanbietern werden auf die Webapplikaton angewendet                                                |
-| ES3 | Die Security Tests beinhalten die bereits implemtierten Security Features, welche zuvor in der CI Pipeline definiert sind     |
-| ES4 | Argo CD läuft lokal auf dem Computer                                                                                          |
-| ES5 | Kubernetes wird lokal mittels minikube ausgerollt                                                                             |
-| ES6 | Der Endbenutzer kann die Applikation nutzen und erkennt dabei die Schwachstellen                                              |
-| ES7 | Die Securtiy Features werden vollständig dokumentiert                                                                         |
+| ES2 | Alle Security Tests von Drittanbietern werden auf die Webapplikaton angewendet                                                  |
+| ES3 | Die Security Tests beinhalten die bereits implemtierten Security Features, welche zuvor in der CI Pipeline definiert sind       |
+| ES4 | Argo CD läuft lokal auf dem Computer                                                                                           |
+| ES5 | Kubernetes wird lokal mittels minikube ausgerollt                                                                               |
+| ES6 | Der Endbenutzer kann die Applikation nutzen und erkennt dabei die Schwachstellen                                                |
+| ES7 | Die Securtiy Features werden vollständig dokumentiert                                                                          |
 
 ## Ressourcen
-«Ressourcen sind nach DIN69902 Personal und Sachmittel, die zur von Vorgängen, Arbeitspaketen und Projekten benötigt werden. Sie können wiederholt oder nur einmal einsetzbar sein. Sie können in wert- oder Mengeneinheiten beschrieben und für einen Zeitpunkt oder Zeitraum disponiert werden.» 
+
+«Ressourcen sind nach DIN69902 Personal und Sachmittel, die zur von Vorgängen, Arbeitspaketen und Projekten benötigt werden. Sie können wiederholt oder nur einmal einsetzbar sein. Sie können in wert- oder Mengeneinheiten beschrieben und für einen Zeitpunkt oder Zeitraum disponiert werden.»
 (Rohde & Pfetzing, 2020, S.219)
 
 ### Ressourcenplanung
+
 Die Ressourcenplanung wird in nicht-verzehrbare und verzehrbare Einsatzmittel unterschieden. Die nicht-verzehrbare Mittel sind Personal und Sachmittel, welche nicht verbraucht werden, sondern eher in Leistungen und Dauer abgerechnet und eingeplant werden.
 
 Die verzehrbaren Einsatzmittel sind hingegen alle Materialien und auch Geldmittel, die während dem Projekt verbraucht werden. Bei diesen Mittel sind neben der Bereitstellung auch wichtig zu planen, wann und wie diese neu beschlaft werden können.
@@ -303,13 +313,14 @@ Die verzehrbaren Einsatzmittel sind hingegen alle Materialien und auch Geldmitte
 
 ### Verzehrbare Mittel
 
-- Storage 
+- Storage
 - GitHub Runner
 - Strom
 - Lizenzen
 - Zeit
 
 ## Risikomanagement
+
 Risikomanagement beschreibt die systematische Identifikation, Analyse, Bewertung und Überwachung von Risiken in Projekten oder Organisationen. Ziel ist es, die negativen Folgen in einem Projekt zu minimieren oder gar zu beseitigen. (ChatGPT, persönliche Kommunikation, 16. Dez. 2024)
 
 ### Risikoregister
@@ -317,33 +328,41 @@ Risikomanagement beschreibt die systematische Identifikation, Analyse, Bewertung
 | Nr. | Risiko                                           | Hauptursache                                                             | Erste Massnahme                              | Eintritt | Auswirkungen | Risikostufe |
 | :-- | ------------------------------------------------ | ------------------------------------------------------------------------ | -------------------------------------------- | -------- | ------------ | ----------- |
 | 1   | K8s falsch aufgesetzt                            | Deployments, RBAC, Secrets sind falsch konfiguriert                      | mit kubectl cmd troubleshooten               | Mittel   | Hoch         | Hoch        |
-| 2   | ArgoCD synchronisiert nicht (Out-of-Sync Fehler) | Fehlende Manifeste oder Berechtigung                                     | ArgoCD Logs prüfen                           | Hoch     | Hoch         | Hoch        |
-| 3   | CI-Pipeline schlägt unerwartet fehl              | Syntaxfehler, falsche Tags, Build-Fehler oder fehlende Secretes          | Pipeline schrittweise testen                 | Hoch     | Mittel       | Hoch        |
+| 2   | ArgoCD synchronisiert nicht (Out-of-Sync Fehler) | Fehlende Manifeste oder Berechtigung                                     | ArgoCD Logs prüfen                          | Hoch     | Hoch         | Hoch        |
+| 3   | CI-Pipeline schlägt unerwartet fehl             | Syntaxfehler, falsche Tags, Build-Fehler oder fehlende Secretes          | Pipeline schrittweise testen                 | Hoch     | Mittel       | Hoch        |
 | 4   | Image Scanner blockiert Workflow Chain           | DVWA deployment wird blockiert, weil es voll mit Schwachstellen ist      | Schwellwerte richtig setzen                  | Hoch     | Niedrig      | Mittel      |
-| 5   | Zeitliche Verzögerungen                          | Implementierung & Planung dauert länger als geplant                      | Backlog reduzieren                           | Mittel   | Hoch         | Hoch        |
-| 6   | Technische Probleme                              | Unerwartete Probleme tauchen auf                                         | Ressourcen überprüfen & minikube reseten     | Hoch     | Mittel       | Hoch        |
-| 7   | Fehlende Dokumentation (nicht aktualisiert)      | Zu starker Fokus auf Realisierung als Dokumentation                      | Dokumentation als DoD überprüfen             | Mittel   | Mitel        | Mittel      |
-| 8   | Git Konfilikte                                   | Mehrere Developer arbeiten am gleichen Codeabschnitt                     | Häufig Mergen und kleine Branchen erstellen  | Niedrig  | Mittel       | Mittel      |
+| 5   | Zeitliche Verzögerungen                         | Implementierung & Planung dauert länger als geplant                     | Backlog reduzieren                           | Mittel   | Hoch         | Hoch        |
+| 6   | Technische Probleme                              | Unerwartete Probleme tauchen auf                                         | Ressourcen überprüfen & minikube reseten   | Hoch     | Mittel       | Hoch        |
+| 7   | Fehlende Dokumentation (nicht aktualisiert)      | Zu starker Fokus auf Realisierung als Dokumentation                      | Dokumentation als DoD überprüfen           | Mittel   | Mitel        | Mittel      |
+| 8   | Git Konfilikte                                   | Mehrere Developer arbeiten am gleichen Codeabschnitt                     | Häufig Mergen und kleine Branchen erstellen | Niedrig  | Mittel       | Mittel      |
 | 9   | Ausfall externer Dienste                         | GitHub ist nicht erreichbar                                              | Lokale Tests fortsetzen oder Doku verbessern | Niedirg  | Hoch         | Hoch        |
-| 10  | Unvollständiges Architekturdiagramm              | Zu ungenaue Vorbereitung des Architekur und fehlendes Check mit Dozenten | Architekturdiagramm überarbeiten             | Mittel   | Hoch         | Hoch        |
-
+| 10  | Unvollständiges Architekturdiagramm             | Zu ungenaue Vorbereitung des Architekur und fehlendes Check mit Dozenten | Architekturdiagramm überarbeiten            | Mittel   | Hoch         | Hoch        |
 
 ### Risikoportfolio
+
 Das Risikoportfolio veranschaulicht die Einflussgrössen der Risiken auf das gesamte Projekt hinweg. Sinn und Zweck ist es dabei eine Einschätzung, der Risikoherde bildlich darzustellen und die Abschätzung zwischen der Eintrittswahrscheinlichkeit und der Schadenshöhe beim Eintreffen des Risikos vorherzusehen.
 Aus dem Portfolio ist zu erkennen, dass die Risiken im Projekt mittel bis hoch eingeschätzt werden. Die vielen technischen Komponenten bilden eine grosse Abhängigkeit in Bezug der Umsetzung und Machbarkeit des Projkets.
 
-Des Weiteren zeigt das Portfolio, dass insbesondere technische Fehlkonfigurationen und Zeitverzug das grösste Risiko für den Projekterfolg darstellen. Diese Risiken müssen daher frühzeitig adressiert werden, um den erfolgreichen Abschluss des Proof of Concepts sicherzustellen. 
-<br>
+Des Weiteren zeigt das Portfolio, dass insbesondere technische Fehlkonfigurationen und Zeitverzug das grösste Risiko für den Projekterfolg darstellen. Diese Risiken müssen daher frühzeitig adressiert werden, um den erfolgreichen Abschluss des Proof of Concepts sicherzustellen.
+`<br>`
 
 ![Risikoportfolio](image/Risikoportfolio.drawio.png)
 
 #### Resultierende Nacharbeiten
+
 - Dokumentation zum Einrichten und Aufsetzen des K8s Clusters: [Link](https://kubernetes.io/docs/concepts/overview/)
 - Lernvideos zu K8s von KodeKloud: [Link](https://shorturl.at/RRXJS)
 - Weitere Recherchen zu ArgoCD tätigen: [Link](https://argo-cd.readthedocs.io/en/stable/)
 - Weniger Stories im nächsten Sprint assignen.
 
-## GitOps Konzepts
+## Architekturdiagramm
+
+In meinem Architekturdiagramm wird dargestellt, wie der Security-GitOps-Workflow funktioniert und welche Komponenten daran beteiligt sind. 
+Im Mittelpunkt stehen zwei Repositories, die den zentralen Ablauf steuern: das Applikations-Repository für Build- und Security-Prüfungen sowie das GitOps-Repository als „Single Source of Truth“ für den gewünschten Deployment-Zustand.
+Über GitHub Actions werden Build und Security-Checks (SonarCloud, Snyk, Trivy) ausgeführt und anschließend die Kubernetes-Manifeste im GitOps-Repository aktualisiert. ArgoCD überwacht das GitOps-Repository und synchronisiert Änderungen automatisiert in den Kubernetes-Cluster, wodurch die neue Version der Applikation ausgerollt wird.
+
+![GitOps Konzept](image/architekturV2.drawio.png)
+
 
 ## Security Konzept
 
