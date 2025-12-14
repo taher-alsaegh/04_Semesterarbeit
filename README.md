@@ -181,6 +181,9 @@ Beachte diesen Punkt mit dem GitOps Workflow Konzept. MVP zusammen mit Git Tags/
 | Security Konzept erstellen          | [SEM04-32](https://h7.cl/1fpry)       | 5      |
 | Test Konzept erarbeiten             | [SEM04-26](https://h7.cl/1kg3M)       | 3      |
 
+> [!NOTE]
+> **Sprint Goal**: Abschluss und Erreichung der beiden Meilensteine; Initialisierungs- und Konzeptionsphase.
+
 ### 2. Sprint vom xx.xx - xx.xx.2025
 
 Als Table mit den Stories/Tasks und Akzepttanzkriterien
@@ -357,12 +360,12 @@ Des Weiteren zeigt das Portfolio, dass insbesondere technische Fehlkonfiguration
 
 ## Architekturdiagramm
 
-In meinem Architekturdiagramm wird dargestellt, wie der Security-GitOps-Workflow funktioniert und welche Komponenten daran beteiligt sind. 
+In meinem Architekturdiagramm wird dargestellt, wie der Security-GitOps-Workflow funktioniert und welche Komponenten daran beteiligt sind.
 Im Mittelpunkt stehen zwei Repositories, die den zentralen Ablauf steuern: Das Applikation-Repository für den Build-Stage und die Security-Prüfungen sowie das GitOps-Repository als „Single Source of Truth“ für den gewünschten Deployment-Zustand.
 Über GitHub Actions werden Build und Security-Checks ausgeführt und anschliessend die Kubernetes-Manifeste im GitOps-Repository aktualisiert. ArgoCD überwacht das GitOps-Repository und synchronisiert Änderungen automatisiert in den Kubernetes-Cluster, wodurch die neue Version der Applikation ausgerollt wird.
 
-Der Best-Practice-Ansatz mit zwei separaten Repositories entspricht dem Prinzip der GitOps Manifest Segregation und bietet durch die konsequente Isolation des Deployment-Prozesses einen zusätzlichen Schutz. 
-Durch diese Trennung kann das Deployment unabhängig vom aktuellen Zustand der Codebasis kontrolliert und nachvollziehbar gesteuert werden. Änderungen am Applikationscode führen somit nicht automatisch zu einem Deployment, sondern erst dann, wenn die Kubernetes-Manifeste im GitOps-Repository bewusst aktualisiert werden. Dadurch wird verhindert, dass jede kleinere Codeänderung unmittelbar einen Deployment-Prozess auslöst, und es entsteht ein kontrollierter, stabiler und sicherer Bereitstellungsablauf.
+Der Best-Practice-Ansatz mit zwei separaten Repositories entspricht dem Prinzip der GitOps Manifest Segregation und bietet durch die konsequente Isolation des Deployment-Prozesses einen zusätzlichen Schutz.
+Durch diese Trennung kann das Deployment unabhängig vom aktuellen Zustand der Codebasis kontrolliert und nachvollziehbar gesteuert werden. Änderungen am Applikationscode führen somit nicht automatisch zu einem Deployment, sondern erst dann, wenn die Kubernetes-Manifeste im GitOps-Repository bewusst aktualisiert werden. Dadurch wird verhindert, dass jede kleinere Codeänderung unmittelbar einen Deployment-Prozess auslöst und es entsteht ein kontrollierter, stabiler und sicherer Bereitstellungsablauf.
 
 ![GitOps Konzept](image/architekturV2.drawio.png)
 
