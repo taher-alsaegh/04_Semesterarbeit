@@ -21,14 +21,14 @@
 
 # Sprint Review
 
-1. **Zielerreichung**
-   a. Wurde das Sprint-Ziel erreicht?
+1. **Zielerreichung** <br>
+   a. Wurde das Sprint-Ziel erreicht? <br>
    Das Sprint Ziel wurde nicht vollständig erreicht. Leider konnte das Konzept noch nicht ganz fertiggestellt werden.
 
-   b. Welche User Stories wurden vollständig umgesetzt?
+   b. Welche User Stories wurden vollständig umgesetzt? <br>
    Alle User-Stories bis auf das Securtiy- und Test Konzept.
-2. **Produktinkrement**
-   a. Was wurde im Sprint konkret geliefert?
+2. **Produktinkrement** <br>
+   a. Was wurde im Sprint konkret geliefert? <br>
    Die Initialisierung des Projekts konnte erfolgreich abgeschlossen werden. Zudem wurde ein grosser Teil der Konzeptionsphase umgesetzt. Das für die Realisierungsphase notwendige Architekturdiagramm wurde erstellt und liegt in einer finalen Version vor.
 
    b. Welche Funktionalitäten sind produktiv nutzbar?
