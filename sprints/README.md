@@ -31,17 +31,17 @@
    a. Was wurde im Sprint konkret geliefert? <br>
    Die Initialisierung des Projekts konnte erfolgreich abgeschlossen werden. Zudem wurde ein grosser Teil der Konzeptionsphase umgesetzt. Das für die Realisierungsphase notwendige Architekturdiagramm wurde erstellt und liegt in einer finalen Version vor.
 
-   b. Welche Funktionalitäten sind produktiv nutzbar?
+   b. Welche Funktionalitäten sind produktiv nutzbar? <br>
    Da es sich bei diesem Sprint primär um einen Dokumentations- und Konzeptionssprint handelt, sind noch keine produktiv nutzbaren Funktionalitäten vorhanden.
-3. **Abweichungen & offene Punkte**
-   a. Welche geplanten Inhalte konnten nicht umgesetzt werden?
+3. **Abweichungen & offene Punkte** <br>
+   a. Welche geplanten Inhalte konnten nicht umgesetzt werden? <br>
    Zum einen konnte die User Story "Security Konzept" und "Test Konzept erarbeiten" nicht abgeschlossen werden.
 
-   b. Warum wurden diese Inhalte nicht abgeschlossen?
+   b. Warum wurden diese Inhalte nicht abgeschlossen? <br>
    Aus zeitlichen Gründen konnte ich die Stories nicht vollständig abschliessen. Es war zu viel im 1. Sprint eingeplant worden.
 
-   c. Müssen Stories in den nächsten Sprint übernommen werden?
-   Es gitb einen Spill over von zwei Stories.
+   c. Müssen Stories in den nächsten Sprint übernommen werden? <br>
+   Es gitb einen Spill over von zwei Stories.<br>
 
 # Sprint Retrospektive
 Für die Sprint Retrospektive wird hier eine 4L-Feedback-Technik angewendet. Dabei werden abgeschlossene Sprints rückblickend beleuchtet, um züküftige Projekte und Sprints zu verbessern. 
@@ -68,6 +68,6 @@ Die 4L-Feedback-Technik strukturiert die Sprint Retrospektive anhand von vier Le
 
 - Ich muss mein Zeitmanagement besser unter Kontrolle bekommen.
 
-## Longed
+## Longed for
 
 - Ich wünsche mir bereits mit der Realisierung starten zu können.
