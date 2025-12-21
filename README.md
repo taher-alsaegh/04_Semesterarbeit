@@ -371,7 +371,7 @@ Durch diese Trennung kann das Deployment unabhängig vom aktuellen Zustand der C
 
 ## Security Konzept
 
-![Security Konzept](image/security_coneptdrawio.drawio)
+![Security Konzept](image/security_coneptdrawio.drawio.png)
 
 ### Evaluation von Trivy etc.
 
