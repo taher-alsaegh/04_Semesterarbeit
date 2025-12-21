@@ -270,25 +270,25 @@ Ein System ist im organisatorischen Sinn eine gegenüber der Umwelt abgegrenzte 
 | IS  | Definition                                                                                                                          |
 | :-- | :---------------------------------------------------------------------------------------------------------------------------------- |
 | IS1 | Die Kubnerentes Manifest Files sind auf Github abgelegt. Damit ist sichergestellt das der Code einheitlich und zentral abgelegt ist |
-| IS2 | Der Kubnernetes Cluster wird über Argo CD deployed                                                                                 |
-| IS3 | Das Docker Image wird in der CI Pipeline auf Schwachstellen und Sicherheitslücken geprüft                                         |
-| IS4 | Die Security Features werden auf die Web-Applikation angewendet und prüft die App auf Herz und Nieren                              |
-| IS5 | Der GitHub Workflow ist in GitHub zentral abgelegt und steuert die Ausführung der CI Pipeline                                      |
+| IS2 | Der Kubnernetes Cluster wird über Argo CD deployed                                                                                  |
+| IS3 | Das Docker Image wird in der CI Pipeline auf Schwachstellen und Sicherheitslücken geprüft                                           |
+| IS4 | Die Security Features werden auf die Web-Applikation angewendet und prüft die App auf Herz und Nieren                               |
+| IS5 | Der GitHub Workflow ist in GitHub zentral abgelegt und steuert die Ausführung der CI Pipeline                                       |
 | IS6 | Argo CD ist mit dem GitHub Repo verlinkt. Nur so kann ein sauberer GitOps Prozess funktionieren                                     |
 | IS7 | Der Quellcode der Web-Applikation ist im GitHub Repo abgelegt                                                                       |
-| IS8 | Die Applikation läuft schlussendlich auf einem Kubnernets Cluster                                                                  |
+| IS8 | Die Applikation läuft schlussendlich auf einem Kubnernets Cluster                                                                   |
 
 #### Externe-Schnittstellen
 
-| ES  | Definition                                                                                                                      |
-| :-- | :------------------------------------------------------------------------------------------------------------------------------ |
+| ES  | Definition                                                                                                                    |
+| :-- | :---------------------------------------------------------------------------------------------------------------------------- |
 | ES1 | Die aus dem Internet bezogene Applikation bietet eine Dokumentation an, welche für die hier verwendete Weiterarbeit nötig ist |
-| ES2 | Alle Security Tests von Drittanbietern werden auf die Webapplikaton angewendet                                                  |
-| ES3 | Die Security Tests beinhalten die bereits implemtierten Security Features, welche zuvor in der CI Pipeline definiert sind       |
-| ES4 | Argo CD läuft lokal auf dem Computer                                                                                           |
-| ES5 | Kubernetes wird lokal mittels minikube ausgerollt                                                                               |
-| ES6 | Der Endbenutzer kann die Applikation nutzen und erkennt dabei die Schwachstellen                                                |
-| ES7 | Die Securtiy Features werden vollständig dokumentiert                                                                          |
+| ES2 | Alle Security Tests von Drittanbietern werden auf die Webapplikaton angewendet                                                |
+| ES3 | Die Security Tests beinhalten die bereits implemtierten Security Features, welche zuvor in der CI Pipeline definiert sind     |
+| ES4 | Argo CD läuft lokal auf dem Computer                                                                                          |
+| ES5 | Kubernetes wird lokal mittels minikube ausgerollt                                                                             |
+| ES6 | Der Endbenutzer kann die Applikation nutzen und erkennt dabei die Schwachstellen                                              |
+| ES7 | Die Securtiy Features werden vollständig dokumentiert                                                                         |
 
 ## Ressourcen
 
@@ -331,15 +331,15 @@ Risikomanagement beschreibt die systematische Identifikation, Analyse, Bewertung
 | Nr. | Risiko                                           | Hauptursache                                                             | Erste Massnahme                              | Eintritt | Auswirkungen | Risikostufe |
 | :-- | ------------------------------------------------ | ------------------------------------------------------------------------ | -------------------------------------------- | -------- | ------------ | ----------- |
 | 1   | K8s falsch aufgesetzt                            | Deployments, RBAC, Secrets sind falsch konfiguriert                      | mit kubectl cmd troubleshooten               | Mittel   | Hoch         | Hoch        |
-| 2   | ArgoCD synchronisiert nicht (Out-of-Sync Fehler) | Fehlende Manifeste oder Berechtigung                                     | ArgoCD Logs prüfen                          | Hoch     | Hoch         | Hoch        |
-| 3   | CI-Pipeline schlägt unerwartet fehl             | Syntaxfehler, falsche Tags, Build-Fehler oder fehlende Secretes          | Pipeline schrittweise testen                 | Hoch     | Mittel       | Hoch        |
+| 2   | ArgoCD synchronisiert nicht (Out-of-Sync Fehler) | Fehlende Manifeste oder Berechtigung                                     | ArgoCD Logs prüfen                           | Hoch     | Hoch         | Hoch        |
+| 3   | CI-Pipeline schlägt unerwartet fehl              | Syntaxfehler, falsche Tags, Build-Fehler oder fehlende Secretes          | Pipeline schrittweise testen                 | Hoch     | Mittel       | Hoch        |
 | 4   | Image Scanner blockiert Workflow Chain           | DVWA deployment wird blockiert, weil es voll mit Schwachstellen ist      | Schwellwerte richtig setzen                  | Hoch     | Niedrig      | Mittel      |
-| 5   | Zeitliche Verzögerungen                         | Implementierung & Planung dauert länger als geplant                     | Backlog reduzieren                           | Mittel   | Hoch         | Hoch        |
-| 6   | Technische Probleme                              | Unerwartete Probleme tauchen auf                                         | Ressourcen überprüfen & minikube reseten   | Hoch     | Mittel       | Hoch        |
-| 7   | Fehlende Dokumentation (nicht aktualisiert)      | Zu starker Fokus auf Realisierung als Dokumentation                      | Dokumentation als DoD überprüfen           | Mittel   | Mitel        | Mittel      |
-| 8   | Git Konfilikte                                   | Mehrere Developer arbeiten am gleichen Codeabschnitt                     | Häufig Mergen und kleine Branchen erstellen | Niedrig  | Mittel       | Mittel      |
+| 5   | Zeitliche Verzögerungen                          | Implementierung & Planung dauert länger als geplant                      | Backlog reduzieren                           | Mittel   | Hoch         | Hoch        |
+| 6   | Technische Probleme                              | Unerwartete Probleme tauchen auf                                         | Ressourcen überprüfen & minikube reseten     | Hoch     | Mittel       | Hoch        |
+| 7   | Fehlende Dokumentation (nicht aktualisiert)      | Zu starker Fokus auf Realisierung als Dokumentation                      | Dokumentation als DoD überprüfen             | Mittel   | Mitel        | Mittel      |
+| 8   | Git Konfilikte                                   | Mehrere Developer arbeiten am gleichen Codeabschnitt                     | Häufig Mergen und kleine Branchen erstellen  | Niedrig  | Mittel       | Mittel      |
 | 9   | Ausfall externer Dienste                         | GitHub ist nicht erreichbar                                              | Lokale Tests fortsetzen oder Doku verbessern | Niedirg  | Hoch         | Hoch        |
-| 10  | Unvollständiges Architekturdiagramm             | Zu ungenaue Vorbereitung des Architekur und fehlendes Check mit Dozenten | Architekturdiagramm überarbeiten            | Mittel   | Hoch         | Hoch        |
+| 10  | Unvollständiges Architekturdiagramm              | Zu ungenaue Vorbereitung des Architekur und fehlendes Check mit Dozenten | Architekturdiagramm überarbeiten             | Mittel   | Hoch         | Hoch        |
 
 ### Risikoportfolio
 
@@ -370,6 +370,8 @@ Durch diese Trennung kann das Deployment unabhängig vom aktuellen Zustand der C
 ![GitOps Konzept](image/architekturV2.drawio.png)
 
 ## Security Konzept
+
+![Security Konzept](image/system-seusag.drawio.png)
 
 ### Evaluation von Trivy etc.
 
