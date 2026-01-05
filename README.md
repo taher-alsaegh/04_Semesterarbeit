@@ -371,9 +371,15 @@ Durch diese Trennung kann das Deployment unabhängig vom aktuellen Zustand der C
 
 ## Security Konzept
 
+Das Security Konzept beschreibt den "Shift Left" Ansatz, in dem das Nutzen von automatisierten Sicherheitstest im kompletten Bereitstellungsprozess integriert wird.
+Dabei ist zu beachten das sich die Test in SAST, SCA und DAST von einander Unterscheiden. Sinn und Zweck dieser Tests soll die Aufmerksamkeit gegenüber Sicherheitslücken darstellen und deren Wichtigkeit zur frühen Berreinigung im Etwicklungs und Bereitstellungsphasen.
+
 ![Security Konzept](image/security_coneptdrawio.drawio.png)
 
-### Evaluation von Trivy etc.
+**Gitleaks**: Diese Funktion prüft bereits lokal beim Entwickler, ob Secrets eingecheckt wurden. Damit können ungewollte security breaches verhindert werden.
+**SAST**: Static Application Security Testing ist eine Art, wie man die Code Basis auf Sicherheitslücken untersurcht, ohne dabei die Applikation laufen zu lassen. In meinem Konzept wird dabei mit Snyk die Code-Analyse durchgefürht. Hierbei sollen Angriffsmuster, wie XSS, Path Traversal etc. erkennt und alarmiert werden.
+**SCA**: In der Software Composition Analysis werden die verwendeten Bibliotheken auf Schwachstellen überprüft und dadurch können potenzielle Angriffe erkennbar gemacht werden. Die Schwachstellen sind mit CVE Nummern gekennzeichnet. Auch in diesem Teil wird auf Snyk zurückgegriffen, ausserdem wird zusächtzlich Trivy gebraucht, damit das gesamte Imgage nochmals auf Sicherheitslücken gesannt wird. Das Resultat soll im GitHub Repo ersichtlich werden.
+**DAST**: Dynamic Application Security Testing bezeichnet Sicherheitstests an der laufenden Anwendung. Die Tests ähneln die einem Penetration Testers. Es werden verschiedene Angriffe auf das laufende System unternommen, um Schwachstellen zu erkennen.
 
 ## Test Konzept
 
