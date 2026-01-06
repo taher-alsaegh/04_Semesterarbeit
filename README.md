@@ -377,14 +377,11 @@ Dabei ist zu beachten das sich die Test in SAST, SCA und DAST von einander Unter
 ![Security Konzept](image/security_coneptdrawio.drawio.png)
 
 **Gitleaks**: Diese Funktion prüft bereits lokal beim Entwickler, ob Secrets eingecheckt wurden. Damit können ungewollte security breaches verhindert werden.
-`<br>`
-`<br>`
+
 **SAST**: Static Application Security Testing ist eine Art, wie man die Code Basis auf Sicherheitslücken untersurcht, ohne dabei die Applikation laufen zu lassen. In meinem Konzept wird dabei mit Snyk die Code-Analyse durchgefürht. Hierbei sollen Angriffsmuster, wie XSS, Path Traversal etc. erkennt und alarmiert werden.
-`<br>`
-`<br>`
+
 **SCA**: In der Software Composition Analysis werden die verwendeten Bibliotheken auf Schwachstellen überprüft und dadurch können potenzielle Angriffe erkennbar gemacht werden. Die Schwachstellen sind mit CVE Nummern gekennzeichnet. Auch in diesem Teil wird auf Snyk zurückgegriffen, ausserdem wird zusächtzlich Trivy gebraucht, damit das gesamte Imgage nochmals auf Sicherheitslücken gesannt wird. Das Resultat soll im GitHub Repo ersichtlich werden.
-`<br>`
-`<br>`
+
 **DAST**: Dynamic Application Security Testing bezeichnet Sicherheitstests an der laufenden Anwendung. Die Tests ähneln die einem Penetration Testers. Es werden verschiedene Angriffe auf das laufende System unternommen, um Schwachstellen zu erkennen.
 
 ## Test Konzept
