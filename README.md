@@ -270,25 +270,25 @@ Ein System ist im organisatorischen Sinn eine gegenüber der Umwelt abgegrenzte 
 | IS  | Definition                                                                                                                          |
 | :-- | :---------------------------------------------------------------------------------------------------------------------------------- |
 | IS1 | Die Kubnerentes Manifest Files sind auf Github abgelegt. Damit ist sichergestellt das der Code einheitlich und zentral abgelegt ist |
-| IS2 | Der Kubnernetes Cluster wird über Argo CD deployed                                                                                  |
-| IS3 | Das Docker Image wird in der CI Pipeline auf Schwachstellen und Sicherheitslücken geprüft                                           |
-| IS4 | Die Security Features werden auf die Web-Applikation angewendet und prüft die App auf Herz und Nieren                               |
-| IS5 | Der GitHub Workflow ist in GitHub zentral abgelegt und steuert die Ausführung der CI Pipeline                                       |
+| IS2 | Der Kubnernetes Cluster wird über Argo CD deployed                                                                                 |
+| IS3 | Das Docker Image wird in der CI Pipeline auf Schwachstellen und Sicherheitslücken geprüft                                         |
+| IS4 | Die Security Features werden auf die Web-Applikation angewendet und prüft die App auf Herz und Nieren                              |
+| IS5 | Der GitHub Workflow ist in GitHub zentral abgelegt und steuert die Ausführung der CI Pipeline                                      |
 | IS6 | Argo CD ist mit dem GitHub Repo verlinkt. Nur so kann ein sauberer GitOps Prozess funktionieren                                     |
 | IS7 | Der Quellcode der Web-Applikation ist im GitHub Repo abgelegt                                                                       |
-| IS8 | Die Applikation läuft schlussendlich auf einem Kubnernets Cluster                                                                   |
+| IS8 | Die Applikation läuft schlussendlich auf einem Kubnernets Cluster                                                                  |
 
 #### Externe-Schnittstellen
 
-| ES  | Definition                                                                                                                    |
-| :-- | :---------------------------------------------------------------------------------------------------------------------------- |
+| ES  | Definition                                                                                                                      |
+| :-- | :------------------------------------------------------------------------------------------------------------------------------ |
 | ES1 | Die aus dem Internet bezogene Applikation bietet eine Dokumentation an, welche für die hier verwendete Weiterarbeit nötig ist |
-| ES2 | Alle Security Tests von Drittanbietern werden auf die Webapplikaton angewendet                                                |
-| ES3 | Die Security Tests beinhalten die bereits implemtierten Security Features, welche zuvor in der CI Pipeline definiert sind     |
-| ES4 | Argo CD läuft lokal auf dem Computer                                                                                          |
-| ES5 | Kubernetes wird lokal mittels minikube ausgerollt                                                                             |
-| ES6 | Der Endbenutzer kann die Applikation nutzen und erkennt dabei die Schwachstellen                                              |
-| ES7 | Die Securtiy Features werden vollständig dokumentiert                                                                         |
+| ES2 | Alle Security Tests von Drittanbietern werden auf die Webapplikaton angewendet                                                  |
+| ES3 | Die Security Tests beinhalten die bereits implemtierten Security Features, welche zuvor in der CI Pipeline definiert sind       |
+| ES4 | Argo CD läuft lokal auf dem Computer                                                                                           |
+| ES5 | Kubernetes wird lokal mittels minikube ausgerollt                                                                               |
+| ES6 | Der Endbenutzer kann die Applikation nutzen und erkennt dabei die Schwachstellen                                                |
+| ES7 | Die Securtiy Features werden vollständig dokumentiert                                                                          |
 
 ## Ressourcen
 
@@ -331,15 +331,15 @@ Risikomanagement beschreibt die systematische Identifikation, Analyse, Bewertung
 | Nr. | Risiko                                           | Hauptursache                                                             | Erste Massnahme                              | Eintritt | Auswirkungen | Risikostufe |
 | :-- | ------------------------------------------------ | ------------------------------------------------------------------------ | -------------------------------------------- | -------- | ------------ | ----------- |
 | 1   | K8s falsch aufgesetzt                            | Deployments, RBAC, Secrets sind falsch konfiguriert                      | mit kubectl cmd troubleshooten               | Mittel   | Hoch         | Hoch        |
-| 2   | ArgoCD synchronisiert nicht (Out-of-Sync Fehler) | Fehlende Manifeste oder Berechtigung                                     | ArgoCD Logs prüfen                           | Hoch     | Hoch         | Hoch        |
-| 3   | CI-Pipeline schlägt unerwartet fehl              | Syntaxfehler, falsche Tags, Build-Fehler oder fehlende Secretes          | Pipeline schrittweise testen                 | Hoch     | Mittel       | Hoch        |
+| 2   | ArgoCD synchronisiert nicht (Out-of-Sync Fehler) | Fehlende Manifeste oder Berechtigung                                     | ArgoCD Logs prüfen                          | Hoch     | Hoch         | Hoch        |
+| 3   | CI-Pipeline schlägt unerwartet fehl             | Syntaxfehler, falsche Tags, Build-Fehler oder fehlende Secretes          | Pipeline schrittweise testen                 | Hoch     | Mittel       | Hoch        |
 | 4   | Image Scanner blockiert Workflow Chain           | DVWA deployment wird blockiert, weil es voll mit Schwachstellen ist      | Schwellwerte richtig setzen                  | Hoch     | Niedrig      | Mittel      |
-| 5   | Zeitliche Verzögerungen                          | Implementierung & Planung dauert länger als geplant                      | Backlog reduzieren                           | Mittel   | Hoch         | Hoch        |
-| 6   | Technische Probleme                              | Unerwartete Probleme tauchen auf                                         | Ressourcen überprüfen & minikube reseten     | Hoch     | Mittel       | Hoch        |
-| 7   | Fehlende Dokumentation (nicht aktualisiert)      | Zu starker Fokus auf Realisierung als Dokumentation                      | Dokumentation als DoD überprüfen             | Mittel   | Mitel        | Mittel      |
-| 8   | Git Konfilikte                                   | Mehrere Developer arbeiten am gleichen Codeabschnitt                     | Häufig Mergen und kleine Branchen erstellen  | Niedrig  | Mittel       | Mittel      |
+| 5   | Zeitliche Verzögerungen                         | Implementierung & Planung dauert länger als geplant                     | Backlog reduzieren                           | Mittel   | Hoch         | Hoch        |
+| 6   | Technische Probleme                              | Unerwartete Probleme tauchen auf                                         | Ressourcen überprüfen & minikube reseten   | Hoch     | Mittel       | Hoch        |
+| 7   | Fehlende Dokumentation (nicht aktualisiert)      | Zu starker Fokus auf Realisierung als Dokumentation                      | Dokumentation als DoD überprüfen           | Mittel   | Mitel        | Mittel      |
+| 8   | Git Konfilikte                                   | Mehrere Developer arbeiten am gleichen Codeabschnitt                     | Häufig Mergen und kleine Branchen erstellen | Niedrig  | Mittel       | Mittel      |
 | 9   | Ausfall externer Dienste                         | GitHub ist nicht erreichbar                                              | Lokale Tests fortsetzen oder Doku verbessern | Niedirg  | Hoch         | Hoch        |
-| 10  | Unvollständiges Architekturdiagramm              | Zu ungenaue Vorbereitung des Architekur und fehlendes Check mit Dozenten | Architekturdiagramm überarbeiten             | Mittel   | Hoch         | Hoch        |
+| 10  | Unvollständiges Architekturdiagramm             | Zu ungenaue Vorbereitung des Architekur und fehlendes Check mit Dozenten | Architekturdiagramm überarbeiten            | Mittel   | Hoch         | Hoch        |
 
 ### Risikoportfolio
 
@@ -377,14 +377,14 @@ Dabei ist zu beachten das sich die Test in SAST, SCA und DAST von einander Unter
 ![Security Konzept](image/security_coneptdrawio.drawio.png)
 
 **Gitleaks**: Diese Funktion prüft bereits lokal beim Entwickler, ob Secrets eingecheckt wurden. Damit können ungewollte security breaches verhindert werden.
-<br>
-<br>
+`<br>`
+`<br>`
 **SAST**: Static Application Security Testing ist eine Art, wie man die Code Basis auf Sicherheitslücken untersurcht, ohne dabei die Applikation laufen zu lassen. In meinem Konzept wird dabei mit Snyk die Code-Analyse durchgefürht. Hierbei sollen Angriffsmuster, wie XSS, Path Traversal etc. erkennt und alarmiert werden.
-<br>
-<br>
+`<br>`
+`<br>`
 **SCA**: In der Software Composition Analysis werden die verwendeten Bibliotheken auf Schwachstellen überprüft und dadurch können potenzielle Angriffe erkennbar gemacht werden. Die Schwachstellen sind mit CVE Nummern gekennzeichnet. Auch in diesem Teil wird auf Snyk zurückgegriffen, ausserdem wird zusächtzlich Trivy gebraucht, damit das gesamte Imgage nochmals auf Sicherheitslücken gesannt wird. Das Resultat soll im GitHub Repo ersichtlich werden.
-<br>
-<br>
+`<br>`
+`<br>`
 **DAST**: Dynamic Application Security Testing bezeichnet Sicherheitstests an der laufenden Anwendung. Die Tests ähneln die einem Penetration Testers. Es werden verschiedene Angriffe auf das laufende System unternommen, um Schwachstellen zu erkennen.
 
 ## Test Konzept
@@ -398,10 +398,41 @@ Zu aller Erst muss das DSVPWA Repository von [Gabor Seljan](https://github.com/s
 > - DSVPWA Repo: https://github.com/taher-alsaegh/DSVPW
 > - GitOps Repo: https://github.com/taher-alsaegh/dsvpwa-gitops
 
+Im DSVPWA Repo, wo sich auch der Source Code befindet, wird zusätzlich zur `main` branch eine `dev` branch erstellt. Dort wird wie im Architekturdiagramm zusehen, das Image gebaut und durchläuft die Sicherheitstests. Von dort aus wird das Image mit `dev getagged` und im GitHub Container Registry abgelegt (GHCR).
+In der `main` branch wird ausschliesslich der Daily DAST Security Test ausgefürht.
 
+Im GitOps Repo wird ausschliesslich die default `main` branch verwendet.
+
+### Semantic Versioning
+
+Der Ansatz vom Semantic Versioning kurz SemVer ist in dieser Arbeit ebenfalls angewendet. SemVer ist ein vordefiniertes Versionsschema, damit Menschen erkennen, was sich nach einem Update an der Anwendung verändert hat.
+Dieses Format wird wie folgt in drei Elementen angezeigt `MAJOR.MINOR.PATCH`. Somit lässt sich nach einem Update den aktuellen Stand, durch die Veränderungselemente erkennen. [Quelle](https://semver.org/lang/de/)
+
+Die Versionierung erfolgt durch `git tags` und lässt sich gut mit dem SemVer Prinziep vereinbaren. Nachdem die Pipeline durchlaufen ist und das Image erfolgreich in `dev`  gebaut wurde, erhält das Image, wie bereits erwähnt automatisch einen `dev tag`.
+Sofern die `dev` Version zufriedenstellend ist, kann ein git tag bspw. `v0.1.3` initiiert werden und mit einem `git push origin v0.1.3` auf das Remote Repository ausgeführt werden. Somit erstellen wir eine neue Versionierung des neu gebauten images und liegt ausserdem mit dem `latest` tag im GHCR.
+Ausserdem befindet sich eine komplette Versionierung des Repos, welches unter dem Tag Icon zu finden ist.
+
+![repo_bar](image/repo_bar.png)
+![git_tags](/image/git_tags.png)
+
+###  Branch Protection & Merge Strategy
+
+Damit keine Commits direkt auf die `main` branch gemacht werden, ist diese mit einer branch protection gesichert. Veränderungen auf der `main` branch können nur via pull requests erzeugt werden. Da es nur eine `dev`branch in diesem Setup verfügbar ist, wird auch nur diese zum mergen freigegeben.
+
+**Konfiguration**
+
+- [x] Restricted deletions
+- [x] Require a pull request before merging
+- [x] Block force pushes
+- [x] Required apporvals: 0
+
+![branch_protection](image/branch_protection.png)
+
+Für die Merge-Strategie wird hier das normale Merge commit Prinzip angewendet. Der Vorteil davon ist, dass die Deployment history durch den merge commit ersichtlich bleibt und die  dev commits nachvollziehbar beleiben.
+Hingegen bei anderen Strategien, wie einem Squash Merge gehen die dev commits verloren und die Transparenz in der Semesterarbeit ist nicht gewährleistet.
+
+![merge_method](image/merge_method.png)
 ## GitHub-Repository & Branching
-
-
 
 ## FlaskApp & Tests
 
