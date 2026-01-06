@@ -395,7 +395,10 @@ Dabei ist zu beachten das sich die Test in SAST, SCA und DAST von einander Unter
 
 Zu aller Erst muss das DSVPWA Repository von [Gabor Seljan](https://github.com/sgabe/DSVPWA) erfolgreich geklont werden. Anschliessend bereiten wir unser zweites Repo vor, welches wir für unseren GitOps Workflow benötigen. Der Grund warum hier auf zwei verschiedene Repos referenziert wird, ist aus Best Practice Gründen zu verzeichnen. Die GitOps Manifest Segregation zielt dauraf hin, den Source Code von den K8s Files strikt zu trennen. Dadurch können veränderungen an der Applikation vorgenommen werden, ohne Einfluss auf das Deployment zu verursachen. [Quelle](https://gitopsecurity.com/gitOpsManifestSegregation)
 
-> DSVPWA Repo: https://github.com/taher-alsaegh/DSVPW
+> DSVPWA Repo: https://github.com/taher-alsaegh/DSVPW <br>
+> GitOps Repo: https://github.com/taher-alsaegh/dsvpwa-gitops
+>
+> DSVPWA Repo: https://github.com/taher-alsaegh/DSVPW␠␠
 > GitOps Repo: https://github.com/taher-alsaegh/dsvpwa-gitops
 
 ## GitHub-Repository & Branching
