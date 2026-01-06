@@ -418,17 +418,22 @@ Damit keine Commits direkt auf die `main` branch gemacht werden, ist diese mit e
 
 **Konfiguration**
 
-- [x] Restricted deletions
-- [x] Require a pull request before merging
-- [x] Block force pushes
-- [x] Required apporvals: 0
+- [X] Restricted deletions
+- [X] Require a pull request before merging
+- [X] Block force pushes
+- [X] Required apporvals: 0
 
 ![branch_protection](image/branch_protection.png)
+
+Hier ist die erfolgreiche Implementation der Branch Protection zu sehen. Von der `main` branch können keine Anpassungen vorgenommen werden.
+
+![branch_protection_test](image/branch_protection_test.png)
 
 Für die Merge-Strategie wird hier das normale Merge commit Prinzip angewendet. Der Vorteil davon ist, dass die Deployment history durch den merge commit ersichtlich bleibt und die  dev commits nachvollziehbar beleiben.
 Hingegen bei anderen Strategien, wie einem Squash Merge gehen die dev commits verloren und die Transparenz in der Semesterarbeit ist nicht gewährleistet.
 
 ![merge_method](image/merge_method.png)
+
 ## GitHub-Repository & Branching
 
 ## FlaskApp & Tests
