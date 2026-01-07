@@ -434,14 +434,15 @@ Hingegen bei anderen Strategien, wie einem Squash Merge gehen die dev commits ve
 
 ![merge_method](image/merge_method.png)
 
-## CI Pipline
+## SAST, SCA and Build & Push Pipline
 
-Im diesem Abschnitt wird die Continuous Integration Pipeline kurz CI-Pipeline im Detail auf ihre Funktionen und deren Nutzen eingegangen.
+In diesem Abschnitt wird die erste von Drei Pipelines beschrieben. Dabei handlet es sicht um die Sicherheitstest mit Snyk und dem scannen des Container-Images mit Trivy.
 
 ### Linting
 Linting ist der Prozess, bei dem ein Programm ausgeführt wird, das den Code auf mögliche Fehler analysiert. Es handelt sich hierbei um eine statische Code-Analyse, die Programmierfehler, Bugs, stilistische Fehler und verdächtige Konstrukte aufdecken soll.
 
 Der erste Teil der Pipeline der durchläuft ist der lint checker. Hierbei werden zunächst die python dependencies isort und black installiert.
+
 **isort check** sortiert die die Imports alphabetisch und trennt die standard Libs von den third parties Libarys. Der Nutzen ist hierbei die Lesbarkeit für den Entwickler.
 
 **black check** formatiert schlussendlich den Code. Einrückungen, Zeilenlänge, Leerzeichen etc. werden alle sauber über einen Style Guide Stadard wie PEP8 formatiert. Das ist wicktig, um mit einen einheitlichen und strukturierten Code zu arbeiten
@@ -559,7 +560,71 @@ Zu guter Letzt wird mit Trivy das gerade erstelle Image auf weitere Schwachstell
           category: trivy-image
 ```
 
-## FlaskApp & Tests
+## Kubnernetes Setup
+
+### Minikube
+
+Für die K8s installation wird in diesem Fall Minikube verwendet. Minikube eigenet sich sehr gut für das schnelle Aufsetzen eines K8s Clusters und kann sehr einfach lokal betreieben werden. Da die Semesterarbeit ein Proof of Concept darstellt, reicht Minikube für diesen Einsatzzweck vollkommen aus.
+
+Die Virtualisierungsumgebung in dem Minikube läuft auf Ubuntu 24.04.3 LTS und wird mit UTM, einem Virtualisierungsprogramm für MacOS, erstellt.
+
+
+#### Installation
+
+Nach dem die Virtuelle Maschine Einsatz bereit ist, muss überprüft werden ob weitere Virtualisierungen möglich sind. Hierbei nuzten wir diesen Befehl und sollten keinen Output erwarten:
+`egrep --color 'vmx|svm' /proc/cpuinfo` 
+
+Mit diesem Befehl wird Minikube installiert:
+`curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64 && chmod +x minikube`
+
+Zu guter Letzt fügen wir die Programmdatei zu userem Pfad hinzu:
+`sudo cp minikube /usr/local/bin && rm minikube`
+
+Mit `minikube status` kann der Status des lightweight K8s Clusters überprüft werden.
+
+![minikube](image/minikube.png) 
+
+### ArgoCD
+
+Argo CD ist ein deklaratives, GitOps continuous delivery tool für Kubernetes. 
+
+#### Installation & Konfiguration
+
+Zuerst wird ein Namespace für ArgoCD erstellt und anschliessend kann die Applikation installiert werden.
+
+`kubectl create namespace argocd`
+`kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml`
+
+Unter dem lokal erstellten ordner `dsvpwa` ist folgende ArgoCD `app.yml` Konfigurationdatei hinterlegt. Es zielt mein `dsvpwa-gitops.git` repo an und prüft automatisch ob es unter dem pfad `k8s` veränderungen gegeben hat.
+
+Mit `kubectl apply -f app.yml` erstelle ich meine Konfig.
+
+```yml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dsvpwa
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: "https://github.com/taher-alsaegh/dsvpwa-gitops.git"
+    targetRevision: main
+    path: k8s
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: dsvpwa
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+```
+
+Mit `kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d; echo` lese ich das initial Passwort aus und mit `kubectl -n argocd port-forward svc/argocd-server 8080:443` kann ich die Portweiterleitung aktiviern sodass ich über localhost:8080 auf mein ArgoCD GUI komme.
+
+![1767816861609](image/argocd.png)
 
 ## App in Docker
 
