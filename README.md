@@ -434,7 +434,130 @@ Hingegen bei anderen Strategien, wie einem Squash Merge gehen die dev commits ve
 
 ![merge_method](image/merge_method.png)
 
-## GitHub-Repository & Branching
+## CI Pipline
+
+Im diesem Abschnitt wird die Continuous Integration Pipeline kurz CI-Pipeline im Detail auf ihre Funktionen und deren Nutzen eingegangen.
+
+### Linting
+Linting ist der Prozess, bei dem ein Programm ausgeführt wird, das den Code auf mögliche Fehler analysiert. Es handelt sich hierbei um eine statische Code-Analyse, die Programmierfehler, Bugs, stilistische Fehler und verdächtige Konstrukte aufdecken soll.
+
+Der erste Teil der Pipeline der durchläuft ist der lint checker. Hierbei werden zunächst die python dependencies isort und black installiert.
+**isort check** sortiert die die Imports alphabetisch und trennt die standard Libs von den third parties Libarys. Der Nutzen ist hierbei die Lesbarkeit für den Entwickler.
+
+**black check** formatiert schlussendlich den Code. Einrückungen, Zeilenlänge, Leerzeichen etc. werden alle sauber über einen Style Guide Stadard wie PEP8 formatiert. Das ist wicktig, um mit einen einheitlichen und strukturierten Code zu arbeiten
+
+```yml
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+          cache: "pip"
+
+      - name: Install lint deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install black isort
+
+      - name: isort check
+        run: isort --check-only .
+
+      - name: black check
+        run: black --check .
+```
+
+### Snyk
+
+Mit Snyk, einer zusätzlicher externen Anwendungen können Sicherheitsschwachstellen im Code oder in Open-Source-Dependencies automatisiert aufgedeckt und diese auf deren Schweregrad priorisiert werden.
+
+In diesem Schritt wird zunächst der Code auf potenzielle gefährdete Schwachstellen oder Agriffsmuster geprüft. Der SCA-Teil scannt die Dependencies/Libarys auf Schwachstellen.
+```yml
+snyk:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+
+      # SAST: scannt deinen Code
+      - name: Snyk Code (SAST)
+        continue-on-error: true
+        uses: snyk/actions/python@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: code test
+
+      # SCA: scannt Dependencies (requirements/lockfiles)
+      - name: Snyk Open Source (SCA)
+        continue-on-error: true
+        uses: snyk/actions/python@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: test
+
+```
+
+### Build & Scan
+
+Damit die Sematic auch für die Versionierung stimmt, wird vor dem Build ein Check durchgeführt, ob die Referenzierung auf dev oder entsprechend des Versionstag übereinstimmt.  
+
+```yml
+build_push_and_trivy:
+    runs-on: ubuntu-latest
+    needs: snyk
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compute image name (lowercase)
+        id: img
+        shell: bash
+        run: |
+          echo "image=${{ env.REGISTRY }}/${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
+        
+      - name: Compute tags + scan target
+        id: ver
+        shell: bash
+        run: |
+          # Branch dev => tag "dev" und scan "dev"
+          if [[ "${GITHUB_REF}" == "refs/heads/dev" ]]; then
+            echo "tags=${{ steps.img.outputs.image }}:dev" >> "$GITHUB_OUTPUT"
+            echo "scan_ref=${{ steps.img.outputs.image }}:dev" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # SemVer tag vX.Y.Z => push "X.Y.Z" + "latest", scan "X.Y.Z"
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            VERSION="${GITHUB_REF_NAME#v}"
+            echo "tags=${{ steps.img.outputs.image }}:${VERSION},${{ steps.img.outputs.image }}:latest" >> "$GITHUB_OUTPUT"
+            echo "scan_ref=${{ steps.img.outputs.image }}:${VERSION}" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "Unsupported ref: ${GITHUB_REF}"
+          exit 1
+```
+
+Zu guter Letzt wird mit Trivy das gerade erstelle Image auf weitere Schwachstellen geprüft und mit dem SARIF Format auf Github hochgeladen. So können die Vulnerabilities direkt ausgelesen werden.
+```yml
+      # Trivy scannt direkt aus der Registry (kein pull nötig)
+      - name: Trivy image scan (SARIF)
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ steps.ver.outputs.scan_ref }}
+          format: sarif
+          output: trivy-image.sarif
+
+      - name: Upload Trivy SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: trivy-image.sarif 
+          category: trivy-image
+```
 
 ## FlaskApp & Tests
 
