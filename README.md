@@ -543,6 +543,36 @@ build_push_and_trivy:
           exit 1
 ```
 
+Da das Minikube Setup auf einer ARM basierten Architektur läuft, müssen die Imges entsprechend kompatibel sein. Dafür werden in GitHub Action die QUMU-Binärdateien genutzt, um die verschiedenen Prozessarchitekturen zu erstellen.
+
+```yml
+      # Multi-Arch Build Support (fix für ARM64 Minikube)
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build & push image (multi-arch)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ steps.ver.outputs.tags }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+```
+
+
 Zu guter Letzt wird mit Trivy das gerade erstelle Image auf weitere Schwachstellen geprüft und mit dem SARIF Format auf Github hochgeladen. So können die Vulnerabilities direkt ausgelesen werden.
 ```yml
       # Trivy scannt direkt aus der Registry (kein pull nötig)
@@ -569,7 +599,7 @@ Für die K8s installation wird in diesem Fall Minikube verwendet. Minikube eigen
 Die Virtualisierungsumgebung in dem Minikube läuft auf Ubuntu 24.04.3 LTS und wird mit UTM, einem Virtualisierungsprogramm für MacOS, erstellt.
 
 
-#### Installation
+#### Installation
 
 Nach dem die Virtuelle Maschine Einsatz bereit ist, muss überprüft werden ob weitere Virtualisierungen möglich sind. Hierbei nuzten wir diesen Befehl und sollten keinen Output erwarten:
 `egrep --color 'vmx|svm' /proc/cpuinfo` 
@@ -586,16 +616,16 @@ Mit `minikube status` kann der Status des lightweight K8s Clusters überprüft w
 
 ### ArgoCD
 
-Argo CD ist ein deklaratives, GitOps continuous delivery tool für Kubernetes. 
+Argo CD ist ein deklaratives, GitOps continuous delivery tool für Kubernetes. ArgoCD wird als Schnitstelle zum GitOps Repo und dem K8s Clusters fungieren. Jegliche Anpassungen auf den K8s Manifest Files triggert eine Veränderung am K8s Deployment.
 
 #### Installation & Konfiguration
 
 Zuerst wird ein Namespace für ArgoCD erstellt und anschliessend kann die Applikation installiert werden.
-
 `kubectl create namespace argocd`
+
 `kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml`
 
-Unter dem lokal erstellten ordner `dsvpwa` ist folgende ArgoCD `app.yml` Konfigurationdatei hinterlegt. Es zielt mein `dsvpwa-gitops.git` repo an und prüft automatisch ob es unter dem pfad `k8s` veränderungen gegeben hat.
+Unter dem lokal erstellten Ordner `dsvpwa` ist folgende ArgoCD `app.yml` Konfigurationdatei hinterlegt. Es zielt mein `dsvpwa-gitops.git` Repo an und prüft aktiv, ob es unter dem Pfad `k8s` veränderungen gegeben hat.
 
 Mit `kubectl apply -f app.yml` erstelle ich meine Konfig.
 
@@ -624,19 +654,183 @@ spec:
 
 Mit `kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d; echo` lese ich das initial Passwort aus und mit `kubectl -n argocd port-forward svc/argocd-server 8080:443` kann ich die Portweiterleitung aktiviern sodass ich über localhost:8080 auf mein ArgoCD GUI komme.
 
-![1767816861609](image/argocd.png)
+![argocd](image/argocd.png)
 
-## App in Docker
+### K8s Manifest Files
 
-## CI/CD Pipeline
+Als Kubernets Manifest File versteht man oft Mals ein YAML oder JSON Datei, die den gewünschten Status des Kubernets Objekts darstellen soll. Ein K8s Objekt kann ein Deployment, ReplicaSet, Service usw. sein. Manifest Files definieren die Spezifikationen des Objekts, wie deren Metadata, Eigenschaften oder Zustand in einem deklarativen Ansatz.  
 
-## Kubernetes minikube & ArgoCD implementation
+#### Deployment
 
-## Security implementation
+Das Deployment ist Zuständig dafür, dass die Pods/Container in dem gewünschten Zustand laufen.
 
-- Trivy implementieren
-- Secret Management
-- RBAC / Least Privilege
+Der Erste Abschnitt weisst im namespace `dsvpwa` jeweils Zwei Replicas auf. Das definert den Zustand von jeweils Zwei Pods. Unter dem Selector `matchLabels: dsvpwa` ist ein Filter definiert. Dieses Merkmal dient dazu das alle Pods unter `app: dsvpwa` den Zustand vom replicas einnehmen. 
+
+``` yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dsvpwa
+  namespace: dsvpwa
+spec:
+  replicas: 2
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: dsvpwa
+  template:
+    metadata:
+      labels:
+        app: dsvpwa
+```
+
+Im zweiten Abschnitt des Deployments wird der container definiert. Hier wird das Image eingetragen und die nötigen paramenter zum Starten der Applikation hinterlegt. Auch sieht man auf welchem Port die Applikation exposed wird.
+
+```yml
+spec:
+      containers:
+        - name: dsvpwa
+          image: ghcr.io/taher-alsaegh/dsvpwa:0.1.8
+          command:
+            - python
+          args:
+            - dsvpwa.py
+            - --host
+            - "0.0.0.0"
+            - --port
+            - "65413"
+          ports:
+            - containerPort: 65413
+          env:
+            - name: PORT
+              value: "65413"
+```
+
+
+#### Service
+
+
+Ein Service leitet den Traffic über eine Reihe von Pods. Diese können ebenfalls mit Labels gekennzeichnet werden. Der Service ermöglicht der Anwendung, Datenverkehr zu empfangen und dient daher als Schnittstelle für die Kommunikation zur Applikation.
+
+Auch hier werden alle Pods mit dem Selector Label dsvpwa getrackt. Als Expose Methode wird `ClusterIP` genutzt. Hierbei wird der Service nur im internen Cluster verfügbar gemacht.
+```yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: dsvpwa
+  namespace: dsvpwa
+spec:
+  selector:
+    app: dsvpwa
+  ports:
+    - name: http
+      port: 65413
+      targetPort: 65413
+  type: ClusterIP
+```
+
+#### Certificates
+
+Mit einem Zertifikat kann eine sichere TLS Verschlüsselung hergestellt werden. Sie dient als digitales "Ausweisdokument" und bildet den handshake für eine sichere Webkommunikation über HTTPS.
+
+In dieser Arbeit wird ausschliesslich ein lokales Setup gebaut. Daher ist dieser Teil mit dem Zeritifikat rein als Showcase zu betrachten. Es soll vielmehr die herangehensweise für das online Stellen einer Webanwendung beschreiben.
+
+Wir initialisieren eine interne CA mit einem self-signed Issuer, erzeugen daraus einen CA-basierten ClusterIssuer und lassen cert-manager daraus automatisch TLS-Zertifikate für Services erstellen. So integrieren wir TLS vollständig in den Kubernetes-Lifecycle
+
+##### Cert-Manager
+
+Der Cert-Manager ist zwingend nötig, um das Zertifikat automatisiert über Kubnernetes zu erstellen. Ausserdem ist dieser Zuständig für die Erneuerung des Zertifikats und sichert die TLS Datei unter den Secrets. Ohne Cert-Manager müsste man bei jeder Änderung manuell ein neues Cert über OpenSSL erzeugen und es zu den secrets hinzufügen.
+
+###### Installation
+
+In diesem Schritt wird ein zusätzlicher namespace für den Cert-Manager angelegt und anschliessend über helm installiert.
+
+```sh
+helm repo add jetstack https://charts.jetstack.io
+helm repo update
+kubectl create namespace cert-manager
+helm install cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --set crds.enabled=true
+```
+
+Hier ist der aktive Cert-Manager zu sehen, welcher mit Drei Pods im seperaten namespace läuft.
+![cert-manager](image/cert-manager.png)
+
+##### SelfSigned ClusterIssuer
+
+Mit dem SelfSigned ClusterIssuer wird das Zertifikat von mir selbst signiert. In einem realen Setup würde diese CA natürlich nicht jemand selbst sein, sondern im besten Fall eine anerkannte Certificate Authority Stelle, wie beispielsweise Let's Encrypt.
+
+```yml
+kind: ClusterIssuer
+metadata:
+  name: selfsigned
+spec:
+  selfSigned: {}
+```
+
+##### Root-CA erzeugen
+
+Hiermit erstlle ich die von mir definierte CA Stelle über den Cert-Manager. Es wird ein ein `local-root-ca` key-pair erstellt, um damit als vermeintliche CA Zertifikate signieren zu können.
+
+```yml
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: local-root-ca
+  namespace: cert-manager
+spec:
+  isCA: true
+  commonName: local-root-ca
+  secretName: local-root-ca-secret
+  issuerRef:
+    name: selfsigned
+    kind: ClusterIssuer
+```
+
+##### CA-Issuer
+
+In diesem Schritt wird der cert-manager angewiesen, den ca-schlüssel `local-root-ca-secret` zu nutzen, um Zertifikate zu signieren. Dieser Schlüssel wird Kubernetes nie verlassen. Somit wird dieser Schlüssel intern vom Cert-Manager genutzt.
+
+```yml
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: local-ca-issuer
+spec:
+  ca:
+    secretName: local-root-ca-secret
+```
+
+##### Signed Certificate
+
+Der Cert-Manager signiert nun über den `local-ca-issuer` das Zertifikat. Dieses Zertifikat ist nun als secret `dsvpwa-tls` in K8s aktiv.
+
+```yml
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: dsvpwa-local-cert
+  namespace: dsvpwa
+spec:
+  secretName: dsvpwa-tls
+  dnsNames:
+    - dsvpwa.local
+  issuerRef:
+    name: local-ca-issuer
+    kind: ClusterIssuer
+```
+
+
+![cert-secret](image/cert-secret.png)
+
+
+#### Ingress
+
+## Daily DAST Pipeline
+
+## GitOps verfiy Pipeline
+
 
 ## Post Deploy Smoke Tests
 
