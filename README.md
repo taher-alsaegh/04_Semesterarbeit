@@ -741,7 +741,7 @@ Wir initialisieren eine interne CA mit einem self-signed Issuer, erzeugen daraus
 
 Der Cert-Manager ist zwingend nötig, um das Zertifikat automatisiert über Kubnernetes zu erstellen. Ausserdem ist dieser Zuständig für die Erneuerung des Zertifikats und sichert die TLS Datei unter den Secrets. Ohne Cert-Manager müsste man bei jeder Änderung manuell ein neues Cert über OpenSSL erzeugen und es zu den secrets hinzufügen.
 
-###### Installation
+###### Installation
 
 In diesem Schritt wird ein zusätzlicher namespace für den Cert-Manager angelegt und anschliessend über helm installiert.
 
@@ -821,11 +821,45 @@ spec:
     kind: ClusterIssuer
 ```
 
+Der Status kann wie auf dem Bild leicht zu erkennen, abgefragt werden.
 
 ![cert-secret](image/cert-secret.png)
 
 
 #### Ingress
+
+Da die Anwendung nicht mehr über localhost erreicht werden soll, sondern über einen lokalen Host-Eintrag und HTTPS, benötigt es hier einen Ingress. Bisher hat es bis zum Layer 4 TCP/IP gereicht, um mit einem Port-Forwarding auf die Applikation zuzugreifen. Mit dem TLS und dem HTTP protokoll kann der Service nichts mehr anfangen.
+
+Aus diesem Grund muss ein Ingress implementiert werden, der das TLS Zertifikat ausliest und auf HTTPS terminiert.
+```yml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dsvpwa
+  namespace: dsvpwa
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  tls:
+    - hosts:
+        - dsvpwa.local
+      secretName: dsvpwa-tls
+  rules:
+    - host: dsvpwa.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dsvpwa
+                port:
+                  number: 65413
+```
+
+Damit die Applikation nicht über localhost angesteuert werden muss, wird zusätzlich ein Host-Eintrag gemacht, sodass die Seite über https://dsvpwa.local zugegriffen werden kann.
+
+![hostentry](image/hostentry.png)
 
 ## Daily DAST Pipeline
 
