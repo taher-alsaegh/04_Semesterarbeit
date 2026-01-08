@@ -660,6 +660,8 @@ Mit `kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.dat
 
 Als Kubernets Manifest File versteht man oft Mals ein YAML oder JSON Datei, die den gewünschten Status des Kubernets Objekts darstellen soll. Ein K8s Objekt kann ein Deployment, ReplicaSet, Service usw. sein. Manifest Files definieren die Spezifikationen des Objekts, wie deren Metadata, Eigenschaften oder Zustand in einem deklarativen Ansatz.  
 
+Alle Manifest Files werden im GitOps Repo unter der `main` branch abgelegt.
+
 #### Deployment
 
 Das Deployment ist Zuständig dafür, dass die Pods/Container in dem gewünschten Zustand laufen.
@@ -828,7 +830,7 @@ Der Status kann wie auf dem Bild leicht zu erkennen, abgefragt werden.
 
 #### Ingress
 
-Da die Anwendung nicht mehr über localhost erreicht werden soll, sondern über einen lokalen Host-Eintrag und HTTPS, benötigt es hier einen Ingress. Bisher hat es bis zum Layer 4 TCP/IP gereicht, um mit einem Port-Forwarding auf die Applikation zuzugreifen. Mit dem TLS und dem HTTP protokoll kann der Service nichts mehr anfangen.
+Da die Anwendung nicht mehr über localhost erreicht werden soll, sondern über einen lokalen Host-Eintrag und HTTPS, benötigt es hier einen Ingress. Bisher hat es bis zum OSI-Layer 4 gereicht, um mit einem Port-Forwarding mittels TCP/IP auf die Applikation zuzugreifen. Mit dem TLS und dem HTTP protokoll kann der Service nichts mehr anfangen.
 
 Aus diesem Grund muss ein Ingress implementiert werden, der das TLS Zertifikat ausliest und auf HTTPS terminiert.
 ```yml
@@ -857,7 +859,7 @@ spec:
                   number: 65413
 ```
 
-Damit die Applikation nicht über localhost angesteuert werden muss, wird zusätzlich ein Host-Eintrag gemacht, sodass die Seite über https://dsvpwa.local zugegriffen werden kann.
+Damit die Applikation nicht über localhost angesteuert werden muss, wird zusätzlich ein Host-Eintrag gemacht, sodass die Seite über https://dsvpwa.local aufgerufen werden kann.
 
 ![hostentry](image/hostentry.png)
 
