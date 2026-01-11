@@ -864,6 +864,101 @@ Damit die Applikation nicht über localhost angesteuert werden muss, wird zusät
 ![hostentry](image/hostentry.png)
 
 ## Daily DAST Pipeline
+Dynamic Application Security Testing (DAST) bezeichnet Sicherheitstests, die gegen eine laufende Anwendung durchgeführt werden. Der Test erfolgt zur Laufzeit und simuliert das Verhalten eines externen Angreifers.
+
+DAST-Scanner behandeln die Anwendung als Blackbox. Das bedeutet, sie haben keinen Zugriff auf den Quellcode und interagieren ausschliesslich über öffentlich erreichbare Schnittstellen wie HTTP-Endpunkte oder Web-Oberflächen.
+Typische getestete Schwachstellen sind unter anderem SQL-Injection, XSS, Brute-Force etc. Das Ergebnis des Tests wird mit einem Raport festgehalten und veranschaulicht eine Zusammenfassung der erfolgten Angriffe.
+
+In dieser Arbeit kann DAST nicht auf die laufende Anwendung ausgeführt werden, da die Webapplikation von extern nicht erreichbar ist.
+Aus diesem Grund wird das Image aktuelle Image verwendet und so auf Schwachstellen geprüft.
+
+Der Test läuft jeden Tag, um ca. 05:00 MEZ ab und ist mit einem cron job eingerichtet. Ausserdem läuft der Test bei jedem commit auf dev erneut ab. Sommit kann der Entwickler den Test-Raport vor der Veröffentlichung der Version einsehen.
+
+```yaml
+name: Daily DAST (OWASP ZAP)
+
+on:
+  push:
+    branches: [dev]
+  schedule:
+    - cron: "0 4 * * *"   # UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  packages: read
+```
+
+In diesem Teil wird das Image von der Container Registry gepullt. Anschliessend wird der Container gestartet und mit einem for loop geprüft, ob die Anwedung bereit ist. Mit einer erfolgreichen HTTP-Antwort wird nun der weitere Teil der Pipeline abfolgen.
+
+```yml
+jobs:
+  zap:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE: ghcr.io/${{ github.repository_owner }}/dsvpwa:latest
+      TARGET: http://127.0.0.1:65413
+
+    steps:
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull image
+        run: docker pull "${IMAGE}"
+
+      - name: Run app container
+        run: |
+          docker rm -f dsvpwa 2>/dev/null || true
+          docker run -d --rm --name dsvpwa \
+            -p 65413:65413 \
+            -e DSVPWA_PORT=65413 \
+            "${IMAGE}"
+
+          for i in {1..30}; do
+            curl -fsS "${TARGET}" >/dev/null && exit 0
+            sleep 2
+          done
+
+          echo "App did not become ready. Logs:"
+          docker logs dsvpwa || true
+          exit 1
+
+```
+Nun wird der full scan vom ZAP (Zed Attack Proxy) durchgeführt. Auch hier wird ein Container hochgefahren und auf unser localhost-Targen referenziert. Alle Test-Angriffe werden auf die in der Pipeline definierten TARGET-Adresse durchgeführt.
+Am Ende des Tests wird ein Raport als ZIP-Datei beigefügt.
+
+```yml
+      - name: ZAP full scan (active)
+        run: |
+          set +e
+          docker run --rm --network host --user 0:0 \
+            -v ${{ github.workspace }}:/zap/wrk \
+            ghcr.io/zaproxy/zaproxy:stable \
+            zap-full-scan.py -t "${TARGET}" -r zap-full.html -J zap-full.json
+          echo "ZAP exit code: $?"
+          exit 0
+
+      - name: List reports
+        if: always()
+        run: ls -la
+
+      - name: Upload ZAP reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap-report
+          path: |
+            zap-full.html
+            zap-full.json
+
+      - name: Stop app
+        if: always()
+        run: docker stop dsvpwa || true
+```
 
 ## GitOps verfiy Pipeline
 
