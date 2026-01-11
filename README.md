@@ -962,6 +962,103 @@ Am Ende des Tests wird ein Raport als ZIP-Datei beigefügt.
 
 ## GitOps verfiy Pipeline
 
+Nun soll nach jeder Versionänderung (nach jedem Merge von dev -> main) die Version auf den Manifest Files angepasst werden, damit der K8s Cluster auf der aktuellen Version läuft. Um diese Idee umzusetzen benötigen wir eine weitere Pipeline, die bei jdedem Merge auf main getriggert wird und die Versionsüberprüfung durchführt und unter dem Manifest File im Gitops Repo aktuallisiert.
+
+Im folgenden Abschnitt der Pipeline wird das aktulle DSVPWA Repo geklont und im nächsten Schritt werden die git tags mit dem remote repo gefetched. Anschliessend wird die aktuellste Version als Variabel gespeichert. Mit einem conditional statement wird der Tag auf die Semantik überprüft. Im lezten Teil des runs wird die Version auf die GitHub Variabel weitergeleitet, damit im späteren Ablauf darauf zugegriffen werden kann.
+
+```yml
+name: Auto-update GitOps image version via PR
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  bump-gitops:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout app repo (tags)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine latest semver tag (vX.Y.Z)
+        id: latest
+        shell: bash
+        run: |
+          git fetch --tags --force
+          TAG="$(git tag -l 'v*.*.*' --sort=-v:refname | head -n1)"
+          if [ -z "$TAG" ]; then
+            echo "No semver tags found (vX.Y.Z)."
+            exit 1
+          fi
+          VER="${TAG#v}"
+          echo "ver=$VER" >> "$GITHUB_OUTPUT"
+          echo "Latest version: $VER"
+```
+
+Zunächst wird das `deployment.yml` file ermittelt. Anschliessend wird mit `sed` die neue version ersetzt. `([^@[:space:]]+)` definert den aktuellen tag. `(@sha256:[a-f0-9]+)?` soll ebenfalls beachtet werden, falls das Image weder dev oder einen Versions tag hat. @sha256 bezieht sich auf das spezifische Image im GHCR.
+
+`grep -nE '^\s*image:\s*' "$FILE" || true` gibt die Zeilennummer retour, von wo die Änderung gemacht wird. Im letzten Teil wird abgefangen, ob es überhaupt eine Änderung an der Datei gegeben hat.
+```yml
+          
+      - name: Checkout GitOps repo
+        uses: actions/checkout@v4
+        with:
+          repository: taher-alsaegh/dsvpwa-gitops
+          ref: main
+          path: gitops
+          token: ${{ secrets.GITOPS_TOKEN }}
+
+      - name: Update image tag in GitOps deployment
+        id: patch
+        shell: bash
+        run: |
+          FILE="gitops/k8s/deployment.yml"
+          if [ ! -f "$FILE" ]; then
+            echo "GitOps deployment not found at $FILE"
+            exit 1
+          fi
+
+          VER="${{ steps.latest.outputs.ver }}"
+
+          # Ersetzt :<tag> und entfernt optional @sha256:
+          sed -i -E "s|(image:\s*ghcr\.io/[^[:space:]]+/dsvpwa:)[^@[:space:]]+(@sha256:[a-f0-9]+)?|\1${VER}|g" "$FILE"
+
+          echo "New image line:"
+          grep -nE '^\s*image:\s*' "$FILE" || true
+
+          if git -C gitops diff --quiet; then
+            echo "No change needed."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+```
+In diesem Bereich des Codes wird sichergestellt, dass die Änderung mittels PR und einem sauberen Kommentar ausgeführt wird.
+
+```yml
+      - name: Create Pull Request in GitOps repo
+        if: steps.patch.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITOPS_TOKEN }}
+          path: gitops
+          commit-message: "gitops: update dsvpwa image to ${{ steps.latest.outputs.ver }}"
+          branch: "update-dsvpwa-${{ steps.latest.outputs.ver }}"
+          delete-branch: true
+          title: "gitops: update dsvpwa image to ${{ steps.latest.outputs.ver }}"
+          body: |
+            Auto-generated update after merge to main in app repo.
+            - sets image tag to `${{ steps.latest.outputs.ver }}`
+            - keeps GitOps in sync with latest release
+          base: main
+```
 
 ## Post Deploy Smoke Tests
 
