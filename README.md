@@ -960,7 +960,7 @@ Am Ende des Tests wird ein Raport als ZIP-Datei beigefügt.
         run: docker stop dsvpwa || true
 ```
 
-## GitOps verfiy Pipeline
+## GitOps Image verification Pipeline
 
 Nun soll nach jeder Versionänderung (nach jedem Merge von dev -> main) die Version auf den Manifest Files angepasst werden, damit der K8s Cluster auf der aktuellen Version läuft. Um diese Idee umzusetzen benötigen wir eine weitere Pipeline, die bei jdedem Merge auf main getriggert wird und die Versionsüberprüfung durchführt und unter dem Manifest File im Gitops Repo aktuallisiert.
 
@@ -1060,7 +1060,27 @@ In diesem Bereich des Codes wird sichergestellt, dass die Änderung mittels PR u
           base: main
 ```
 
-## Post Deploy Smoke Tests
+## Testing
+
+#### 1. Test: Security Scan & Image Build in Dev
+
+| Testfall               | Security Scan & Image Build in Dev                                                                                                                                                                                                                                                                                    |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Testbeschreibung       | 1. Pipeline durchläuft den Security und Image Build Teail in der dev branch                                                                                                                                                                                                                                           |
+| Erwartets Ergebnis     | Die Pipeline wird durch einen Commit getriggert. Dabei soll zunächst der SAST & SCA Scan durchlaufen und anschliessend das Image mit dem dev tag gebuildet werden. Am Ende läuft ein Image Security Scanner durch und prüft auf potenzielle Schwachstellen. Das Image wird in der Github Container Registry abgelegt. |
+| Tatsächliches Ergebnis | ![1768421521942](image/README/1768421521942.png)                                                                                                                                                                                                                                                                      |
+| Status                 | Erfolgreich                                                                                                                                                                                                                                                                                                           |
+
+#### 2. Test: Image Build in Main
+
+#### 3. Test: Daily DAST Job
+
+#### 4. Test: K8s Setup
+
+#### 5. Test: Automated Image verification
+
+
+
 
 # Einführungsphase
 
