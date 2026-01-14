@@ -1066,20 +1066,46 @@ In diesem Bereich des Codes wird sichergestellt, dass die Änderung mittels PR u
 
 | Testfall               | Security Scan & Image Build in Dev                                                                                                                                                                                                                                                                                    |
 | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Testbeschreibung       | 1. Pipeline durchläuft den Security und Image Build Teail in der dev branch                                                                                                                                                                                                                                           |
+| Testbeschreibung       | 1. Pipeline durchläuft den Security Scan und Image Build Teail in der dev branch                                                                                                                                                                                                                                           |
 | Erwartets Ergebnis     | Die Pipeline wird durch einen Commit getriggert. Dabei soll zunächst der SAST & SCA Scan durchlaufen und anschliessend das Image mit dem dev tag gebuildet werden. Am Ende läuft ein Image Security Scanner durch und prüft auf potenzielle Schwachstellen. Das Image wird in der Github Container Registry abgelegt. |
-| Tatsächliches Ergebnis | ![1768421521942](image/README/1768421521942.png)                                                                                                                                                                                                                                                                      |
+| Tatsächliches Ergebnis | ![result_ci-dev](image/result_ci-dev.png) [GHCR](https://github.com/taher-alsaegh/DSVPWA/pkgs/container/dsvpwa)                                                                                                                                                                                                                                                                       |
 | Status                 | Erfolgreich                                                                                                                                                                                                                                                                                                           |
 
-#### 2. Test: Image Build in Main
+#### 2. Test: Image Build mit Version Tag
 
-#### 3. Test: Daily DAST Job
+| Testfall               | Image Build mit Version Tag                                                                                                                                                                                                                                                                        |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Testbeschreibung       | Image mit korrektem Versionstag wird erstellt und in der Container Registry abgelegt                                                                                                                                                                                                               |
+| Erwartets Ergebnis     | Der `git push origin tag vx.x.x` Befehl triggert die CI Pipeline und erstellt das neue Image mit der korrekten Versionierung. Die Pipeline ignoriert die zuvor durchlaufenen Steps, die nach einem commit in dev getriggert werden, um so unnötige Wiederholungen zu vermeiden und Zeit zu sparen. |
+| Tatsächliches Ergebnis | ![result_ci-main](image/result_ci-main.png) [GHCR](https://github.com/taher-alsaegh/DSVPWA/pkgs/container/dsvpwa)                                                                                                                                                                                                                                             |
+| Status                 | Erfolgreich                                                                                                                                                                                                                                                                                        |
 
-#### 4. Test: K8s Setup
+#### 3. Test: Automated Image verification
 
-#### 5. Test: Automated Image verification
+| Testfall               | Automated Image verification                                                                                                                                                                                                                                          |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Testbeschreibung       | Der Versionsstand des Images wird nach einem Merge durch die 2. Pipeline auf main geprüft und gegebenenfalls im K8s Deployment angepasst.                                                                                                                                                                                                                                                                      |
+| Erwartets Ergebnis     | Nachdem von dev auf main germerged wurde läuft die 2. Pipeline automatisch durch. Dabei wird der aktuelle Versionsstand im K8s Deployment File, falls nötig angepasst. Mit einem Refresh auf ArgoCD wird das neue Image via `RollingUpdate` Strategy Type ausgerollt. |
+| Tatsächliches Ergebnis | ![gitops_image_verification](image/gitops_image_verification.png)                                                                                                                                                  |
+| Status                 | Erfolgreich                                                                                                                                                                                                                                                           |
 
+#### 4. Test: Daily DAST Job
 
+| Testfall               | Automated Image verification                                                                                                                                                                                                                                          |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Testbeschreibung       | Die 3. Pipeline wird alle 24h automatisch angestossen und fürht den DAST Scann durch                                                                                                                                                                                                                                                                      |
+| Erwartets Ergebnis     | Jeweils um 05:00 morgens läuft der DAST job durch und erstellt einen Raport von allen ausgeführten Angriffen. |
+| Tatsächliches Ergebnis | ![dast](image/dast.png) ![dast-report](image/dast-report.png)                                                                                                                                             |
+| Status                 | Erfolgreich  
+
+#### 5. Test: K8s Setup
+
+ Testfall               | Automated Image verification                                                                                                                                                                                                                                          |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Testbeschreibung       | Kubernetes läuft über Minikube auf einer VM mit ArgoCD                                                                                                                                                                                                                                                           |
+| Erwartets Ergebnis     | Das Kubernetes Setup in Minikube läuft auf einer virtuellen Maschine und ist mit ArgoCD für den Deployment aufgerüstet. Alle Änderungen im GitOps Repository führen zu einer Zustandsveränderung im K8s Deployment. |
+| Tatsächliches Ergebnis | ![k8s-setup](image/k8s-setup.png)                                                                                                                                       |
+| Status                 | Erfolgreich  
 
 
 # Einführungsphase
