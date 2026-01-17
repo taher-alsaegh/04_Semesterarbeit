@@ -1112,6 +1112,18 @@ In diesem Bereich des Codes wird sichergestellt, dass die Änderung mittels PR u
 
 ## Fazit
 
+Im Rahmen dieser Semesterarbeit wurde eine vollständige und praxisnahe DevSecOps-Pipeline für eine containerbasierte Webanwendung konzipiert und technisch umgesetzt. Die Umsetzung erfolgt als Proof of Concept für ein fiktives Unternehmen und orientiert sich an realen industriellen Best Practices.
+
+Die zu Beginn formulierte Fragestellung:
+*Wie kann mithilfe von GitOps (Argo CD) und integrierten Sicherheitsprüfungen, wie Trivy, ein sicherer, reproduzierbarer und automatisierter Deployment-Prozess für containerisierte Webapplikationen in Kubernetes realisiert werden?*
+
+kann wie folgt beantwortet werden:
+
+Ein sicherer, reproduzierbarer und automatisierter Deployment-Prozess wird erreicht, indem Git als einzige Wahrheitsquelle (Single Source of Truth) genutzt wird und sämtliche Änderungen – sowohl am Anwendungscode als auch an der Kubernetes-Konfiguration – versioniert und nachvollziehbar erfolgen.
+Die Integration von Sicherheitsprüfungen direkt in die CI-Pipeline stellt sicher, dass potenzielle Schwachstellen frühzeitig erkannt werden. SAST- und SCA-Scans analysieren Quellcode und Abhängigkeiten bereits vor dem Build, während Trivy Container-Images auf bekannte Sicherheitslücken überprüft. Ergänzend dazu ermöglicht DAST mit OWASP ZAP die Analyse der Anwendung aus externer Angreiferperspektive, wodurch auch Konfigurations- und Laufzeitschwächen identifiziert werden können. Durch den Einsatz von versionierten Container-Images wird gewährleistet, dass Deployments reproduzierbar sind und Änderungen gezielt und kontrolliert ausgerollt werden. Die Trennung zwischen Applikations-Repository und GitOps-Repository erhöht zusätzlich die Sicherheit und Transparenz, da Deployments ausschliesslich über explizite Änderungen an den Manifest Dateien erfolgen.
+
+Zusammenfassend zeigt die Arbeit, dass die Kombination aus GitOps (Argo CD), automatisierten Sicherheitsprüfungen und Kubernetes-basierter Bereitstellung einen robusten, auditierbaren und skalierbaren Deployment-Prozess ermöglicht, der den Anforderungen moderner Cloud-nativer Anwendungen gerecht wird.
+
 ### Evaluation / Zielerreichung
 
 ## Reflexion
