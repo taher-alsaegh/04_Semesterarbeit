@@ -10,14 +10,14 @@ Im Rahmen meiner 4. Semesterarbeit an der Technischen Berufsschule Zürich soll 
 ### Ausgangslage & Motivation
 
 In der modernen Softwareentwicklung steigen die Anforderungen an Automatisierung, Sicherheit und Nachvollziehbarkeit entlang des gesamten Softwarebereitstellungsprozesses. Traditionelle CI/CD-Prozesse bieten zwar bereits eine gewisse Automatisierung, jedoch fehlt häufig eine integrierte Sicherheitsüberprüfung und eine vollständige Rückverfolgbarkeit von Änderungen bis in die Produktionsumgebung.
-Insbesondere bei containerisierten Anwendungen in Kubernetes-Clustern besteht das Risiko, dass unsichere oder veraltete Container-Images im Betrieb genutzt.
-Herkömmliche Deployments erfordern oftmals manuelle Eingriffe durch Entwickler oder Administratoren, was Fehleranfälligkeit begünstigen.
+Insbesondere bei containerisierten Anwendungen in Kubernetes-Clustern besteht das Risiko, dass unsichere oder veraltete Container-Images im Betrieb genutzt werden.
+Herkömmliche Deployments erfordern oftmals manuelle Eingriffe durch Entwickler oder Administratoren, was Fehleranfälligkeit begünstigt.
 
 Die fiktive Firma Kubinet AG betreibt mehrere containerisierte Webapplikationen in einem Kubernetes-Cluster.
-Der aktuelle Deployment-Prozess erfolgt manuell über ein klassisches CI/CD-System (Github Actions) ohne zentrale Sicherheitsprüfung oder automatische Validierung der Container-Images.
-Dadurch besteht die Gefahr, dass fehlerhafte oder unsichere Images deployed werden, was sowohl Compliance-Vorgaben als auch Betriebssicherheit gefährdet. Da das Unternehmen nun an weitere Kunden gewinnt, steigen gleichzeitig die Sicherheitsmassnahmen an und Anforderungen. Ziel ist es einen Shift Left zu erzielen um den automatisierten Security Ansatz so früh wie möglichst einzubringen.
+Der aktuelle Deployment-Prozess erfolgt manuell über ein klassisches CI/CD-System (GitHub Actions) ohne zentrale Sicherheitsprüfung oder automatische Validierung der Container-Images.
+Dadurch besteht die Gefahr, dass fehlerhafte oder unsichere Images deployed werden, was sowohl Compliance-Vorgaben als auch die Betriebssicherheit gefährdet. Da das Unternehmen nun weitere Kunden gewinnt, steigen gleichzeitig die Sicherheitsmassnahmen und Anforderungen. Ziel ist es, einen Shift Left zu erzielen, um den automatisierten Security-Ansatz so früh wie möglich einzubringen.
 
-Das Unternehmen möchte den Bereitstellungsprozess modernisieren, indem ein GitOps-basierter Workflow eingeführt wird, welcher Sicherheitsüberprüfungen, wie Trivy integriert, Deployments automatisiert (ArgoCD) und sämtliche Änderungen nachvollziehbar im Git-Repo dokumentiert.
+Das Unternehmen möchte den Bereitstellungsprozess modernisieren, indem ein GitOps-basierter Workflow eingeführt wird, welcher Sicherheitsüberprüfungen, wie Trivy oder Snyk, integriert, Deployments automatisiert (ArgoCD) und sämtliche Änderungen nachvollziehbar im Git-Repo dokumentiert.
 
 ### Product Vision
 
@@ -28,9 +28,9 @@ Die Product Vision beschreibt kurz und klar, wofür ein Produkt existiert und we
 
 ### Nicht Teil der Arbeit (Out of Scope)
 
-Das Erarbeiten der webbasierten Flask Applikation ist nicht Teil dieser Arbeit und wird daher nicht im Detail erläutert. Bestandteile wie, ERM, Sequenzdiagramm oder UML fallen hier weg, da diese Bereiche, den Rahmen der Arbeit sprengen würden und nicht im Vordergrund stehen.
+Das Erarbeiten der webbasierten Flask-Applikation ist nicht Teil dieser Arbeit und wird daher nicht im Detail erläutert. Bestandteile wie ERM, Sequenzdiagramm oder UML fallen hier weg, da diese Bereiche den Rahmen der Arbeit sprengen würden und nicht im Vordergrund stehen.
 
-Als Webapplikation wird stattdessen auf eine vulnerable Webapplikation zurückgeriffen. Damit können die Security Askpekte in der Arbeit realisitisch geprüft und nachverfolgt werden. Damn Vulnerable Web Application kurz _DVWA_ ist ein Penetration Testing Projekt, das bewusst Schwachstellen in der Anwendung aufweisst und für Cyber Security Studenten eine Spielwiese fürs Hacken bietet. In meiner Arbeit soll die Security-Chain auf folgendes DVWA durchlaufen und dadurch aufzeigen, welche Gefahren zu erkennen sind.
+Als Webapplikation wird stattdessen auf eine vulnerable Webapplikation zurückgegriffen. Damit können die Security-Aspekte in der Arbeit realistisch geprüft und nachverfolgt werden. Damn Vulnerable Web Application, kurz DVWA, ist ein Penetration-Testing-Projekt, das bewusst Schwachstellen in der Anwendung aufweist und für Cyber-Security-Studenten eine Spielwiese fürs Hacken bietet. In meiner Arbeit soll die Security-Chain auf folgende DVWA durchlaufen werden und dadurch aufzeigen, welche Gefahren zu erkennen sind.
 
 ## Projektmanagement
 
@@ -78,8 +78,8 @@ Im folgenden Abschnitt werden die Ziele dieser Semesterarbeit definiert. Ausgang
 
 ### IST-Analyse
 
-Aktuell werden containerisierte Applikationen häufig über klassische CI/CD-Pipelines bereitgestellt, die nur teilweise automatisiert sind und meist keine integrierten Sicherheitsmechanismen enthalten. Dadurch können fehlerhafte oder verwundbare Container-Images in produktionsnahe Umgebungen gelangen.
-In vielen Umgebungen fehlt eine klare Trennung zwischen Build-, Security- und Deployment-Schritten, und Deployments erfolgen teilweise manuell oder ohne konsequente Nachvollziehbarkeit.
+Aktuell werden containerisierte Applikationen häufig über klassische CI/CD-Pipelines bereitgestellt, die nur teilweise automatisiert sind und meist keine integrierten Sicherheitsmechanismen enthalten. Dadurch können fehlerhafte oder verwundbare Container-Images in produktionsnahe Umgebungen gelangen. 
+In vielen Umgebungen fehlt eine klare Trennung zwischen Build-, Security- und Deployment-Schritten, und Deployments erfolgen teilweise manuell oder ohne konsequente Nachvollziehbarkeit.In vielen Umgebungen fehlt eine klare Trennung zwischen Build-, Security- und Deployment-Schritten, und Deployments erfolgen teilweise manuell oder ohne konsequente Nachvollziehbarkeit.
 
 Die fiktive Firma Kubinet AG verwendet GitHub Actions als CI-Pipeline und führt Deployments in ein Kubernetes-Cluster aktuell ohne automatisierte Security-Gates und ohne GitOps-Prinzipien durch. Dadurch bestehen folgende Risiken:
 
@@ -98,53 +98,52 @@ Der Soll-Zustand beschreibt die gewünschte Zielarchitektur der Deployment-Pipel
 - Das System soll leicht erweiterbar und testbar sein, insbesondere für zukünftige Security-Integrationen.
 - Der PoC soll demonstrieren, dass sichere, reproduzierbare und nachvollziehbare Deployments mittels GitOps und DevSecOps erfolgreich umsetzbar sind.
 
-### SAMAT-Ziele
+### SMART-Ziele
 
 Ein SMART-Ziel ist eine Methode zur Zieldefinition, bei der ein Ziel anhand von fünf klaren Kriterien
 formuliert wird. Jeder Buchstabe des Wortes SMART steht für eines dieser Kriterien und hilft dabei,
 das Ziel konkret und überprüfbar zu beschreiben.
 
 - **Spezifisch**: Aufbau eines GitOps-basierten Deployment-Workflows inkl. Sicherheitsprüfungen.
-- **Messbar**: Deployment erfolgt über Kubernetes und die Sicherheitsanalyse ist durch das DVWA zu klar zu erkennen.
-- **Akzeptiert**: Ziele entsprechen den Vorgaben der Semesterarbeit und sind realistisch umsetzbar.
-- **Anspruchsvoll**: Integration mehrerer Tools (GitHub Actions, ArgoCD, Trivy, Kubernetes).
-- **Terminiert**: Umsetzung der Arbeit erfolgt in 3 Sprints und ist am 27.01.2026 abzugeben.
+- **Messbar**: Deployment erfolgt über Kubernetes, und die Sicherheitsanalyse ist durch die DVWA klar erkennbar.
+- **Akzeptiert**: Die Ziele entsprechen den Vorgaben der Semesterarbeit und sind realistisch umsetzbar.
+- **Anspruchsvoll**: Integration mehrerer Tools (GitHub Actions, ArgoCD, Trivy, Snyk, Kubernetes).
+- **Terminiert**: Die Umsetzung der Arbeit erfolgt in drei Sprints und ist am 27.01.2026 abzugeben.
 
 ## Abwicklungsziele
 
-Die Abwicklungsziele beschreiben die wesentlichen Merkmale des Projektweges, die zur Erreichung
-der Systemziele nötig sind. (B.Jenny, 2019, S. 132)
+Die Abwicklungsziele beschreiben die wesentlichen Merkmale des Projektweges, die zur Erreichung der Systemziele nötig sind. (B.Jenny, 2019, S. 132)
 
-Das Projekt wird nach der agilen Projektmanagementmethode Scrum umgesetzt. Es ist in drei Sprints unterteilt, die jeweils konkrete User-Stories beinhalten. Nach jedem Sprint liegt ein Zwischenstand des Projektes vor. Der Fortschritt wird durch Sprint-Reviews überprüft und mit Sprint Retrospektiven reflektiert und verbessert. Anforderungen und Aufgaben können während der Entwicklung angepasst oder verfeinert werden. Die Umsetzung erfolgt in Zyklen, wodurch Risiken frühzeitig erkannt und der Projekterfolg schrittweise gesichert wird.
+Das Projekt wird nach der agilen Projektmanagementmethode Scrum umgesetzt. Es ist in drei Sprints unterteilt, die jeweils konkrete User-Stories beinhalten. Nach jedem Sprint liegt ein Zwischenstand des Projekts vor. Der Fortschritt wird durch Sprint-Reviews überprüft und mit Sprint-Retrospektiven reflektiert und verbessert. Anforderungen und Aufgaben können während der Entwicklung angepasst oder verfeinert werden. Die Umsetzung erfolgt in Zyklen, wodurch Risiken frühzeitig erkannt und der Projekterfolg schrittweise gesichert wird.
 
 ### Definition of Done (DoD)
 
-Die Definition of Done (DoD) beschreibt eine klare Vereinbarung innerhalb des Teams, welche
-Kriterien erfüllt sein müssen, damit das Product Backlog Item oder ein Sprint als fertig gilt. (Gärtner, 2020)
+Die Definition of Done (DoD) beschreibt eine klare Vereinbarung innerhalb des Teams, welche Kriterien erfüllt sein müssen, damit ein Product-Backlog-Item oder ein Sprint als fertig gilt (Gärtner, 2020).
 
-In den unten beschriebenen Punkten werden die nötigen Schritte definiert, welche dafür sorgen, dass
-dieses Projekt als erledigt gilt. Neben den Akzeptanzkriterien, die jeweils in den User-Stories definiert
-sind, gilt die DoD generell zur Erledigung des Projekts.
+In den unten beschriebenen Punkten werden die nötigen Schritte definiert, die dafür sorgen, dass dieses Projekt als erledigt gilt. Neben den Akzeptanzkriterien, die jeweils in den User-Stories definiert sind, gilt die DoD generell für die Erledigung des Projekts.
 
 - **Inhaltliche Vollständigkeit**: Alle beschriebenen Anforderungen der Story oder Aufgabe wurden umgesetzt.
 - **Dokumentation erstellt oder aktualisiert:**: Relevante Inhalte sind in der Semesterarbeit, im Architekturdiagramm oder in technischen Dokumenten nachvollziehbar dokumentiert.
-- **Zeremonien eingehalten**: Alle in SCRUM beinhalteten Zeremonien sind eingeplant und werden durgefürht.
+- **Zeremonien eingehalten**: Alle in Scrum beinhalteten Zeremonien sind eingeplant und werden durchgeführt.
 - **Qualitätsanforderungen eingehalten**: Verständliche Formulierung, korrekte Struktur und keine Rechtschreib- oder Grammatikfehler.
-- **Testing durchgeführt**: Die Implemtierung ist erfolgreich getestet und läuft durch alle CI/CD Steps durch.
+- **Testing durchgeführt**: Die Implementierung ist erfolgreich getestet und läuft durch alle CI/CD-Steps durch.
 
 ### Meilensteine
 
 1. Meilenstein: Initialisierungsphase
    Ziel: Projektstart, Definition von Zielen, Rahmenbedingungen und Rollen
    Erledigt: XX
+
 2. Meilenstein: Konzeptionsphase
-   Ziel: Ausarbeitung der Systemarchitektur, Schnittstellen, Ressourcen- und Risikoplanung
+   Ziel: Ausarbeitung der Systemarchitektur, Schnittstellen sowie Ressourcen- und Risikoplanung
    Erledigt: XX
+
 3. Meilenstein: Realisierungsphase
-   Ziel: Technsiche Umsetzung des GitOps-Workflows, Deployment auf K8s, Security Tests und Validation sicherstellen
+   Ziel: Technische Umsetzung des GitOps-Workflows, Deployment auf Kubernetes sowie Sicherstellung von Security-Tests und Validierung
    Erledigt: XX
+
 4. Meilenstein: Einführungsphase
-   Ziel: Fazit, Reflextion, Lessons Learned,
+   Ziel: Fazit, Reflexion, Lessons Learned
    Erledigt: XX
 
 ### Story Point Schätzung
@@ -194,11 +193,11 @@ Als Table mit den Stories/Tasks und Akzepttanzkriterien
 
 ## Anforderungsdefinition
 
-Eine Anforderung beschreibt die Eigenschaften oder Leistungen, welches von einem Produkt erwartet wird, um den End-Benutzer zufrieden zu stellen. (Rohde & Pfetzing, 2020, S. 171)
+Eine Anforderung beschreibt die Eigenschaften oder Leistungen, die von einem Produkt erwartet werden, um den Endbenutzer zufriedenzustellen (Rohde & Pfetzing, 2020, S. 171).
 
-In der unteren Grafik ist ein Anforderungsportfolio zu erkennen, welches die Prioritäten aller Anforderungen visuell veranschaulicht. Die Anforderungen werden als funktional und nicht-funktional unterschieden. Funktionale Anforderungen beschreiben die konkreten Anforderungen ans System, wie beispeilsweise Kernfunktionen des Produkts. Nicht funktionale Anforderungen beschreiben sogenante Qualitätsmerkmale, wie gut oder uneter welchen Bedingungen das System funktionert. Jede Anforderung ist mit einer Nummer vermerkt und ist der Priorisierung im Gitter entsprechend zugeordnet.
+In der unteren Grafik ist ein Anforderungsportfolio zu erkennen, welches die Prioritäten aller Anforderungen visuell veranschaulicht. Die Anforderungen werden in funktionale und nicht-funktionale Anforderungen unterschieden. Funktionale Anforderungen beschreiben die konkreten Anforderungen an das System, wie beispielsweise die Kernfunktionen des Produkts. Nicht-funktionale Anforderungen beschreiben sogenannte Qualitätsmerkmale, wie gut oder unter welchen Bedingungen das System funktioniert. Jede Anforderung ist mit einer Nummer vermerkt und der Priorisierung im Gitter entsprechend zugeordnet.
 
-Die Grafik teilt uns mit, dass die Anforderungen für den Kunden eine grosse Beduetung für den Nutzen beiträgt und das Projekt mittelschwer umsetzbar ist. Somit veranschaulicht uns die Grafik den Nutzen und Ertrag des gesamten Projekts und eine Einschätzung der Machbarkeit, die während der Arbeit durch Prioritäten unterschieden wird.
+Die Grafik zeigt, dass die Anforderungen für den Kunden eine grosse Bedeutung für den Nutzen haben und das Projekt mittelschwer umsetzbar ist. Somit veranschaulicht die Grafik den Nutzen und Ertrag des gesamten Projekts sowie eine Einschätzung der Machbarkeit, die während der Arbeit durch Prioritäten unterschieden wird.
 
 ![Anforderungsportfolio](image/anforderungsportfolio.drawio.png)
 
@@ -210,7 +209,6 @@ Hier ist die Auflistung aller funktionalen Anforderungen:
 - Erstellen der CI/CD Pipeline
 - Deployment mittels ArgoCD auf Kubnernetes
 - Security Integration implementieren
-- Secrets & RBAC realisieren als Least Privilege Ansatz
 - Testing
 
 ### Nicht-funktionale Anforderungen
@@ -233,29 +231,29 @@ Im folgenden Abschnitt werden die wichtigsten Begriffe kurz und präzise erläut
 
 Ziel von CI/CD, kurz für Continuous Integration und Continuous Delivery/Deployment, ist die Optimierung und Beschleunigung des Softwareentwicklungs-Lifecycles.
 
-Continuous Integration (CI) bezieht sich auf die Praktik, Codeänderungen automatisch und regelmässig in ein gemeinsames Quellcode-Repository zu integrieren. Continuous Delivery und/oder Continuous Deployment (CD) ist ein zweiteiliger Prozess, der die Integration, das Testen und die Bereitstellung der Codeänderungen umfasst. Continuous Delivery beinhaltet kein automatisches Produktiv-Deployment, während beim Continuous Deployment Update-Releases automatisch in die Produktivumgebung übergeben werden. [Quelle](https://www.redhat.com/de/topics/devops/what-is-ci-cd)
+Continuous Integration (CI) bezieht sich auf die Praxis, Codeänderungen automatisch und regelmässig in ein gemeinsames Quellcode-Repository zu integrieren. Continuous Delivery und/oder Continuous Deployment (CD) ist ein zweiteiliger Prozess, der die Integration, das Testen und die Bereitstellung der Codeänderungen umfasst. Continuous Delivery beinhaltet kein automatisches Produktiv-Deployment, während beim Continuous Deployment Update-Releases automatisch in die Produktivumgebung übergeben werden. [Quelle](https://www.redhat.com/de/topics/devops/what-is-ci-cd)
 
 ### Kubnernetes
 
-Das Ziel von Kubernetes, kurz K8s ist die Automatisierung und Vereinfachung der Bereitstellung, Skalierung und Verwaltung von containerisierten Anwendungen über mehrere Computer hinweg.
+Das Ziel von Kubernetes, kurz K8s, ist die Automatisierung und Vereinfachung der Bereitstellung, Skalierung und Verwaltung von containerisierten Anwendungen über mehrere Computer hinweg.
 
 Kubernetes ist eine portable, erweiterbare Open-Source-Plattform zur Verwaltung von containerisierten Arbeitslasten und Services, die sowohl die deklarative Konfiguration als auch die Automatisierung erleichtert. [Quelle](https://kubernetes.io/de/docs/concepts/overview/what-is-kubernetes/)
 
 ### ArgoCD
 
-Argo CD ist ein deklaratives CD-Tool (Continuous Delivery) für Kubernetes. Sie können es als eigenständiges Tool oder als Teil Ihres CI/CD-Workflows einsetzen, um Ihren Clustern die erforderlichen Ressourcen bereitzustellen.
+Argo CD ist ein deklaratives CD-Tool (Continuous Delivery) für Kubernetes. Du kannst es als eigenständiges Tool oder als Teil deines CI/CD-Workflows einsetzen, um deinen Clustern die erforderlichen Ressourcen bereitzustellen.
 
-Damit das Management Ihrer Infrastruktur- und Anwendungskonfigurationen auf GitOps abgestimmt werden kann, muss Ihr Git Repository die Single Source of Truth sein. Der gewünschte Zustand Ihres Systems sollte ein versionierter, deklarativ definierter Zustand sein, der automatisch abgerufen wird. Hier kommt Argo CD ins Spiel. [Quelle](https://www.redhat.com/de/topics/devops/what-is-argocd)
+Damit das Management deiner Infrastruktur- und Anwendungskonfigurationen auf GitOps abgestimmt werden kann, muss dein Git-Repository die Single Source of Truth sein. Der gewünschte Zustand deines Systems sollte ein versionierter, deklarativ definierter Zustand sein, der automatisch abgerufen wird. Hier kommt Argo CD ins Spiel. [Quelle](https://www.redhat.com/de/topics/devops/what-is-argocd)
 
 ### DevSecOps
 
-DevSecOps steht für „Development, Security and Operations“. Es ist ein Ansatz für Unternehmenskultur, Automatisierung und Plattformdesign, bei dem die Sicherheit als eine gemeinsame Verantwortung im gesamten IT-Lifecycle integriert ist.
+DevSecOps steht für „Development, Security and Operations“. Es ist ein Ansatz für Unternehmenskultur, Automatisierung und Plattformdesign, bei dem die Sicherheit als gemeinsame Verantwortung im gesamten IT-Lifecycle integriert ist.
 
-Bei DevSecOps geht es nicht nur um die Entwicklungs- und Operations-Teams. Wenn Sie die Agilität und Reaktionsfähigkeit von DevOps vollständig ausschöpfen möchten, muss auch die IT-Sicherheit im gesamten Lifecycle Ihrer Apps integriert sein. [Quelle](http://redhat.com/de/topics/devops/what-is-devsecops)
+Bei DevSecOps geht es nicht nur um die Entwicklungs- und Operations-Teams. Wenn du die Agilität und Reaktionsfähigkeit von DevOps vollständig ausschöpfen möchtest, muss auch die IT-Sicherheit im gesamten Lifecycle deiner Apps integriert sein. [Quelle](http://redhat.com/de/topics/devops/what-is-devsecops)
 
 ### GtiHub Actions
 
-GitHub Actions ist eine Plattform für Continuous Integration und Continuous Delivery (CI/CD), mit der du deine Build-, Test- und Bereitstellungspipeline automatisieren kannst. Du kannst Workflows erstellen, mit denen du alle Pull Requests für dein Repository erstellen und testen sowie gemergte Pull Requests für die Produktion bereitstellen kannst. [Quelle](http://docs.github.com/de/actions/get-started/understand-github-actions)
+GitHub Actions ist eine Plattform für Continuous Integration und Continuous Delivery (CI/CD), mit der du deine Build-, Test- und Bereitstellungspipeline automatisieren kannst. Du kannst Workflows erstellen, mit denen du alle Pull Requests für dein Repository erstellst und testest sowie gemergte Pull Requests für die Produktion bereitstellst. [Quelle](http://docs.github.com/de/actions/get-started/understand-github-actions)
 
 ## Systemgrenzen
 
@@ -270,47 +268,46 @@ Ein System ist im organisatorischen Sinn eine gegenüber der Umwelt abgegrenzte 
 | IS  | Definition                                                                                                                          |
 | :-- | :---------------------------------------------------------------------------------------------------------------------------------- |
 | IS1 | Die Kubnerentes Manifest Files sind auf Github abgelegt. Damit ist sichergestellt das der Code einheitlich und zentral abgelegt ist |
-| IS2 | Der Kubnernetes Cluster wird über Argo CD deployed                                                                                 |
-| IS3 | Das Docker Image wird in der CI Pipeline auf Schwachstellen und Sicherheitslücken geprüft                                         |
-| IS4 | Die Security Features werden auf die Web-Applikation angewendet und prüft die App auf Herz und Nieren                              |
-| IS5 | Der GitHub Workflow ist in GitHub zentral abgelegt und steuert die Ausführung der CI Pipeline                                      |
+| IS2 | Der Kubnernetes Cluster wird über Argo CD deployed                                                                                  |
+| IS3 | Das Docker Image wird in der CI Pipeline auf Schwachstellen und Sicherheitslücken geprüft                                           |
+| IS4 | Die Security Features werden auf die Web-Applikation angewendet und prüft die App auf Herz und Nieren                               |
+| IS5 | Der GitHub Workflow ist in GitHub zentral abgelegt und steuert die Ausführung der CI Pipeline                                       |
 | IS6 | Argo CD ist mit dem GitHub Repo verlinkt. Nur so kann ein sauberer GitOps Prozess funktionieren                                     |
 | IS7 | Der Quellcode der Web-Applikation ist im GitHub Repo abgelegt                                                                       |
-| IS8 | Die Applikation läuft schlussendlich auf einem Kubnernets Cluster                                                                  |
+| IS8 | Die Applikation läuft schlussendlich auf einem Kubnernets Cluster                                                                   |
 
 #### Externe-Schnittstellen
 
-| ES  | Definition                                                                                                                      |
-| :-- | :------------------------------------------------------------------------------------------------------------------------------ |
+| ES  | Definition                                                                                                                    |
+| :-- | :---------------------------------------------------------------------------------------------------------------------------- |
 | ES1 | Die aus dem Internet bezogene Applikation bietet eine Dokumentation an, welche für die hier verwendete Weiterarbeit nötig ist |
-| ES2 | Alle Security Tests von Drittanbietern werden auf die Webapplikaton angewendet                                                  |
-| ES3 | Die Security Tests beinhalten die bereits implemtierten Security Features, welche zuvor in der CI Pipeline definiert sind       |
-| ES4 | Argo CD läuft lokal auf dem Computer                                                                                           |
-| ES5 | Kubernetes wird lokal mittels minikube ausgerollt                                                                               |
-| ES6 | Der Endbenutzer kann die Applikation nutzen und erkennt dabei die Schwachstellen                                                |
-| ES7 | Die Securtiy Features werden vollständig dokumentiert                                                                          |
+| ES2 | Alle Security Tests von Drittanbietern werden auf die Webapplikaton angewendet                                                |
+| ES3 | Die Security Tests beinhalten die bereits implemtierten Security Features, welche zuvor in der CI Pipeline definiert sind     |
+| ES4 | Argo CD läuft lokal auf dem Computer                                                                                          |
+| ES5 | Kubernetes wird lokal mittels minikube ausgerollt                                                                             |
+| ES6 | Der Endbenutzer kann die Applikation nutzen und erkennt dabei die Schwachstellen                                              |
+| ES7 | Die Securtiy Features werden vollständig dokumentiert                                                                         |
 
 ## Ressourcen
 
-«Ressourcen sind nach DIN69902 Personal und Sachmittel, die zur von Vorgängen, Arbeitspaketen und Projekten benötigt werden. Sie können wiederholt oder nur einmal einsetzbar sein. Sie können in wert- oder Mengeneinheiten beschrieben und für einen Zeitpunkt oder Zeitraum disponiert werden.»
-(Rohde & Pfetzing, 2020, S.219)
+«Ressourcen sind nach DIN 69902 Personal und Sachmittel, die zur Durchführung von Vorgängen, Arbeitspaketen und Projekten benötigt werden. Sie können wiederholt oder nur einmal einsetzbar sein. Sie können in Wert- oder Mengeneinheiten beschrieben und für einen Zeitpunkt oder Zeitraum disponiert werden.»
+(Rohde & Pfetzing, 2020, S. 219)
 
 ### Ressourcenplanung
 
-Die Ressourcenplanung wird in nicht-verzehrbare und verzehrbare Einsatzmittel unterschieden. Die nicht-verzehrbare Mittel sind Personal und Sachmittel, welche nicht verbraucht werden, sondern eher in Leistungen und Dauer abgerechnet und eingeplant werden.
+Die Ressourcenplanung wird in nicht-verzehrbare und verzehrbare Einsatzmittel unterschieden. Die nicht-verzehrbaren Mittel sind Personal und Sachmittel, welche nicht verbraucht werden, sondern eher nach Leistungen und Dauer abgerechnet und eingeplant werden.
 
-Die verzehrbaren Einsatzmittel sind hingegen alle Materialien und auch Geldmittel, die während dem Projekt verbraucht werden. Bei diesen Mittel sind neben der Bereitstellung auch wichtig zu planen, wann und wie diese neu beschlaft werden können.
+Die verzehrbaren Einsatzmittel sind hingegen alle Materialien sowie Geldmittel, die während des Projekts verbraucht werden. Bei diesen Mitteln ist neben der Bereitstellung auch wichtig zu planen, wann und wie diese neu beschafft werden können.
 
 ### Nicht-verzehrbare Mittel
 
-- SCRUM Master
-- Product Owner
+- Scrum-Master
+- Product-Owner
 - Developer
 - Kubernetes (minikube)
 - ArgoCD
 - Computer
 - GitHub
-- SonarQube
 - Trivy
 - Snyk
 
@@ -330,24 +327,23 @@ Risikomanagement beschreibt die systematische Identifikation, Analyse, Bewertung
 
 | Nr. | Risiko                                           | Hauptursache                                                             | Erste Massnahme                              | Eintritt | Auswirkungen | Risikostufe |
 | :-- | ------------------------------------------------ | ------------------------------------------------------------------------ | -------------------------------------------- | -------- | ------------ | ----------- |
-| 1   | K8s falsch aufgesetzt                            | Deployments, RBAC, Secrets sind falsch konfiguriert                      | mit kubectl cmd troubleshooten               | Mittel   | Hoch         | Hoch        |
-| 2   | ArgoCD synchronisiert nicht (Out-of-Sync Fehler) | Fehlende Manifeste oder Berechtigung                                     | ArgoCD Logs prüfen                          | Hoch     | Hoch         | Hoch        |
-| 3   | CI-Pipeline schlägt unerwartet fehl             | Syntaxfehler, falsche Tags, Build-Fehler oder fehlende Secretes          | Pipeline schrittweise testen                 | Hoch     | Mittel       | Hoch        |
+| 1   | K8s falsch aufgesetzt                            | Deployments, Secrets sind falsch konfiguriert                            | mit kubectl cmd troubleshooten               | Mittel   | Hoch         | Hoch        |
+| 2   | ArgoCD synchronisiert nicht (Out-of-Sync Fehler) | Fehlende Manifeste oder Berechtigung                                     | ArgoCD Logs prüfen                           | Hoch     | Hoch         | Hoch        |
+| 3   | CI-Pipeline schlägt unerwartet fehl              | Syntaxfehler, falsche Tags, Build-Fehler oder fehlende Secretes          | Pipeline schrittweise testen                 | Hoch     | Mittel       | Hoch        |
 | 4   | Image Scanner blockiert Workflow Chain           | DVWA deployment wird blockiert, weil es voll mit Schwachstellen ist      | Schwellwerte richtig setzen                  | Hoch     | Niedrig      | Mittel      |
-| 5   | Zeitliche Verzögerungen                         | Implementierung & Planung dauert länger als geplant                     | Backlog reduzieren                           | Mittel   | Hoch         | Hoch        |
-| 6   | Technische Probleme                              | Unerwartete Probleme tauchen auf                                         | Ressourcen überprüfen & minikube reseten   | Hoch     | Mittel       | Hoch        |
-| 7   | Fehlende Dokumentation (nicht aktualisiert)      | Zu starker Fokus auf Realisierung als Dokumentation                      | Dokumentation als DoD überprüfen           | Mittel   | Mitel        | Mittel      |
-| 8   | Git Konfilikte                                   | Mehrere Developer arbeiten am gleichen Codeabschnitt                     | Häufig Mergen und kleine Branchen erstellen | Niedrig  | Mittel       | Mittel      |
+| 5   | Zeitliche Verzögerungen                          | Implementierung & Planung dauert länger als geplant                      | Backlog reduzieren                           | Mittel   | Hoch         | Hoch        |
+| 6   | Technische Probleme                              | Unerwartete Probleme tauchen auf                                         | Ressourcen überprüfen & minikube reseten     | Hoch     | Mittel       | Hoch        |
+| 7   | Fehlende Dokumentation (nicht aktualisiert)      | Zu starker Fokus auf Realisierung als Dokumentation                      | Dokumentation als DoD überprüfen             | Mittel   | Mitel        | Mittel      |
+| 8   | Git Konfilikte                                   | Mehrere Developer arbeiten am gleichen Codeabschnitt                     | Häufig Mergen und kleine Branchen erstellen  | Niedrig  | Mittel       | Mittel      |
 | 9   | Ausfall externer Dienste                         | GitHub ist nicht erreichbar                                              | Lokale Tests fortsetzen oder Doku verbessern | Niedirg  | Hoch         | Hoch        |
-| 10  | Unvollständiges Architekturdiagramm             | Zu ungenaue Vorbereitung des Architekur und fehlendes Check mit Dozenten | Architekturdiagramm überarbeiten            | Mittel   | Hoch         | Hoch        |
+| 10  | Unvollständiges Architekturdiagramm              | Zu ungenaue Vorbereitung des Architekur und fehlendes Check mit Dozenten | Architekturdiagramm überarbeiten             | Mittel   | Hoch         | Hoch        |
 
 ### Risikoportfolio
 
-Das Risikoportfolio veranschaulicht die Einflussgrössen der Risiken auf das gesamte Projekt hinweg. Sinn und Zweck ist es dabei eine Einschätzung, der Risikoherde bildlich darzustellen und die Abschätzung zwischen der Eintrittswahrscheinlichkeit und der Schadenshöhe beim Eintreffen des Risikos vorherzusehen.
-Aus dem Portfolio ist zu erkennen, dass die Risiken im Projekt mittel bis hoch eingeschätzt werden. Die vielen technischen Komponenten bilden eine grosse Abhängigkeit in Bezug der Umsetzung und Machbarkeit des Projkets.
+Das Risikoportfolio veranschaulicht die Einflussgrössen der Risiken auf das gesamte Projekt hinweg. Sinn und Zweck ist es dabei, eine Einschätzung der Risikoherde bildlich darzustellen und die Abschätzung zwischen der Eintrittswahrscheinlichkeit und der Schadenshöhe beim Eintreffen eines Risikos zu verdeutlichen.
+Aus dem Portfolio ist zu erkennen, dass die Risiken im Projekt mittel bis hoch eingeschätzt werden. Die vielen technischen Komponenten bilden eine grosse Abhängigkeit in Bezug auf die Umsetzung und Machbarkeit des Projekts.
 
 Des Weiteren zeigt das Portfolio, dass insbesondere technische Fehlkonfigurationen und Zeitverzug das grösste Risiko für den Projekterfolg darstellen. Diese Risiken müssen daher frühzeitig adressiert werden, um den erfolgreichen Abschluss des Proof of Concepts sicherzustellen.
-`<br>`
 
 ![Risikoportfolio](image/Risikoportfolio.drawio.png)
 
@@ -361,60 +357,58 @@ Des Weiteren zeigt das Portfolio, dass insbesondere technische Fehlkonfiguration
 ## Architekturdiagramm
 
 In meinem Architekturdiagramm wird dargestellt, wie der Security-GitOps-Workflow funktioniert und welche Komponenten daran beteiligt sind.
-Im Mittelpunkt stehen zwei Repositories, die den zentralen Ablauf steuern: Das Applikation-Repository für den Build-Stage und die Security-Prüfungen sowie das GitOps-Repository als „Single Source of Truth“ für den gewünschten Deployment-Zustand.
+Im Mittelpunkt stehen zwei Repositories, die den zentralen Ablauf steuern: das Applikation-Repository für den Build-Stage und die Security-Prüfungen sowie das GitOps-Repository als „Single Source of Truth“ für den gewünschten Deployment-Zustand.
 Über GitHub Actions werden Build und Security-Checks ausgeführt und anschliessend die Kubernetes-Manifeste im GitOps-Repository aktualisiert. ArgoCD überwacht das GitOps-Repository und synchronisiert Änderungen automatisiert in den Kubernetes-Cluster, wodurch die neue Version der Applikation ausgerollt wird.
 
-Der Best-Practice-Ansatz mit zwei separaten Repositories entspricht dem Prinzip der GitOps Manifest Segregation und bietet durch die konsequente Isolation des Deployment-Prozesses einen zusätzlichen Schutz.
-Durch diese Trennung kann das Deployment unabhängig vom aktuellen Zustand der Codebasis kontrolliert und nachvollziehbar gesteuert werden. Änderungen am Applikationscode führen somit nicht automatisch zu einem Deployment, sondern erst dann, wenn die Kubernetes-Manifeste im GitOps-Repository bewusst aktualisiert werden. Dadurch wird verhindert, dass jede kleinere Codeänderung unmittelbar einen Deployment-Prozess auslöst und es entsteht ein kontrollierter, stabiler und sicherer Bereitstellungsablauf.
+Der Best-Practice-Ansatz mit zwei separaten Repositories entspricht dem Prinzip der GitOps-Manifest-Segregation und bietet durch die konsequente Isolation des Deployment-Prozesses einen zusätzlichen Schutz.
+Durch diese Trennung kann das Deployment unabhängig vom aktuellen Zustand der Codebasis kontrolliert und nachvollziehbar gesteuert werden. Änderungen am Applikationscode führen somit nicht automatisch zu einem Deployment, sondern erst dann, wenn die Kubernetes-Manifeste im GitOps-Repository bewusst aktualisiert werden. Dadurch wird verhindert, dass jede kleinere Codeänderung unmittelbar einen Deployment-Prozess auslöst, und es entsteht ein kontrollierter, stabiler und sicherer Bereitstellungsablauf.
 
 ![GitOps Konzept](image/architekturFinal.png)
 
 ## Security Konzept
 
-Das Security Konzept beschreibt den "Shift Left" Ansatz, in dem das Nutzen von automatisierten Sicherheitstest im kompletten Bereitstellungsprozess integriert wird.
-Dabei ist zu beachten das sich die Test in SAST, SCA und DAST von einander Unterscheiden. Sinn und Zweck dieser Tests soll die Aufmerksamkeit gegenüber Sicherheitslücken darstellen und deren Wichtigkeit zur frühen Berreinigung im Etwicklungs und Bereitstellungsphasen.
+Das Security-Konzept beschreibt den „Shift-Left“-Ansatz, bei dem das Nutzen von automatisierten Sicherheitstests in den kompletten Bereitstellungsprozess integriert wird.
+Dabei ist zu beachten, dass sich die Tests in SAST, SCA und DAST voneinander unterscheiden. Sinn und Zweck dieser Tests ist es, die Aufmerksamkeit gegenüber Sicherheitslücken darzustellen und deren Wichtigkeit zur frühen Bereinigung in den Entwicklungs- und Bereitstellungsphasen hervorzuheben.
 
 ![Security Konzept](image/security_coneptdrawio.drawio.png)
 
-**Gitleaks**: Diese Funktion prüft bereits lokal beim Entwickler, ob Secrets eingecheckt wurden. Damit können ungewollte security breaches verhindert werden.
+**Gitleaks**: Diese Funktion prüft bereits lokal beim Entwickler, ob Secrets eingecheckt wurden. Damit können ungewollte Security Breaches verhindert werden.
 
-**SAST**: Static Application Security Testing ist eine Art, wie man die Code Basis auf Sicherheitslücken untersurcht, ohne dabei die Applikation laufen zu lassen. In meinem Konzept wird dabei mit Snyk die Code-Analyse durchgefürht. Hierbei sollen Angriffsmuster, wie XSS, Path Traversal etc. erkennt und alarmiert werden.
+**SAST**: Static Application Security Testing ist eine Methode, mit der die Codebasis auf Sicherheitslücken untersucht wird, ohne dabei die Applikation auszuführen. In meinem Konzept wird hierfür Snyk eingesetzt, um die Code-Analyse durchzuführen. Dabei sollen Angriffsmuster wie XSS, Path Traversal etc. erkannt und entsprechend alarmiert werden.
 
-**SCA**: In der Software Composition Analysis werden die verwendeten Bibliotheken auf Schwachstellen überprüft und dadurch können potenzielle Angriffe erkennbar gemacht werden. Die Schwachstellen sind mit CVE Nummern gekennzeichnet. Auch in diesem Teil wird auf Snyk zurückgegriffen, ausserdem wird zusächtzlich Trivy gebraucht, damit das gesamte Imgage nochmals auf Sicherheitslücken gesannt wird. Das Resultat soll im GitHub Repo ersichtlich werden.
+**SCA**: In der Software Composition Analysis werden die verwendeten Bibliotheken auf Schwachstellen überprüft, wodurch potenzielle Angriffe erkennbar gemacht werden. Die Schwachstellen sind mit CVE-Nummern gekennzeichnet. Auch in diesem Teil wird auf Snyk zurückgegriffen, zusätzlich wird Trivy eingesetzt, damit das gesamte Image nochmals auf Sicherheitslücken gescannt wird. Das Resultat soll im GitHub-Repository ersichtlich werden.
 
-**DAST**: Dynamic Application Security Testing bezeichnet Sicherheitstests an der laufenden Anwendung. Die Tests ähneln die einem Penetration Testers. Es werden verschiedene Angriffe auf das laufende System unternommen, um Schwachstellen zu erkennen.
-
-## Test Konzept
+**DAST**: Dynamic Application Security Testing bezeichnet Sicherheitstests an der laufenden Anwendung. Die Tests ähneln denen eines Penetration Testers. Es werden verschiedene Angriffe auf das laufende System durchgeführt, um Schwachstellen zu erkennen.
 
 # Realisierungsphase
 
 ## Repositories & Branching
 
-Zu aller Erst muss das DSVPWA Repository von [Gabor Seljan](https://github.com/sgabe/DSVPWA) erfolgreich geklont werden. Anschliessend bereiten wir unser zweites Repo vor, welches wir für unseren GitOps Workflow benötigen. Der Grund warum hier auf zwei verschiedene Repos referenziert wird, ist aus Best Practice Gründen zu verzeichnen. Die GitOps Manifest Segregation zielt dauraf hin, den Source Code von den K8s Files strikt zu trennen. Dadurch können veränderungen an der Applikation vorgenommen werden, ohne Einfluss auf das Deployment zu verursachen. [Quelle](https://gitopsecurity.com/gitOpsManifestSegregation)
+Zuallererst muss das DVSPWA-Repository von [Gabor Seljan](https://github.com/sgabe/DSVPWA) erfolgreich geklont werden. Anschliessend bereiten wir unser zweites Repository vor, welches wir für unseren GitOps-Workflow benötigen. Der Grund, warum hier auf zwei verschiedene Repositories referenziert wird, ist aus Best-Practice-Gründen zu verzeichnen. Die GitOps-Manifest-Segregation zielt darauf ab, den Source Code strikt von den Kubernetes-Files zu trennen. Dadurch können Veränderungen an der Applikation vorgenommen werden, ohne Einfluss auf das Deployment zu verursachen. [Quelle](https://gitopsecurity.com/gitOpsManifestSegregation)
 
 > - DSVPWA Repo: https://github.com/taher-alsaegh/DSVPW
 > - GitOps Repo: https://github.com/taher-alsaegh/dsvpwa-gitops
 
-Im DSVPWA Repo, wo sich auch der Source Code befindet, wird zusätzlich zur `main` branch eine `dev` branch erstellt. Dort wird wie im Architekturdiagramm zusehen, das Image gebaut und durchläuft die Sicherheitstests. Von dort aus wird das Image mit `dev getagged` und im GitHub Container Registry abgelegt (GHCR).
-In der `main` branch wird ausschliesslich der Daily DAST Security Test ausgefürht.
+Im DSVPWA-Repository, in dem sich auch der Source Code befindet, wird zusätzlich zum `main` Branch ein `dev` Branch erstellt. Dort wird, wie im Architekturdiagramm zu sehen ist, das Image gebaut und durchläuft die Sicherheitstests. Von dort aus wird das Image mit dev getaggt und in der GitHub Container Registry (GHCR) abgelegt.
+Im `main` Branch wird ausschliesslich der tägliche DAST-Security-Test ausgeführt.
 
-Im GitOps Repo wird ausschliesslich die default `main` branch verwendet.
+Im GitOps Repo wird ausschliesslich die default `main` Branch verwendet.
 
 ### Semantic Versioning
 
-Der Ansatz vom Semantic Versioning kurz SemVer ist in dieser Arbeit ebenfalls angewendet. SemVer ist ein vordefiniertes Versionsschema, damit Menschen erkennen, was sich nach einem Update an der Anwendung verändert hat.
-Dieses Format wird wie folgt in drei Elementen angezeigt `MAJOR.MINOR.PATCH`. Somit lässt sich nach einem Update den aktuellen Stand, durch die Veränderungselemente erkennen. [Quelle](https://semver.org/lang/de/)
+Der Ansatz des Semantic Versioning, kurz SemVer, wird in dieser Arbeit ebenfalls angewendet. SemVer ist ein vordefiniertes Versionsschema, mit dem ersichtlich wird, was sich nach einem Update an der Anwendung verändert hat.
+Dieses Format wird wie folgt in drei Elementen dargestellt: `MAJOR.MINOR.PATCH`. Somit lässt sich nach einem Update der aktuelle Stand anhand der Veränderungselemente erkennen.[Quelle](https://semver.org/lang/de/)
 
-Die Versionierung erfolgt durch `git tags` und lässt sich gut mit dem SemVer Prinziep vereinbaren. Nachdem die Pipeline durchlaufen ist und das Image erfolgreich in `dev`  gebaut wurde, erhält das Image, wie bereits erwähnt automatisch einen `dev tag`.
-Sofern die `dev` Version zufriedenstellend ist, kann ein git tag bspw. `v0.1.3` initiiert werden und mit einem `git push origin v0.1.3` auf das Remote Repository ausgeführt werden. Somit erstellen wir eine neue Versionierung des neu gebauten images und liegt ausserdem mit dem `latest` tag im GHCR.
-Ausserdem befindet sich eine komplette Versionierung des Repos, welches unter dem Tag Icon zu finden ist.
+Die Versionierung erfolgt durch Git-Tags und lässt sich gut mit dem SemVer-Prinzip vereinbaren. Nachdem die Pipeline durchlaufen ist und das Image erfolgreich in `dev` gebaut wurde, erhält das Image, wie bereits erwähnt, automatisch einen `dev tag`.
+Sofern die `dev`-Version zufriedenstellend ist, kann ein Git-Tag, bspw. `v0.1.3`, initiiert und mit einem `git push origin v0.1.3` auf das Remote-Repository übertragen werden. Somit wird eine neue Version des neu gebauten Images erstellt, welche ausserdem mit dem `latest`-Tag im GHCR abgelegt ist.
+Ausserdem befindet sich eine komplette Versionierung des Repositories, welche unter dem Tag-Icon zu finden ist.
 
 ![repo_bar](image/repo_bar.png)
 ![git_tags](/image/git_tags.png)
 
 ###  Branch Protection & Merge Strategy
 
-Damit keine Commits direkt auf die `main` branch gemacht werden, ist diese mit einer branch protection gesichert. Veränderungen auf der `main` branch können nur via pull requests erzeugt werden. Da es nur eine `dev`branch in diesem Setup verfügbar ist, wird auch nur diese zum mergen freigegeben.
+Damit keine Commits direkt auf den `main`-Branch gemacht werden, ist dieser mit einer Branch-Protection gesichert. Veränderungen auf dem `main`-Branch können nur via Pull Requests erfolgen. Da in diesem Setup nur ein `dev`-Branch verfügbar ist, wird auch nur dieser zum Mergen freigegeben.
 
 **Konfiguration**
 
@@ -425,31 +419,34 @@ Damit keine Commits direkt auf die `main` branch gemacht werden, ist diese mit e
 
 ![branch_protection](image/branch_protection.png)
 
-Hier ist die erfolgreiche Implementation der Branch Protection zu sehen. Von der `main` branch können keine Anpassungen vorgenommen werden.
+Hier ist die erfolgreiche Implementierung der Branch-Protection zu sehen. Von der `main`-Branch können keine Anpassungen vorgenommen werden.
 
 ![branch_protection_test](image/branch_protection_test.png)
 
-Für die Merge-Strategie wird hier das normale Merge commit Prinzip angewendet. Der Vorteil davon ist, dass die Deployment history durch den merge commit ersichtlich bleibt und die  dev commits nachvollziehbar beleiben.
-Hingegen bei anderen Strategien, wie einem Squash Merge gehen die dev commits verloren und die Transparenz in der Semesterarbeit ist nicht gewährleistet.
+Für die Merge-Strategie wird hier das normale Merge-Commit-Prinzip angewendet. Der Vorteil davon ist, dass die Deployment-History durch den Merge-Commit ersichtlich bleibt und die Dev-Commits nachvollziehbar bleiben.
+Hingegen gehen bei anderen Strategien, wie einem Squash-Merge, die Dev-Commits verloren, wodurch die Transparenz in der Semesterarbeit nicht gewährleistet ist.
 
 ![merge_method](image/merge_method.png)
 
-## SAST, SCA and Build & Push Pipline
+## SAST, SCA and Build & Push Pipeline
 
-In diesem Abschnitt wird die erste von Drei Pipelines beschrieben. Dabei handlet es sicht um die Sicherheitstest mit Snyk und dem scannen des Container-Images mit Trivy.
+In diesem Abschnitt wird die erste von drei Pipelines beschrieben. Dabei handelt es sich um die Sicherheitstests mit Snyk sowie das Scannen des Container-Images mit Trivy.
 
 ### Linting
+
 Linting ist der Prozess, bei dem ein Programm ausgeführt wird, das den Code auf mögliche Fehler analysiert. Es handelt sich hierbei um eine statische Code-Analyse, die Programmierfehler, Bugs, stilistische Fehler und verdächtige Konstrukte aufdecken soll.
 
-Der erste Teil der Pipeline der durchläuft ist der lint checker. Hierbei werden zunächst die python dependencies isort und black installiert.
+Der erste Teil der Pipeline, der durchlaufen wird, ist der Lint-Checker. Hierbei werden zunächst die Python-Dependencies isort und black installiert.
 
-**isort check** sortiert die die Imports alphabetisch und trennt die standard Libs von den third parties Libarys. Der Nutzen ist hierbei die Lesbarkeit für den Entwickler.
+**isort check** sortiert die Imports alphabetisch und trennt die Standard-Libraries von den Third-Party-Libraries. Der Nutzen liegt hierbei in der besseren Lesbarkeit für den Entwickler.
 
-**black check** formatiert schlussendlich den Code. Einrückungen, Zeilenlänge, Leerzeichen etc. werden alle sauber über einen Style Guide Stadard wie PEP8 formatiert. Das ist wicktig, um mit einen einheitlichen und strukturierten Code zu arbeiten
+**black check** formatiert schlussendlich den Code. Einrückungen, Zeilenlängen, Leerzeichen etc. werden sauber anhand eines Style-Guide-Standards wie PEP 8 formatiert. Dies ist wichtig, um mit einem einheitlichen und strukturierten Code zu arbeiten.
+
 
 ```yml
 jobs:
   lint:
+    if: startsWith(github.ref, 'refs/heads/dev')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -477,7 +474,8 @@ Mit Snyk, einer zusätzlicher externen Anwendungen können Sicherheitsschwachste
 
 In diesem Schritt wird zunächst der Code auf potenzielle gefährdete Schwachstellen oder Agriffsmuster geprüft. Der SCA-Teil scannt die Dependencies/Libarys auf Schwachstellen.
 ```yml
-snyk:
+  snyk:
+    if: startsWith(github.ref, 'refs/heads/dev')
     runs-on: ubuntu-latest
     needs: lint
     steps:
@@ -491,7 +489,6 @@ snyk:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: code test
-
       # SCA: scannt Dependencies (requirements/lockfiles)
       - name: Snyk Open Source (SCA)
         continue-on-error: true
@@ -500,15 +497,15 @@ snyk:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: test
-
 ```
 
-### Build & Scan
+### Build & Scan in DEV
 
-Damit die Sematic auch für die Versionierung stimmt, wird vor dem Build ein Check durchgeführt, ob die Referenzierung auf dev oder entsprechend des Versionstag übereinstimmt.  
+Dadurch das `refs/heads/` auf `dev` konfiguiert ist, wird dieser Teil nur aus der `dev`-Branch getriggert. Das ebenfllas für den Lint-Check und Snyk Teil.
 
 ```yml
-build_push_and_trivy:
+  build_push_and_trivy_dev:
+    if: startsWith(github.ref, 'refs/heads/dev')
     runs-on: ubuntu-latest
     needs: snyk
     steps:
@@ -517,37 +514,15 @@ build_push_and_trivy:
       - name: Compute image name (lowercase)
         id: img
         shell: bash
-        run: |
-          echo "image=${{ env.REGISTRY }}/${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
-        
-      - name: Compute tags + scan target
-        id: ver
-        shell: bash
-        run: |
-          # Branch dev => tag "dev" und scan "dev"
-          if [[ "${GITHUB_REF}" == "refs/heads/dev" ]]; then
-            echo "tags=${{ steps.img.outputs.image }}:dev" >> "$GITHUB_OUTPUT"
-            echo "scan_ref=${{ steps.img.outputs.image }}:dev" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
+        run: echo "image=${{ env.REGISTRY }}/${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
 
-          # SemVer tag vX.Y.Z => push "X.Y.Z" + "latest", scan "X.Y.Z"
-          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
-            VERSION="${GITHUB_REF_NAME#v}"
-            echo "tags=${{ steps.img.outputs.image }}:${VERSION},${{ steps.img.outputs.image }}:latest" >> "$GITHUB_OUTPUT"
-            echo "scan_ref=${{ steps.img.outputs.image }}:${VERSION}" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
-          echo "Unsupported ref: ${GITHUB_REF}"
-          exit 1
 ```
 
 Da das Minikube Setup auf einer ARM basierten Architektur läuft, müssen die Imges entsprechend kompatibel sein. Dafür werden in GitHub Action die QUMU-Binärdateien genutzt, um die verschiedenen Prozessarchitekturen zu erstellen.
 
 ```yml
       # Multi-Arch Build Support (fix für ARM64 Minikube)
-      - name: Set up QEMU
+ - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
@@ -560,33 +535,33 @@ Da das Minikube Setup auf einer ARM basierten Architektur läuft, müssen die Im
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build & push image (multi-arch)
+      - name: Build & push image (dev tag, multi-arch)
         uses: docker/build-push-action@v6
         with:
           context: .
           file: ./Dockerfile
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: ${{ steps.ver.outputs.tags }}
+          tags: ${{ steps.img.outputs.image }}:dev
           cache-from: type=gha
           cache-to: type=gha,mode=max
 ```
 
-
 Zu guter Letzt wird mit Trivy das gerade erstelle Image auf weitere Schwachstellen geprüft und mit dem SARIF Format auf Github hochgeladen. So können die Vulnerabilities direkt ausgelesen werden.
+
 ```yml
       # Trivy scannt direkt aus der Registry (kein pull nötig)
       - name: Trivy image scan (SARIF)
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ steps.ver.outputs.scan_ref }}
+          image-ref: ${{ steps.img.outputs.image }}:dev
           format: sarif
           output: trivy-image.sarif
 
       - name: Upload Trivy SARIF
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: trivy-image.sarif 
+          sarif_file: trivy-image.sarif
           category: trivy-image
 ```
 
@@ -594,40 +569,41 @@ Zu guter Letzt wird mit Trivy das gerade erstelle Image auf weitere Schwachstell
 
 ### Minikube
 
-Für die K8s installation wird in diesem Fall Minikube verwendet. Minikube eigenet sich sehr gut für das schnelle Aufsetzen eines K8s Clusters und kann sehr einfach lokal betreieben werden. Da die Semesterarbeit ein Proof of Concept darstellt, reicht Minikube für diesen Einsatzzweck vollkommen aus.
+Für die K8s-Installation wird in diesem Fall Minikube verwendet. Minikube eignet sich sehr gut für das schnelle Aufsetzen eines K8s-Clusters und kann sehr einfach lokal betrieben werden. Da die Semesterarbeit ein Proof of Concept darstellt, reicht Minikube für diesen Einsatzzweck vollkommen aus.
 
-Die Virtualisierungsumgebung in dem Minikube läuft auf Ubuntu 24.04.3 LTS und wird mit UTM, einem Virtualisierungsprogramm für MacOS, erstellt.
+Die Virtualisierungsumgebung, in der Minikube läuft, basiert auf Ubuntu 24.04.3 LTS und wird mit UTM, einem Virtualisierungsprogramm für macOS, erstellt.
 
 
 #### Installation
 
-Nach dem die Virtuelle Maschine Einsatz bereit ist, muss überprüft werden ob weitere Virtualisierungen möglich sind. Hierbei nuzten wir diesen Befehl und sollten keinen Output erwarten:
-`egrep --color 'vmx|svm' /proc/cpuinfo` 
+Nachdem die virtuelle Maschine einsatzbereit ist, muss überprüft werden, ob weitere Virtualisierungen möglich sind. Hierbei nutzen wir diesen Befehl und sollten keinen Output erwarten:
+`egrep --color 'vmx|svm' /proc/cpuinfo`
 
 Mit diesem Befehl wird Minikube installiert:
 `curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64 && chmod +x minikube`
 
-Zu guter Letzt fügen wir die Programmdatei zu userem Pfad hinzu:
+Zu guter Letzt fügen wir die Programmdatei zu unserem Pfad hinzu:
 `sudo cp minikube /usr/local/bin && rm minikube`
 
-Mit `minikube status` kann der Status des lightweight K8s Clusters überprüft werden.
+Mit `minikube status` kann der Status des leichtgewichtigen K8s-Clusters überprüft werden.
+
 
 ![minikube](image/minikube.png) 
 
 ### ArgoCD
 
-Argo CD ist ein deklaratives, GitOps continuous delivery tool für Kubernetes. ArgoCD wird als Schnitstelle zum GitOps Repo und dem K8s Clusters fungieren. Jegliche Anpassungen auf den K8s Manifest Files triggert eine Veränderung am K8s Deployment.
+Argo CD ist ein deklaratives GitOps Continuous-Delivery-Tool für Kubernetes. Argo CD fungiert als Schnittstelle zwischen dem GitOps-Repository und dem Kubernetes-Cluster. Jegliche Anpassungen an den Kubernetes-Manifest-Files triggern eine Veränderung am Kubernetes-Deployment.
 
 #### Installation & Konfiguration
 
-Zuerst wird ein Namespace für ArgoCD erstellt und anschliessend kann die Applikation installiert werden.
+Zuerst wird ein Namespace für Argo CD erstellt, anschliessend kann die Applikation installiert werden.
 `kubectl create namespace argocd`
 
 `kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml`
 
-Unter dem lokal erstellten Ordner `dsvpwa` ist folgende ArgoCD `app.yml` Konfigurationdatei hinterlegt. Es zielt mein `dsvpwa-gitops.git` Repo an und prüft aktiv, ob es unter dem Pfad `k8s` veränderungen gegeben hat.
+Unter dem lokal erstellten Ordner `dsvpwa` ist folgende Argo-CD-`app.yml`-Konfigurationsdatei hinterlegt. Sie zielt auf mein `dsvpwa-gitops.git`-Repository ab und prüft aktiv, ob es unter dem Pfad `k8s` Veränderungen gegeben hat.
 
-Mit `kubectl apply -f app.yml` erstelle ich meine Konfig.
+Mit `kubectl apply -f app.yml` erstelle ich meine Konfiguration.
 
 ```yml
 apiVersion: argoproj.io/v1alpha1
@@ -652,22 +628,21 @@ spec:
       - CreateNamespace=true
 ```
 
-Mit `kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d; echo` lese ich das initial Passwort aus und mit `kubectl -n argocd port-forward svc/argocd-server 8080:443` kann ich die Portweiterleitung aktiviern sodass ich über localhost:8080 auf mein ArgoCD GUI komme.
+Mit `kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d; echo` lese ich das initiale Passwort aus, und mit `kubectl -n argocd port-forward svc/argocd-server 8080:443` kann ich die Portweiterleitung aktivieren, sodass ich über `localhost:8080` auf die Argo-CD-GUI zugreifen kann.
 
 ![argocd](image/argocd.png)
 
 ### K8s Manifest Files
 
-Als Kubernets Manifest File versteht man oft Mals ein YAML oder JSON Datei, die den gewünschten Status des Kubernets Objekts darstellen soll. Ein K8s Objekt kann ein Deployment, ReplicaSet, Service usw. sein. Manifest Files definieren die Spezifikationen des Objekts, wie deren Metadata, Eigenschaften oder Zustand in einem deklarativen Ansatz.  
+Als Kubernetes-Manifest-File versteht man oftmals eine YAML- oder JSON-Datei, die den gewünschten Status eines Kubernetes-Objekts darstellen soll. Ein K8s-Objekt kann ein Deployment, ein ReplicaSet, ein Service usw. sein. Manifest-Files definieren die Spezifikationen des Objekts, wie dessen Metadaten, Eigenschaften oder Zustand, in einem deklarativen Ansatz.
 
-Alle Manifest Files werden im GitOps Repo unter der `main` branch abgelegt.
+Alle Manifest-Files werden im GitOps-Repository unter dem `main`-Branch abgelegt.
 
 #### Deployment
 
-Das Deployment ist Zuständig dafür, dass die Pods/Container in dem gewünschten Zustand laufen.
+Das Deployment ist zuständig dafür, dass die Pods beziehungsweise Container im gewünschten Zustand laufen.
 
-Der Erste Abschnitt weisst im namespace `dsvpwa` jeweils Zwei Replicas auf. Das definert den Zustand von jeweils Zwei Pods. Unter dem Selector `matchLabels: dsvpwa` ist ein Filter definiert. Dieses Merkmal dient dazu das alle Pods unter `app: dsvpwa` den Zustand vom replicas einnehmen. 
-
+Der erste Abschnitt weist im Namespace `dsvpwa` jeweils zwei Replicas auf. Das definiert den Zustand von jeweils zwei Pods. Unter dem Selector `matchLabels: dsvpwa` ist ein Filter definiert. Dieses Merkmal dient dazu, dass alle Pods mit dem Label `app: dsvpwa` den Zustand der Replicas einnehmen.
 ``` yml
 apiVersion: apps/v1
 kind: Deployment
@@ -686,7 +661,7 @@ spec:
         app: dsvpwa
 ```
 
-Im zweiten Abschnitt des Deployments wird der container definiert. Hier wird das Image eingetragen und die nötigen paramenter zum Starten der Applikation hinterlegt. Auch sieht man auf welchem Port die Applikation exposed wird.
+Im zweiten Abschnitt des Deployments wird der Container definiert. Hier wird das Image eingetragen und die nötigen Parameter zum Starten der Applikation hinterlegt. Zudem ist ersichtlich, auf welchem Port die Applikation exposed wird.
 
 ```yml
 spec:
@@ -711,10 +686,10 @@ spec:
 
 #### Service
 
+Ein Service leitet den Traffic über eine Reihe von Pods. Diese können ebenfalls mit Labels gekennzeichnet werden. Der Service ermöglicht der Anwendung, Datenverkehr zu empfangen, und dient daher als Schnittstelle für die Kommunikation zur Applikation.
 
-Ein Service leitet den Traffic über eine Reihe von Pods. Diese können ebenfalls mit Labels gekennzeichnet werden. Der Service ermöglicht der Anwendung, Datenverkehr zu empfangen und dient daher als Schnittstelle für die Kommunikation zur Applikation.
+Auch hier werden alle Pods mit dem Selector-Label `dsvpwa` getrackt. Als Expose-Methode wird `ClusterIP` genutzt. Hierbei wird der Service nur im internen Cluster verfügbar gemacht.
 
-Auch hier werden alle Pods mit dem Selector Label dsvpwa getrackt. Als Expose Methode wird `ClusterIP` genutzt. Hierbei wird der Service nur im internen Cluster verfügbar gemacht.
 ```yml
 apiVersion: v1
 kind: Service
@@ -733,19 +708,19 @@ spec:
 
 #### Certificates
 
-Mit einem Zertifikat kann eine sichere TLS Verschlüsselung hergestellt werden. Sie dient als digitales "Ausweisdokument" und bildet den handshake für eine sichere Webkommunikation über HTTPS.
+Mit einem Zertifikat kann eine sichere TLS-Verschlüsselung hergestellt werden. Es dient als digitales „Ausweisdokument“ und bildet den Handshake für eine sichere Webkommunikation über HTTPS.
 
-In dieser Arbeit wird ausschliesslich ein lokales Setup gebaut. Daher ist dieser Teil mit dem Zeritifikat rein als Showcase zu betrachten. Es soll vielmehr die herangehensweise für das online Stellen einer Webanwendung beschreiben.
+In dieser Arbeit wird ausschliesslich ein lokales Setup aufgebaut. Daher ist dieser Teil mit dem Zertifikat rein als Showcase zu betrachten. Es soll vielmehr die Herangehensweise für das Online-Stellen einer Webanwendung beschreiben.
 
-Wir initialisieren eine interne CA mit einem self-signed Issuer, erzeugen daraus einen CA-basierten ClusterIssuer und lassen cert-manager daraus automatisch TLS-Zertifikate für Services erstellen. So integrieren wir TLS vollständig in den Kubernetes-Lifecycle
+Wir initialisieren eine interne CA mit einem self-signed Issuer, erzeugen daraus einen CA-basierten ClusterIssuer und lassen cert-manager daraus automatisch TLS-Zertifikate für Services erstellen. So integrieren wir TLS vollständig in den Kubernetes-Lifecycle.
 
 ##### Cert-Manager
 
-Der Cert-Manager ist zwingend nötig, um das Zertifikat automatisiert über Kubnernetes zu erstellen. Ausserdem ist dieser Zuständig für die Erneuerung des Zertifikats und sichert die TLS Datei unter den Secrets. Ohne Cert-Manager müsste man bei jeder Änderung manuell ein neues Cert über OpenSSL erzeugen und es zu den secrets hinzufügen.
+Der Cert-Manager ist zwingend nötig, um Zertifikate automatisiert über Kubernetes zu erstellen. Ausserdem ist er zuständig für die Erneuerung der Zertifikate und speichert die TLS-Dateien in den Secrets. Ohne Cert-Manager müsste man bei jeder Änderung manuell ein neues Zertifikat über OpenSSL erzeugen und es zu den Secrets hinzufügen.
 
 ###### Installation
 
-In diesem Schritt wird ein zusätzlicher namespace für den Cert-Manager angelegt und anschliessend über helm installiert.
+In diesem Schritt wird ein zusätzlicher Namespace für den Cert-Manager angelegt und anschliessend über Helm installiert.
 
 ```sh
 helm repo add jetstack https://charts.jetstack.io
@@ -756,12 +731,12 @@ helm install cert-manager jetstack/cert-manager \
   --set crds.enabled=true
 ```
 
-Hier ist der aktive Cert-Manager zu sehen, welcher mit Drei Pods im seperaten namespace läuft.
+Hier ist der aktive Cert-Manager zu sehen, welcher mit drei Pods in einem separaten Namespace läuft.
 ![cert-manager](image/cert-manager.png)
 
 ##### SelfSigned ClusterIssuer
 
-Mit dem SelfSigned ClusterIssuer wird das Zertifikat von mir selbst signiert. In einem realen Setup würde diese CA natürlich nicht jemand selbst sein, sondern im besten Fall eine anerkannte Certificate Authority Stelle, wie beispielsweise Let's Encrypt.
+Mit dem SelfSigned ClusterIssuer wird das Zertifikat von mir selbst signiert. In einem realen Setup wäre diese CA natürlich nicht von einer einzelnen Person, sondern im besten Fall eine anerkannte Certificate-Authority-Stelle, wie beispielsweise Let’s Encrypt.
 
 ```yml
 kind: ClusterIssuer
@@ -773,7 +748,7 @@ spec:
 
 ##### Root-CA erzeugen
 
-Hiermit erstlle ich die von mir definierte CA Stelle über den Cert-Manager. Es wird ein ein `local-root-ca` key-pair erstellt, um damit als vermeintliche CA Zertifikate signieren zu können.
+Hiermit erstelle ich die von mir definierte CA-Stelle über den Cert-Manager. Es wird ein `local-root-ca`-Key-Pair erstellt, um damit als vermeintliche CA Zertifikate signieren zu können.
 
 ```yml
 apiVersion: cert-manager.io/v1
@@ -792,7 +767,7 @@ spec:
 
 ##### CA-Issuer
 
-In diesem Schritt wird der cert-manager angewiesen, den ca-schlüssel `local-root-ca-secret` zu nutzen, um Zertifikate zu signieren. Dieser Schlüssel wird Kubernetes nie verlassen. Somit wird dieser Schlüssel intern vom Cert-Manager genutzt.
+In diesem Schritt wird der Cert-Manager angewiesen, den CA-Schlüssel `local-root-ca`-secret zu nutzen, um Zertifikate zu signieren. Dieser Schlüssel verlässt Kubernetes nie. Somit wird dieser Schlüssel intern vom Cert-Manager genutzt.
 
 ```yml
 apiVersion: cert-manager.io/v1
@@ -806,7 +781,7 @@ spec:
 
 ##### Signed Certificate
 
-Der Cert-Manager signiert nun über den `local-ca-issuer` das Zertifikat. Dieses Zertifikat ist nun als secret `dsvpwa-tls` in K8s aktiv.
+Der Cert-Manager signiert nun über den `local-ca-issuer` das Zertifikat. Dieses Zertifikat ist nun als Secret `dsvpwa-tls` in Kubernetes aktiv.
 
 ```yml
 apiVersion: cert-manager.io/v1
@@ -823,16 +798,16 @@ spec:
     kind: ClusterIssuer
 ```
 
-Der Status kann wie auf dem Bild leicht zu erkennen, abgefragt werden.
+Der Status kann, wie auf dem Bild leicht zu erkennen ist, abgefragt werden.
 
 ![cert-secret](image/cert-secret.png)
 
-
 #### Ingress
 
-Da die Anwendung nicht mehr über localhost erreicht werden soll, sondern über einen lokalen Host-Eintrag und HTTPS, benötigt es hier einen Ingress. Bisher hat es bis zum OSI-Layer 4 gereicht, um mit einem Port-Forwarding mittels TCP/IP auf die Applikation zuzugreifen. Mit dem TLS und dem HTTP protokoll kann der Service nichts mehr anfangen.
+Da die Anwendung nicht mehr über localhost erreicht werden soll, sondern über einen lokalen Host-Eintrag und HTTPS, wird hier ein Ingress benötigt. Bisher hat es bis zum OSI-Layer 4 gereicht, um mittels Port-Forwarding über TCP/IP auf die Applikation zuzugreifen. Mit TLS und dem HTTP-Protokoll kann der Service in dieser Form jedoch nichts mehr anfangen.
 
-Aus diesem Grund muss ein Ingress implementiert werden, der das TLS Zertifikat ausliest und auf HTTPS terminiert.
+Aus diesem Grund muss ein Ingress implementiert werden, der das TLS-Zertifikat ausliest und die Verbindung auf HTTPS terminiert.
+
 ```yml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -859,20 +834,20 @@ spec:
                   number: 65413
 ```
 
-Damit die Applikation nicht über localhost angesteuert werden muss, wird zusätzlich ein Host-Eintrag gemacht, sodass die Seite über https://dsvpwa.local aufgerufen werden kann.
+Damit die Applikation nicht über localhost angesteuert werden muss, wird zusätzlich ein Host-Eintrag erstellt, sodass die Seite über https://dsvpwa.local aufgerufen werden kann.
 
 ![hostentry](image/hostentry.png)
 
 ## Daily DAST Pipeline
 Dynamic Application Security Testing (DAST) bezeichnet Sicherheitstests, die gegen eine laufende Anwendung durchgeführt werden. Der Test erfolgt zur Laufzeit und simuliert das Verhalten eines externen Angreifers.
 
-DAST-Scanner behandeln die Anwendung als Blackbox. Das bedeutet, sie haben keinen Zugriff auf den Quellcode und interagieren ausschliesslich über öffentlich erreichbare Schnittstellen wie HTTP-Endpunkte oder Web-Oberflächen.
-Typische getestete Schwachstellen sind unter anderem SQL-Injection, XSS, Brute-Force etc. Das Ergebnis des Tests wird mit einem Raport festgehalten und veranschaulicht eine Zusammenfassung der erfolgten Angriffe.
+DAST-Scanner behandeln die Anwendung als Blackbox. Das bedeutet, sie haben keinen Zugriff auf den Quellcode und interagieren ausschliesslich über öffentlich erreichbare Schnittstellen wie HTTP-Endpunkte oder Web-Oberflächen. 
+Typische getestete Schwachstellen sind unter anderem SQL-Injection, XSS, Brute-Force etc. Das Ergebnis des Tests wird in einem Report festgehalten und veranschaulicht eine Zusammenfassung der erfolgten Angriffe.
 
-In dieser Arbeit kann DAST nicht auf die laufende Anwendung ausgeführt werden, da die Webapplikation von extern nicht erreichbar ist.
-Aus diesem Grund wird das Image aktuelle Image verwendet und so auf Schwachstellen geprüft.
+In dieser Arbeit kann DAST nicht auf die laufende Anwendung ausgeführt werden, da die Webapplikation extern nicht erreichbar ist. 
+Aus diesem Grund wird das aktuelle Image verwendet und auf Schwachstellen geprüft.
 
-Der Test läuft jeden Tag, um ca. 05:00 MEZ ab und ist mit einem cron job eingerichtet. Ausserdem läuft der Test bei jedem commit auf dev erneut ab. Sommit kann der Entwickler den Test-Raport vor der Veröffentlichung der Version einsehen.
+Der Test läuft täglich um ca. 05:00 MEZ und ist über einen Cronjob eingerichtet. Ausserdem wird der Test bei jedem Commit auf `dev` erneut ausgeführt. Somit kann der Entwickler den Test-Report vor der Veröffentlichung einer Version einsehen.
 
 ```yaml
 name: Daily DAST (OWASP ZAP)
@@ -889,7 +864,7 @@ permissions:
   packages: read
 ```
 
-In diesem Teil wird das Image von der Container Registry gepullt. Anschliessend wird der Container gestartet und mit einem for loop geprüft, ob die Anwedung bereit ist. Mit einer erfolgreichen HTTP-Antwort wird nun der weitere Teil der Pipeline abfolgen.
+In diesem Teil wird das Image aus der Container Registry gepullt. Anschliessend wird der Container gestartet und mit einem For-Loop geprüft, ob die Anwendung bereit ist. Mit einer erfolgreichen HTTP-Antwort erfolgt nun der weitere Teil der Pipeline.
 
 ```yml
 jobs:
@@ -928,8 +903,8 @@ jobs:
           exit 1
 
 ```
-Nun wird der full scan vom ZAP (Zed Attack Proxy) durchgeführt. Auch hier wird ein Container hochgefahren und auf unser localhost-Targen referenziert. Alle Test-Angriffe werden auf die in der Pipeline definierten TARGET-Adresse durchgeführt.
-Am Ende des Tests wird ein Raport als ZIP-Datei beigefügt.
+Nun wird der Full-Scan von ZAP (Zed Attack Proxy) durchgeführt. Auch hier wird ein Container hochgefahren und auf unser localhost-Target referenziert. Alle Testangriffe werden auf die in der Pipeline definierte TARGET-Adresse durchgeführt.
+Am Ende des Tests wird ein Report als ZIP-Datei beigefügt.
 
 ```yml
       - name: ZAP full scan (active)
@@ -962,9 +937,9 @@ Am Ende des Tests wird ein Raport als ZIP-Datei beigefügt.
 
 ## GitOps Image verification Pipeline
 
-Nun soll nach jeder Versionänderung (nach jedem Merge von dev -> main) die Version auf den Manifest Files angepasst werden, damit der K8s Cluster auf der aktuellen Version läuft. Um diese Idee umzusetzen benötigen wir eine weitere Pipeline, die bei jdedem Merge auf main getriggert wird und die Versionsüberprüfung durchführt und unter dem Manifest File im Gitops Repo aktuallisiert.
+Nun soll nach jeder Versionsänderung (nach jedem Merge von `dev` → `main`) die Version in den Manifest-Files angepasst werden, damit der Kubernetes-Cluster auf der aktuellen Version läuft. Um diese Idee umzusetzen, wird eine weitere Pipeline benötigt, die bei jedem Merge auf `main` getriggert wird und die Versionsüberprüfung durchführt sowie die Version in den Manifest-Files im GitOps-Repository aktualisiert.
 
-Im folgenden Abschnitt der Pipeline wird das aktulle DSVPWA Repo geklont und im nächsten Schritt werden die git tags mit dem remote repo gefetched. Anschliessend wird die aktuellste Version als Variabel gespeichert. Mit einem conditional statement wird der Tag auf die Semantik überprüft. Im lezten Teil des runs wird die Version auf die GitHub Variabel weitergeleitet, damit im späteren Ablauf darauf zugegriffen werden kann.
+Im folgenden Abschnitt der Pipeline wird das aktuelle DSVPWA-Repository geklont, und im nächsten Schritt werden die Git-Tags mit dem Remote-Repository gefetcht. Anschliessend wird die aktuellste Version als Variable gespeichert. Mit einem Conditional Statement wird der Tag auf die Semantik überprüft. Im letzten Teil des Runs wird die Version an eine GitHub-Variable weitergeleitet, damit im späteren Ablauf darauf zugegriffen werden kann.
 
 ```yml
 name: Auto-update GitOps image version via PR
@@ -1002,9 +977,10 @@ jobs:
           echo "Latest version: $VER"
 ```
 
-Zunächst wird das `deployment.yml` file ermittelt. Anschliessend wird mit `sed` die neue version ersetzt. `([^@[:space:]]+)` definert den aktuellen tag. `(@sha256:[a-f0-9]+)?` soll ebenfalls beachtet werden, falls das Image weder dev oder einen Versions tag hat. @sha256 bezieht sich auf das spezifische Image im GHCR.
+Zunächst wird das `deployment.yml`-File ermittelt. Anschliessend wird mit `sed` die neue Version ersetzt. `([^@[:space:]]+)` definiert den aktuellen Tag. `(@sha256:[a-f0-9]+)?` wird ebenfalls berücksichtigt, falls das Image weder einen dev- noch einen Versions-Tag hat. @sha256 bezieht sich auf das spezifische Image im GHCR.
 
-`grep -nE '^\s*image:\s*' "$FILE" || true` gibt die Zeilennummer retour, von wo die Änderung gemacht wird. Im letzten Teil wird abgefangen, ob es überhaupt eine Änderung an der Datei gegeben hat.
+`grep -nE '^\s*image:\s*' "$FILE" || true ` gibt die Zeilennummer zurück, ab der die Änderung vorgenommen wird. Im letzten Teil wird abgefangen, ob es überhaupt eine Änderung an der Datei gegeben hat.
+
 ```yml
           
       - name: Checkout GitOps repo
@@ -1040,7 +1016,7 @@ Zunächst wird das `deployment.yml` file ermittelt. Anschliessend wird mit `sed`
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 ```
-In diesem Bereich des Codes wird sichergestellt, dass die Änderung mittels PR und einem sauberen Kommentar ausgeführt wird.
+In diesem Bereich des Codes wird sichergestellt, dass die Änderung mittels Pull Request und einem sauberen Kommentar durchgeführt wird.
 
 ```yml
       - name: Create Pull Request in GitOps repo
@@ -1064,48 +1040,51 @@ In diesem Bereich des Codes wird sichergestellt, dass die Änderung mittels PR u
 
 #### 1. Test: Security Scan & Image Build in Dev
 
-| Testfall               | Security Scan & Image Build in Dev                                                                                                                                                                                                                                                                                    |
-| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Testbeschreibung       | 1. Pipeline durchläuft den Security Scan und Image Build Teail in der dev branch                                                                                                                                                                                                                                           |
-| Erwartets Ergebnis     | Die Pipeline wird durch einen Commit getriggert. Dabei soll zunächst der SAST & SCA Scan durchlaufen und anschliessend das Image mit dem dev tag gebuildet werden. Am Ende läuft ein Image Security Scanner durch und prüft auf potenzielle Schwachstellen. Das Image wird in der Github Container Registry abgelegt. |
-| Tatsächliches Ergebnis | ![result_ci-dev](image/result_ci-dev.png) [GHCR](https://github.com/taher-alsaegh/DSVPWA/pkgs/container/dsvpwa)                                                                                                                                                                                                                                                                       |
-| Status                 | Erfolgreich                                                                                                                                                                                                                                                                                                           |
+| Testfall               | Security Scan & Image Build in Dev                                                                                                                                                                                                                                                                                  |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Testbeschreibung       | 1. Pipeline durchläuft den Security-Scan- und Image-Build-Teil im `dev`-Branch                                                                                                                                                                                                                                  |
+| Erwartets Ergebnis     | Die Pipeline wird durch einen Commit getriggert. Dabei soll zunächst der SAST- & SCA-Scan durchlaufen und anschliessend das Image mit dem `dev`-Tag gebaut werden. Am Ende läuft ein Image-Security-Scanner durch und prüft auf potenzielle Schwachstellen. Das Image wird in der GitHub Container Registry abgelegt. |
+| Tatsächliches Ergebnis | ![result_ci-dev](image/result_ci-dev.png) [GHCR](https://github.com/taher-alsaegh/DSVPWA/pkgs/container/dsvpwa)                                                                                                                                                                                                     |
+| Status                 | Erfolgreich                                                                                                                                                                                                                                                                                                         |
 
-#### 2. Test: Image Build mit Version Tag
+#### 2. Test: Image Build mit Version-Tag
 
-| Testfall               | Image Build mit Version Tag                                                                                                                                                                                                                                                                        |
-| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Testbeschreibung       | Image mit korrektem Versionstag wird erstellt und in der Container Registry abgelegt                                                                                                                                                                                                               |
-| Erwartets Ergebnis     | Der `git push origin tag vx.x.x` Befehl triggert die CI Pipeline und erstellt das neue Image mit der korrekten Versionierung. Die Pipeline ignoriert die zuvor durchlaufenen Steps, die nach einem commit in dev getriggert werden, um so unnötige Wiederholungen zu vermeiden und Zeit zu sparen. |
-| Tatsächliches Ergebnis | ![result_ci-main](image/result_ci-main.png) [GHCR](https://github.com/taher-alsaegh/DSVPWA/pkgs/container/dsvpwa)                                                                                                                                                                                                                                             |
-| Status                 | Erfolgreich                                                                                                                                                                                                                                                                                        |
+| Testfall               | Image Build mit Version-Tag                                                                                                                                                                                                                                                                       |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Testbeschreibung       | Image mit korrektem Versions-Tag wird erstellt und in der Container Registry abgelegt                                                                                                                                                                                                             |
+| Erwartetes Ergebnis    | Der Befehl `git push origin tag vX.X.X` triggert die CI-Pipeline und erstellt das neue Image mit der korrekten Versionierung. Die Pipeline ignoriert die zuvor durchlaufenen Steps, die nach einem Commit in `dev` getriggert werden, um unnötige Wiederholungen zu vermeiden und Zeit zu sparen. |
+| Tatsächliches Ergebnis | ![result_ci-main](image/result_ci-main.png) [GHCR](https://github.com/taher-alsaegh/DSVPWA/pkgs/container/dsvpwa)                                                                                                                                                                                 |
+| Status                 | Erfolgreich                                                                                                                                                                                                                                                                                       |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 
-#### 3. Test: Automated Image verification
+#### 3. Test: Automated Image Verification
 
-| Testfall               | Automated Image verification                                                                                                                                                                                                                                          |
-| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Testbeschreibung       | Der Versionsstand des Images wird nach einem Merge durch die 2. Pipeline auf main geprüft und gegebenenfalls im K8s Deployment angepasst.                                                                                                                                                                                                                                                                      |
-| Erwartets Ergebnis     | Nachdem von dev auf main germerged wurde läuft die 2. Pipeline automatisch durch. Dabei wird der aktuelle Versionsstand im K8s Deployment File, falls nötig angepasst. Mit einem Refresh auf ArgoCD wird das neue Image via `RollingUpdate` Strategy Type ausgerollt. |
-| Tatsächliches Ergebnis | ![gitops_image_verification](image/gitops_image_verification.png)                                                                                                                                                  |
-| Status                 | Erfolgreich                                                                                                                                                                                                                                                           |
+| Testfall               | Automated Image Verification                                                                                                                                                                                                                                                   |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Testbeschreibung       | Der Versionsstand des Images wird nach einem Merge durch die zweite Pipeline auf `main` geprüft und gegebenenfalls im K8s-Deployment angepasst.                                                                                                                                |
+| Erwartetes Ergebnis    | Nachdem von `dev` auf `main` gemerged wurde, läuft die zweite Pipeline automatisch durch. Dabei wird der aktuelle Versionsstand im K8s-Deployment-File, falls nötig, angepasst. Mit einem Refresh in Argo CD wird das neue Image via `RollingUpdate`-Strategy-Type ausgerollt. |
+| Tatsächliches Ergebnis | ![gitops_image_verification](image/gitops_image_verification.png)                                                                                                                                                                                                              |
+| Status                 | Erfolgreich                                                                                                                                                                                                                                                                    |
+
 
 #### 4. Test: Daily DAST Job
 
-| Testfall               | Automated Image verification                                                                                                                                                                                                                                          |
-| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Testbeschreibung       | Die 3. Pipeline wird alle 24h automatisch angestossen und fürht den DAST Scann durch                                                                                                                                                                                                                                                                      |
-| Erwartets Ergebnis     | Jeweils um 05:00 morgens läuft der DAST job durch und erstellt einen Raport von allen ausgeführten Angriffen. |
-| Tatsächliches Ergebnis | ![dast](image/dast.png) ![dast-report](image/dast-report.png)                                                                                                                                             |
-| Status                 | Erfolgreich  
+| Testfall               | Daily DAST Job                                                                                               |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Testbeschreibung       | Die dritte Pipeline wird alle 24 Stunden automatisch angestossen und führt den DAST-Scan durch.              |
+| Erwartetes Ergebnis    | Jeweils um 05:00 Uhr morgens läuft der DAST-Job durch und erstellt einen Report aller ausgeführten Angriffe. |
+| Tatsächliches Ergebnis | ![dast](image/dast.png) ![dast-report](image/dast-report.png)                                                |
+| Status                 | Erfolgreich                                                                                                  |
+
 
 #### 5. Test: K8s Setup
 
- Testfall               | Automated Image verification                                                                                                                                                                                                                                          |
-| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Testbeschreibung       | Kubernetes läuft über Minikube auf einer VM mit ArgoCD                                                                                                                                                                                                                                                           |
-| Erwartets Ergebnis     | Das Kubernetes Setup in Minikube läuft auf einer virtuellen Maschine und ist mit ArgoCD für den Deployment aufgerüstet. Alle Änderungen im GitOps Repository führen zu einer Zustandsveränderung im K8s Deployment. |
-| Tatsächliches Ergebnis | ![k8s-setup](image/k8s-setup.png)                                                                                                                                       |
-| Status                 | Erfolgreich  
+| Testfall               | K8s Setup                                                                                                                                                                                                          |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Testbeschreibung       | Kubernetes läuft über Minikube auf einer VM mit Argo CD.                                                                                                                                                           |
+| Erwartetes Ergebnis    | Das Kubernetes-Setup in Minikube läuft auf einer virtuellen Maschine und ist mit Argo CD für Deployments eingerichtet. Alle Änderungen im GitOps-Repository führen zu einer Zustandsveränderung im K8s-Deployment. |
+| Tatsächliches Ergebnis | ![k8s-setup](image/k8s-setup.png)                                                                                                                                                                                  |
+| Status                 | Erfolgreich                                                                                                                                                                                                        |                                                                                                                                                                                                    
+
 
 
 # Einführungsphase
@@ -1115,23 +1094,18 @@ In diesem Bereich des Codes wird sichergestellt, dass die Änderung mittels PR u
 Im Rahmen dieser Semesterarbeit wurde eine vollständige und praxisnahe DevSecOps-Pipeline für eine containerbasierte Webanwendung konzipiert und technisch umgesetzt. Die Umsetzung erfolgt als Proof of Concept für ein fiktives Unternehmen und orientiert sich an realen industriellen Best Practices.
 
 Die zu Beginn formulierte Fragestellung:
-*Wie kann mithilfe von GitOps (Argo CD) und integrierten Sicherheitsprüfungen, wie Trivy, ein sicherer, reproduzierbarer und automatisierter Deployment-Prozess für containerisierte Webapplikationen in Kubernetes realisiert werden?*
+Wie kann mithilfe von GitOps (Argo CD) und integrierten Sicherheitsprüfungen, wie Trivy, ein sicherer, reproduzierbarer und automatisierter Deployment-Prozess für containerisierte Webapplikationen in Kubernetes realisiert werden?
 
 kann wie folgt beantwortet werden:
 
-Ein sicherer, reproduzierbarer und automatisierter Deployment-Prozess wird erreicht, indem Git als einzige Wahrheitsquelle (Single Source of Truth) genutzt wird und sämtliche Änderungen – sowohl am Anwendungscode als auch an der Kubernetes-Konfiguration – versioniert und nachvollziehbar erfolgen.
-Die Integration von Sicherheitsprüfungen direkt in die CI-Pipeline stellt sicher, dass potenzielle Schwachstellen frühzeitig erkannt werden. SAST- und SCA-Scans analysieren Quellcode und Abhängigkeiten bereits vor dem Build, während Trivy Container-Images auf bekannte Sicherheitslücken überprüft. Ergänzend dazu ermöglicht DAST mit OWASP ZAP die Analyse der Anwendung aus externer Angreiferperspektive, wodurch auch Konfigurations- und Laufzeitschwächen identifiziert werden können. Durch den Einsatz von versionierten Container-Images wird gewährleistet, dass Deployments reproduzierbar sind und Änderungen gezielt und kontrolliert ausgerollt werden. Die Trennung zwischen Applikations-Repository und GitOps-Repository erhöht zusätzlich die Sicherheit und Transparenz, da Deployments ausschliesslich über explizite Änderungen an den Manifest Dateien erfolgen.
+Ein sicherer, reproduzierbarer und automatisierter Deployment-Prozess wird erreicht, indem Git als einzige Wahrheitsquelle (Single Source of Truth) genutzt wird und sämtliche Änderungen, sowohl am Anwendungscode als auch an der Kubernetes-Konfiguration, versioniert und nachvollziehbar erfolgen.
+Die Integration von Sicherheitsprüfungen direkt in die CI-Pipeline stellt sicher, dass potenzielle Schwachstellen frühzeitig erkannt werden. SAST- und SCA-Scans analysieren Quellcode und Abhängigkeiten bereits vor dem Build, während Trivy Container-Images auf bekannte Sicherheitslücken überprüft. Ergänzend dazu ermöglicht DAST mit OWASP ZAP die Analyse der Anwendung aus externer Angreiferperspektive, wodurch auch Konfigurations- und Laufzeitschwächen identifiziert werden können. Durch den Einsatz von versionierten Container-Images wird gewährleistet, dass Deployments reproduzierbar sind und Änderungen gezielt und kontrolliert ausgerollt werden. Die Trennung zwischen Applikations-Repository und GitOps-Repository erhöht zusätzlich die Sicherheit und Transparenz, da Deployments ausschliesslich über explizite Änderungen an den Manifest-Dateien erfolgen.
 
-Zusammenfassend zeigt die Arbeit, dass die Kombination aus GitOps (Argo CD), automatisierten Sicherheitsprüfungen und Kubernetes-basierter Bereitstellung einen robusten, auditierbaren und skalierbaren Deployment-Prozess ermöglicht, der den Anforderungen moderner Cloud-nativer Anwendungen gerecht wird.
-
-### Evaluation / Zielerreichung
+Zusammenfassend zeigt die Arbeit, dass die Kombination aus GitOps (Argo CD), automatisierten Sicherheitsprüfungen und Kubernetes-basierter Bereitstellung einen robusten, auditierbaren und skalierbaren Deployment-Prozess ermöglicht, der den Anforderungen moderner cloud-nativer Anwendungen gerecht wird.
 
 ## Reflexion
-
-### Lesson Learned
 
 ## Aussicht
 
 # Literaturverzeichnis
 
-# Anhang
