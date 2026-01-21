@@ -19,13 +19,14 @@
   - [Abwicklungsziele](#abwicklungsziele)
     - [Definition of Done (DoD)](#definition-of-done-dod)
     - [Meilensteine](#meilensteine)
-  - [Releases-Planning --\> Zeitplan?](#releases-planning----zeitplan)
+  - [Roadmap](#roadmap)
     - [Minimum Viable Product (MVP)](#minimum-viable-product-mvp)
     - [Minimum Marketable Product (MMP)](#minimum-marketable-product-mmp)
     - [Minimum Lovable Product (MLP)](#minimum-lovable-product-mlp)
-    - [1. Sprint vom 12.11 - 08.12.2025](#1-sprint-vom-1211---08122025)
-    - [2. Sprint vom xx.xx - xx.xx.2025](#2-sprint-vom-xxxx---xxxx2025)
-    - [3. Sprint vom xx.xx - xx.xx.2025](#3-sprint-vom-xxxx---xxxx2025)
+    - [Projektinitialisierung 12.11 - 08.12.2025](#projektinitialisierung-1211---08122025)
+    - [1. Sprint vom 09.12 - 22.12.2025](#1-sprint-vom-0912---22122025)
+    - [2. Sprint vom 23.01 - 05.01.2026](#2-sprint-vom-2301---05012026)
+    - [3. Sprint vom 06.01 - 23.01.2026](#3-sprint-vom-0601---23012026)
   - [Anforderungsdefinition](#anforderungsdefinition)
     - [Funktionale Anforderung](#funktionale-anforderung)
     - [Nicht-funktionale Anforderungen](#nicht-funktionale-anforderungen)
@@ -235,7 +236,7 @@ In den unten beschriebenen Punkten werden die nötigen Schritte definiert, die d
 ### Story Point Schätzung
 https://clickup.com/de/blog/222797/punkte-der-fibonacci-geschichte
 
-## Releases-Planning --> Zeitplan?
+## Roadmap
 
 Beachte diesen Punkt mit dem GitOps Workflow Konzept. MVP zusammen mit Git Tags/Versionierung der Branches
 
@@ -247,14 +248,14 @@ Beachte diesen Punkt mit dem GitOps Workflow Konzept. MVP zusammen mit Git Tags/
 
 ### Minimum Lovable Product (MLP)
 
-### 1. Sprint vom 12.11 - 08.12.2025
+### Projektinitialisierung 12.11 - 08.12.2025
 
-![Sprint Board](image/01sprint_board.png)
+![Sprint Board](image/vorbereitung_board.png)
 
-| Story                               | Akzeptanzkriterium                 | Points |
-| :---------------------------------- | :--------------------------------- | :----- |
-| Einfürhung schreiben               | [SEM04-5](https://shorturl.at/voJ7B)  | 1      |
-| Projektmanagement erläutern        | [SEM04-6](https://shorturl.at/nkYM0)  | 1      |
+| Story                               | Akzeptanzkriterium                    | Points |
+| :---------------------------------- | :------------------------------------ | :----- |
+| Einfürhung schreiben                | [SEM04-5](https://shorturl.at/voJ7B)  | 1      |
+| Projektmanagement erläutern         | [SEM04-6](https://shorturl.at/nkYM0)  | 1      |
 | Ziele definieren und beschreiben    | [SEM04-7](https://shorturl.at/MJHTs)  | 3      |
 | Sprint planen                       | [SEM04-8](https://shorturl.at/CMeLD)  | 3      |
 | Anforderungsdefinition beschreiben  | [SEM04-9](https://shorturl.at/fGoiQ)  | 1      |
@@ -269,11 +270,17 @@ Beachte diesen Punkt mit dem GitOps Workflow Konzept. MVP zusammen mit Git Tags/
 > [!NOTE]
 > **Sprint Goal**: Abschluss und Erreichung der beiden Meilensteine; Initialisierungs- und Konzeptionsphase.
 
-### 2. Sprint vom xx.xx - xx.xx.2025
+### 1. Sprint vom 09.12 - 22.12.2025
+
+![01sprint_board](image/01sprint_board.png)
 
 Als Table mit den Stories/Tasks und Akzepttanzkriterien
 
-### 3. Sprint vom xx.xx - xx.xx.2025
+### 2. Sprint vom 23.01 - 05.01.2026
+
+Als Table mit den Stories/Tasks und Akzepttanzkriterien
+
+### 3. Sprint vom 06.01 - 23.01.2026
 
 Als Table mit den Stories/Tasks und Akzepttanzkriterien
 
