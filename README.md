@@ -501,7 +501,7 @@ In diesem Schritt wird zunächst der Code auf potenzielle gefährdete Schwachste
 
 ### Build & Scan in DEV
 
-Dadurch das `refs/heads/` auf `dev` konfiguiert ist, wird dieser Teil nur aus der `dev`-Branch getriggert. Das ebenfllas für den Lint-Check und Snyk Teil.
+Dadurch das `refs/heads/` auf `dev` konfiguiert ist, wird dieser Teil nur aus der `dev`-Branch getriggert. Das gilt ebenfllas für den Lint-Check und Snyk Teil.
 
 ```yml
   build_push_and_trivy_dev:
