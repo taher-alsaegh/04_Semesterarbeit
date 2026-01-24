@@ -25,7 +25,7 @@
     - [Minimum Lovable Product (MLP)](#minimum-lovable-product-mlp)
     - [Projektinitialisierung 12.11 - 08.12.2025](#projektinitialisierung-1211---08122025)
     - [1. Sprint vom 09.12 - 22.12.2025](#1-sprint-vom-0912---22122025)
-    - [2. Sprint vom 23.01 - 05.01.2026](#2-sprint-vom-2301---05012026)
+    - [2. Sprint vom 23.12 - 05.01.2026](#2-sprint-vom-2312---05012026)
     - [3. Sprint vom 06.01 - 23.01.2026](#3-sprint-vom-0601---23012026)
   - [Anforderungsdefinition](#anforderungsdefinition)
     - [Funktionale Anforderung](#funktionale-anforderung)
@@ -219,19 +219,19 @@ In den unten beschriebenen Punkten werden die nötigen Schritte definiert, die d
 
 1. Meilenstein: Initialisierungsphase
    Ziel: Projektstart, Definition von Zielen, Rahmenbedingungen und Rollen
-   Erledigt: XX
+   Erledigt: 27.11.2025
 
 2. Meilenstein: Konzeptionsphase
    Ziel: Ausarbeitung der Systemarchitektur, Schnittstellen sowie Ressourcen- und Risikoplanung
-   Erledigt: XX
+   Erledigt: 08.12.2025
 
 3. Meilenstein: Realisierungsphase
    Ziel: Technische Umsetzung des GitOps-Workflows, Deployment auf Kubernetes sowie Sicherstellung von Security-Tests und Validierung
-   Erledigt: XX
+   Erledigt: 01.01.2026
 
 4. Meilenstein: Einführungsphase
    Ziel: Fazit, Reflexion, Lessons Learned
-   Erledigt: XX
+   Erledigt: 24.01.2025
 
 ### Story Point Schätzung
 https://clickup.com/de/blog/222797/punkte-der-fibonacci-geschichte
@@ -264,8 +264,6 @@ Beachte diesen Punkt mit dem GitOps Workflow Konzept. MVP zusammen mit Git Tags/
 | Ressourcen definieren               | [SEM04-22](https://shorturl.at/5Ye3s) | 1      |
 | Risikomanagement erarbeiten         | [SEM04-23](https://rb.gy/humncv)      | 3      |
 | GitOps Konzept erstellen            | [SEM04-24](https://h7.cl/1kg3v)       | 3      |
-| Security Konzept erstellen          | [SEM04-32](https://h7.cl/1fpry)       | 5      |
-| Test Konzept erarbeiten             | [SEM04-26](https://h7.cl/1kg3M)       | 3      |
 
 > [!NOTE]
 > **Sprint Goal**: Abschluss und Erreichung der beiden Meilensteine; Initialisierungs- und Konzeptionsphase.
@@ -274,15 +272,47 @@ Beachte diesen Punkt mit dem GitOps Workflow Konzept. MVP zusammen mit Git Tags/
 
 ![01sprint_board](image/01sprint_board.png)
 
-Als Table mit den Stories/Tasks und Akzepttanzkriterien
+| Story                             | Akzeptanzkriterium                       | Points |
+| :-------------------------------- | :--------------------------------------- | :----- |
+| Security Konzept erstellen        | [SEM04-32](https://shorturl.at/EOXJX)    | 5      |
+| Git-Repository Struktur ausfetzen | [SEM04-34](https://shorturl.at/7ThLE)    | 1      |
+| Ci-Pipeline Grundgerüst erstellen | [SEM04-35](https://shorturl.at/kyv76)    | 2      |
+| DVPWA Docker Image vorbereiten    | [SEM04-36](https://shorturl.at/voJ7B)    | 2      |
+| GitOps-Repo initialisieren        | [SEM04-37](https://shorturl.at/85Fhm)    | 2      |
+| Minikube & ArgoCD aufsetzen       | [SEM04-38](https://tinyurl.com/ymcarjx8) | 2      |
 
-### 2. Sprint vom 23.01 - 05.01.2026
+> [!NOTE]
+> **Sprint Goal**: Am Ende des Sprints steht die Grund-Infrastruktur der Projektarbeit und das Grundgerüst der Security Pipeline.
 
-Als Table mit den Stories/Tasks und Akzepttanzkriterien
+
+### 2. Sprint vom 23.12 - 05.01.2026
+
+![02sprint_board](image/02sprint_board.png)
+
+| Story                               | Akzeptanzkriterium                       | Points |
+| :---------------------------------- | :--------------------------------------- | :----- |
+| Lint-Checker implementieren         | [SEM04-45](https://tinyurl.com/3sj8kkrh) | 2      |
+| TLS-Zerti implementieren            | [SEM04-34](https://tinyurl.com/4a5js6ad) | 4      |
+| Snyk scan SAST & SCA implementieren | [SEM04-35](https://tinyurl.com/fhrusvu9) | 5      |
+| Trivy Scan mit SARIF umsetzen       | [SEM04-35](https://tinyurl.com/5ecnyus4) | 4      |
+| SemVersioning Logik umsetzen        | [SEM04-35](https://tinyurl.com/3zb3xunf) | 4      |
+
+> [!NOTE]
+> **Sprint Goal**: Am Ende des Sprints wird die Anwendung automatisiert als sicheres Container-Image gebaut und versioniert.
 
 ### 3. Sprint vom 06.01 - 23.01.2026
 
-Als Table mit den Stories/Tasks und Akzepttanzkriterien
+![03sprint_board](image/03sprint_board.png)
+
+| Story                                   | Akzeptanzkriterium                    | Points |
+| :-------------------------------------- | :------------------------------------ | :----- |
+| DAST implementation                     | [SEM04-32](https://shorturl.at/voJ7B) | 5      |
+| GitOps verification pipeline erstellen  | [SEM04-34](https://shorturl.at/voJ7B) | 5      |
+| Lösung für den Build in MAIN erarbeiten | [SEM04-35](https://shorturl.at/voJ7B) | 4      |
+| Testing                                 | [SEM04-35](https://shorturl.at/voJ7B) | 4      |
+
+> [!NOTE]
+> **Sprint Goal**: Am Ende des Sprints ist die Anwendung vollständig GitOps-basiert in Kubernetes deployt und zur Laufzeit testbar.
 
 ## Anforderungsdefinition
 
