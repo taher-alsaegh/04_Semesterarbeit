@@ -244,9 +244,23 @@ Beachte diesen Punkt mit dem GitOps Workflow Konzept. MVP zusammen mit Git Tags/
 
 ### Minimum Viable Product (MVP)
 
+Das MVP ist die Version eines Produkts, welche die Kernfunktionalitäten des Produkts beinhaltet, um die eigene Idee zu validieren.
+
+Der MVP umfasst eine lauffähige Webapplikation, die über eine CI-Pipeline automatisiert geprüft (Linting, SAST, SCA) und als Container-Image gebaut wird. Die Anwendung kann in Kubernetes deployt werden und ist funktional erreichbar, jedoch mit minimaler Automatisierung und ohne umfassende Laufzeitsicherheit.
+
 ### Minimum Marketable Product (MMP)
 
+Das MMP soll Features abdecken, die einen Mehrwert für den Nutzer bzw. Kunden stiften und wofür diese ggf. sogar schon bezahlen würden. In Summe sollte dieses also bereits vermarktungsfähig sein.
+
+Der MMP erweitert den MVP um eine vollständige DevSecOps-Pipeline: Container-Images werden versioniert, sicherheitsgeprüft (Trivy) und mittels GitOps (Argo CD) automatisiert in Kubernetes ausgerollt. HTTPS ist integriert und der Deployment-Prozess ist reproduzierbar, stabil und für einen realen Projekteinsatz geeignet.
+
 ### Minimum Lovable Product (MLP)
+
+Das MLP soll also bei dem Benutzer das Gefühl erwecken, dieses Produkt unbedingt zu benötigen und stellt damit die nutzerzentrierte Sichtweise in den Vordergrund. Das Ziel ist, dass sich der Nutzer in das Produkt „verliebt“
+
+Der MLP ergänzt den MMP um kontinuierliche Laufzeitsicherheitsprüfungen (DAST mit OWASP ZAP), automatisierte tägliche Scans sowie klare Transparenz über Sicherheitsbefunde. Zusätzlich sorgen saubere Versionierung, GitOps-Transparenz und Security-Reports dafür, dass das System nicht nur funktioniert, sondern auch wartbar, nachvollziehbar und vertrauenswürdig ist.
+
+
 
 ### Projektinitialisierung 12.11 - 08.12.2025
 
@@ -291,11 +305,11 @@ Beachte diesen Punkt mit dem GitOps Workflow Konzept. MVP zusammen mit Git Tags/
 
 | Story                               | Akzeptanzkriterium                       | Points |
 | :---------------------------------- | :--------------------------------------- | :----- |
-| Lint-Checker implementieren         | [SEM04-45](https://tinyurl.com/3sj8kkrh) | 2      |
-| TLS-Zerti implementieren            | [SEM04-34](https://tinyurl.com/4a5js6ad) | 4      |
-| Snyk scan SAST & SCA implementieren | [SEM04-35](https://tinyurl.com/fhrusvu9) | 5      |
-| Trivy Scan mit SARIF umsetzen       | [SEM04-35](https://tinyurl.com/5ecnyus4) | 4      |
-| SemVersioning Logik umsetzen        | [SEM04-35](https://tinyurl.com/3zb3xunf) | 4      |
+| Lint-Checker implementieren         | [SEM04-41](https://tinyurl.com/3sj8kkrh) | 2      |
+| TLS-Zerti implementieren            | [SEM04-42](https://tinyurl.com/4a5js6ad) | 4      |
+| Snyk scan SAST & SCA implementieren | [SEM04-43](https://tinyurl.com/fhrusvu9) | 5      |
+| Trivy Scan mit SARIF umsetzen       | [SEM04-44](https://tinyurl.com/5ecnyus4) | 4      |
+| SemVersioning Logik umsetzen        | [SEM04-45](https://tinyurl.com/3zb3xunf) | 4      |
 
 > [!NOTE]
 > **Sprint Goal**: Am Ende des Sprints wird die Anwendung automatisiert als sicheres Container-Image gebaut und versioniert.
@@ -304,12 +318,12 @@ Beachte diesen Punkt mit dem GitOps Workflow Konzept. MVP zusammen mit Git Tags/
 
 ![03sprint_board](image/03sprint_board.png)
 
-| Story                                   | Akzeptanzkriterium                    | Points |
-| :-------------------------------------- | :------------------------------------ | :----- |
-| DAST implementation                     | [SEM04-32](https://shorturl.at/voJ7B) | 5      |
-| GitOps verification pipeline erstellen  | [SEM04-34](https://shorturl.at/voJ7B) | 5      |
-| Lösung für den Build in MAIN erarbeiten | [SEM04-35](https://shorturl.at/voJ7B) | 4      |
-| Testing                                 | [SEM04-35](https://shorturl.at/voJ7B) | 4      |
+| Story                                   | Akzeptanzkriterium                       | Points |
+| :-------------------------------------- | :--------------------------------------- | :----- |
+| DAST implementation                     | [SEM04-46](https://tinyurl.com/546453wc) | 5      |
+| GitOps verification pipeline erstellen  | [SEM04-47](https://tinyurl.com/2s35nxkw) | 5      |
+| Lösung für den Build in MAIN erarbeiten | [SEM04-48](https://tinyurl.com/9ucwy3jz) | 4      |
+| Testing                                 | [SEM04-49](https://tinyurl.com/yzjhwayj) | 4      |
 
 > [!NOTE]
 > **Sprint Goal**: Am Ende des Sprints ist die Anwendung vollständig GitOps-basiert in Kubernetes deployt und zur Laufzeit testbar.
