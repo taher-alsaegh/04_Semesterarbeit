@@ -1,6 +1,6 @@
-# 1. Sprint vom 12.11 - 08.12
+# Projektinitialisierung vom 12.11 - 08.12
 
-![Sprint Board](../image/01sprint_board.png)
+![Sprint Board](../image/vorbereitung_board.png)
 
 | Story                               | Akzeptanzkriterium                 | Points |
 | :---------------------------------- | :--------------------------------- | :----- |
@@ -21,30 +21,31 @@
 
 # Sprint Review
 
-1. **Zielerreichung** <br>
-   a. Wurde das Sprint-Ziel erreicht? <br>
+1. **Zielerreichung** `<br>`
+   a. Wurde das Sprint-Ziel erreicht? `<br>`
    Das Sprint Ziel wurde nicht vollständig erreicht. Leider konnte das Konzept noch nicht ganz fertiggestellt werden.
 
-   b. Welche User Stories wurden vollständig umgesetzt? <br>
+   b. Welche User Stories wurden vollständig umgesetzt? `<br>`
    Alle User-Stories bis auf das Securtiy- und Test Konzept.
-2. **Produktinkrement** <br>
-   a. Was wurde im Sprint konkret geliefert? <br>
+2. **Produktinkrement** `<br>`
+   a. Was wurde im Sprint konkret geliefert? `<br>`
    Die Initialisierung des Projekts konnte erfolgreich abgeschlossen werden. Zudem wurde ein grosser Teil der Konzeptionsphase umgesetzt. Das für die Realisierungsphase notwendige Architekturdiagramm wurde erstellt und liegt in einer finalen Version vor.
 
-   b. Welche Funktionalitäten sind produktiv nutzbar? <br>
+   b. Welche Funktionalitäten sind produktiv nutzbar? `<br>`
    Da es sich bei diesem Sprint primär um einen Dokumentations- und Konzeptionssprint handelt, sind noch keine produktiv nutzbaren Funktionalitäten vorhanden.
-3. **Abweichungen & offene Punkte** <br>
-   a. Welche geplanten Inhalte konnten nicht umgesetzt werden? <br>
+3. **Abweichungen & offene Punkte** `<br>`
+   a. Welche geplanten Inhalte konnten nicht umgesetzt werden? `<br>`
    Zum einen konnte die User Story "Security Konzept" und "Test Konzept erarbeiten" nicht abgeschlossen werden.
 
-   b. Warum wurden diese Inhalte nicht abgeschlossen? <br>
+   b. Warum wurden diese Inhalte nicht abgeschlossen? `<br>`
    Aus zeitlichen Gründen konnte ich die Stories nicht vollständig abschliessen. Es war zu viel im 1. Sprint eingeplant worden.
 
-   c. Müssen Stories in den nächsten Sprint übernommen werden? <br>
-   Es gitb einen Spill over von zwei Stories.<br>
+   c. Müssen Stories in den nächsten Sprint übernommen werden? `<br>`
+   Es gitb einen Spill over von zwei Stories.`<br>`
 
 # Sprint Retrospektive
-Für die Sprint Retrospektive wird hier eine 4L-Feedback-Technik angewendet. Dabei werden abgeschlossene Sprints rückblickend beleuchtet, um züküftige Projekte und Sprints zu verbessern. 
+
+Für die Sprint Retrospektive wird hier eine 4L-Feedback-Technik angewendet. Dabei werden abgeschlossene Sprints rückblickend beleuchtet, um züküftige Projekte und Sprints zu verbessern.
 
 Die 4L-Feedback-Technik strukturiert die Sprint Retrospektive anhand von vier Leitfragen: Liked beschreibt, was im Sprint gut funktioniert hat, Learned fasst neue Erkenntnisse und Lernerfahrungen zusammen, Lacked identifiziert fehlende Aspekte oder Hindernisse, und Longed for benennt Verbesserungen oder Wünsche für zukünftige Sprints. Diese Methode unterstützt eine gezielte und konstruktive Reflexion des Arbeitsprozesses.
 
@@ -63,7 +64,75 @@ Die 4L-Feedback-Technik strukturiert die Sprint Retrospektive anhand von vier Le
 - Ausserdem habe ich gelernt wie ich MMP, MLP, MVP in einem Projekt einsezte und welche Bedeutung das hat.
 - Ich konnte mir gedankten zu einem Brach/Merge Konzept machen, welches ich mir zuvor nie gemacht habe.
 - Ich habe durch die vielen Arbeitspackete gemerkt, wie gross der Aufwand ist und weiss nun in etwa ich es in Zukunft einteilen soll.
-  
+
+## Lacked
+
+- Ich muss mein Zeitmanagement besser unter Kontrolle bekommen.
+
+## Longed for
+
+- Ich wünsche mir bereits mit der Realisierung starten zu können.
+
+---
+
+# 1. Sprint vom 09.12 - 22.12
+
+![Sprint Board](../image/01sprint_board.png)
+
+| Story                              | Akzeptanzkriterium                    | Points |
+| :--------------------------------- | :------------------------------------ | :----- |
+| Security Konzept erstellen         | [SEM04-32](https://shorturl.at/EOXJX)    | 5      |
+| Git-Repository Struktur ausfetzen  | [SEM04-34](https://shorturl.at/7ThLE)    | 1      |
+| Ci-Pipeline Grundgerüst erstellen | [SEM04-35](https://shorturl.at/kyv76)    | 2      |
+| DVPWA Docker Image vorbereiten     | [SEM04-36](https://shorturl.at/voJ7B)    | 2      |
+| GitOps-Repo initialisieren         | [SEM04-37](https://shorturl.at/85Fhm)    | 2      |
+| Minikube & ArgoCD aufsetzen        | [SEM04-38](https://tinyurl.com/ymcarjx8) | 2      |
+
+**Sprint Goal**: Am Ende des Sprints steht die Grund-Infrastruktur der Projektarbeit und das Grundgerüst der Security Pipeline.
+
+# Sprint Review
+
+1. **Zielerreichung** `<br>`
+   a. Wurde das Sprint-Ziel erreicht? `<br>`
+   Das Sprint Ziel wurde erreicht. Alle Stories konnten, wie geplant erledigt werden.
+
+   b. Welche User Stories wurden vollständig umgesetzt? `<br>`
+   Alle User-Stories wurden erledigt. Es sind keine neuen Aufgaben hinzugekommen.
+
+2. **Produktinkrement** `<br>`
+   a. Was wurde im Sprint konkret geliefert? `<br>`
+   In diesem Sprint wurde das Grundgerüst für die Projektarbeit aufgebaut. Das beinhaltet die Initialisierung der Repositories und das VM Setup für den Kubernetes Cluster. Ausserdem konnte bereits mit der CI Pipeline gestartet werden.
+
+   b. Welche Funktionalitäten sind produktiv nutzbar? `<br>`
+   Momentan steht der K8s Cluster mit dem ArgoCD Service. Das Main Repo ist im ArgoCD hinterlegt und wird aktiv gesynct.
+
+3. **Abweichungen & offene Punkte** `<br>`
+   a. Welche geplanten Inhalte konnten nicht umgesetzt werden? `<br>`
+   Keine
+
+   b. Warum wurden diese Inhalte nicht abgeschlossen? `<br>`
+   -
+   c. Müssen Stories in den nächsten Sprint übernommen werden? `<br>`
+   Es werden keine Stories übernommen.`<br>`
+
+# Sprint Retrospektive
+
+![Retro](../image/01sprint_retro.png)
+
+## Liked
+
+- Das Fokussierte und disziplinierte Arbeiten während dem Sprint hat mir persönlich am besten gefallen.
+- Dank des strukturierten Projektaufbaus konnte ich den Arbeitsfortschritt besser überblicken und priorisieren.
+- Mit Patrick konnte ich bereits meine Draft Version des Architekturdiagramms besprechen.
+- Mir hat die saubere und klar formullierte Arbeitsaufteilung sehr gut geholfen, die Arbeit gezielt anzugehen.
+
+## Leared
+
+- Ich habe gelert, wie ich eine Product Vision erstelle und was die Merkmale davon sind.
+- Ausserdem habe ich gelernt wie ich MMP, MLP, MVP in einem Projekt einsezte und welche Bedeutung das hat.
+- Ich konnte mir gedankten zu einem Brach/Merge Konzept machen, welches ich mir zuvor nie gemacht habe.
+- Ich habe durch die vielen Arbeitspackete gemerkt, wie gross der Aufwand ist und weiss nun in etwa ich es in Zukunft einteilen soll.
+
 ## Lacked
 
 - Ich muss mein Zeitmanagement besser unter Kontrolle bekommen.
