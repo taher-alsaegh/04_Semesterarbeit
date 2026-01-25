@@ -234,7 +234,16 @@ In den unten beschriebenen Punkten werden die nötigen Schritte definiert, die d
    Erledigt: 24.01.2025
 
 ### Story Point Schätzung
-https://clickup.com/de/blog/222797/punkte-der-fibonacci-geschichte
+
+Zur Aufwandsschätzung der User Stories wurde in diesem Projekt die Story-Point-Methode auf Basis der Fibonacci-Sequenz eingesetzt. Story Points dienen dabei nicht zur Zeitmessung, sondern zur relativen Bewertung von Komplexität, Risiko und Arbeitsaufwand einer Aufgabe im Vergleich zu anderen Stories.
+
+In diesem Projekt wurden Story Points verwendet, um:
+
+- den Umfang einzelner User Stories realistisch abzuschätzen,
+- Stories innerhalb eines Sprints sinnvoll zu priorisieren,
+- eine vergleichbare Planungsgrundlage zwischen technischen und sicherheitsrelevanten Aufgaben zu schaffen.
+
+Die vergebenen Story Points dienten nicht der Leistungsmessung, sondern als Planungs- und Kommunikationsinstrument, um Sprintziele realistisch zu definieren und den Fortschritt nachvollziehbar darzustellen. Durch den Einsatz der Fibonacci-Skala konnte insbesondere bei sicherheitsrelevanten Aufgaben eine angemessene Gewichtung von Risiko und Aufwand vorgenommen werden.
 
 ## Roadmap
 
