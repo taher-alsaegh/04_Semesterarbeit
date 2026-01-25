@@ -218,20 +218,20 @@ In den unten beschriebenen Punkten werden die nötigen Schritte definiert, die d
 
 ### Meilensteine
 
-1. Meilenstein: Initialisierungsphase
-   Ziel: Projektstart, Definition von Zielen, Rahmenbedingungen und Rollen
+1. Meilenstein: Initialisierungsphase <br>
+   Ziel: Projektstart, Definition von Zielen, Rahmenbedingungen und Rollen <br>
    Erledigt: 27.11.2025
 
-2. Meilenstein: Konzeptionsphase
-   Ziel: Ausarbeitung der Systemarchitektur, Schnittstellen sowie Ressourcen- und Risikoplanung
+2. Meilenstein: Konzeptionsphase <br>
+   Ziel: Ausarbeitung der Systemarchitektur, Schnittstellen sowie Ressourcen- und Risikoplanung <br>
    Erledigt: 08.12.2025
 
-3. Meilenstein: Realisierungsphase
-   Ziel: Technische Umsetzung des GitOps-Workflows, Deployment auf Kubernetes sowie Sicherstellung von Security-Tests und Validierung
+3. Meilenstein: Realisierungsphase <br>
+   Ziel: Technische Umsetzung des GitOps-Workflows, Deployment auf Kubernetes sowie Sicherstellung von Security-Tests und Validierung <br>
    Erledigt: 01.01.2026
 
-4. Meilenstein: Einführungsphase
-   Ziel: Fazit, Reflexion, Lessons Learned
+4. Meilenstein: Einführungsphase <br>
+   Ziel: Fazit, Reflexion, Lessons Learned <br>
    Erledigt: 24.01.2025
 
 ### Story-Points
