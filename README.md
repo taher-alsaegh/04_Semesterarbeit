@@ -1,6 +1,7 @@
 ![Titel-Foto](/image/titelfoto.png)
 
 # Table of contents
+
 - [Table of contents](#table-of-contents)
 - [Initialisierungsphase](#initialisierungsphase)
   - [Einleitung](#einleitung)
