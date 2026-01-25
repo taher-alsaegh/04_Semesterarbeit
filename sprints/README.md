@@ -145,7 +145,7 @@ Die 4L-Feedback-Technik strukturiert die Sprint Retrospektive anhand von vier Le
 
 # 2. Sprint vom 23.12 - 05.01
 
-![Sprint Board](../image/01sprint_board.png)
+![Sprint Board](../image/02sprint_board.png)
 
 | Story                               | Akzeptanzkriterium                       | Points |
 | :---------------------------------- | :--------------------------------------- | :----- |
