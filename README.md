@@ -87,8 +87,10 @@
 - [Einführungsphase](#einführungsphase)
   - [Fazit](#fazit)
   - [Reflexion](#reflexion)
-  - [Aussicht](#aussicht)
-- [Literaturverzeichnis](#literaturverzeichnis)
+  - [Mögliche Erweiterungen](#mögliche-erweiterungen)
+    - [Erweiterung der Sicherheitsprüfungen (Security Depth)](#erweiterung-der-sicherheitsprüfungen-security-depth)
+    - [Erweiterung auf eine echte Produktivumgebung](#erweiterung-auf-eine-echte-produktivumgebung)
+- [Quellenverzeichnis](#quellenverzeichnis)
 
 # Initialisierungsphase
 
@@ -1253,7 +1255,45 @@ Zusammenfassend zeigt die Arbeit, dass die Kombination aus GitOps (Argo CD), aut
 
 ## Reflexion
 
-## Aussicht
+## Mögliche Erweiterungen
 
-# Literaturverzeichnis
+Natürlich lässt sich die Arbeit nach belieben ausarbeiten und erweitern. Hier sind zwei potenzielle Erweiterungsmöglichkeiten/-Ideen, um das Produkt weiterzuentwickeln.
 
+### Erweiterung der Sicherheitsprüfungen (Security Depth)
+
+Aktuell wurden SAST, SCA, Image-Scanning und DAST integriert. In einer Weiterentwicklung könnten zusätzliche Sicherheitsebenen ergänzt werden, um eine noch tiefere Absicherung zu erreichen.
+
+- Runtime Security (z. B. Falco): Erkennung von verdächtigem Verhalten während der Laufzeit in Kubernetes
+- Secrets Scanning (z. B. GitHub Secret Scanning oder TruffleHog)
+
+Somit ist die Absicherung nicht nur beim Build, sondern auch zur Laufzeit und auf Infrastrukturebene während die Applikation live ist.
+
+
+### Erweiterung auf eine echte Produktivumgebung
+
+Das Projekt nutzt aktuell Minikube als lokale Kubernetes-Umgebung. Ein logischer nächster Schritt wäre die Übertragung auf eine Cloud-Umgebung.
+
+- Deployment auf AWS EKS, Azure AKS oder Google GKE
+- Nutzung eines echten Ingress Controllers mit öffentlichem DNS
+- Einsatz von Let’s Encrypt für öffentlich gültige TLS-Zertifikate
+
+Mehrwert:
+So würde das Proof of Concept zu einer realitätsnahen Produktionsarchitektur werden.
+
+# Quellenverzeichnis
+
+- [product_vision](https://www.romanpichler.com/blog/the-product-vision-board/)
+- [vulnerability_database](https://avd.aquasec.com/)
+- [dsvwa](https://medium.com/@sonalipriyankasamantaray/penetration-testing-with-dvwa-damn-vulnerable-web-application-e61f5ac9cb24)
+- [SemVer](https://clickup.com/de/blog/222797/punkte-der-fibonacci-geschichte) 
+- [kubespace](https://kubespec.dev/kubernetes/v1/Service)
+- [kubernetes](https://kubernetes.io/docs/concepts/overview/)
+- [argocd](https://argo-cd.readthedocs.io/en/stable/)
+- [GitOps Manifest Segregation](https://gitopsecurity.com/gitOpsManifestSegregation)
+- [GitOps Struktur](https://codefresh.io/blog/how-to-structure-your-argo-cd-repositories-using-application-sets/)
+- [GHCR](https://codefresh.io/docs/docs/integrations/docker-registries/github-container-registry/)
+- [Minikube](https://minikube.sigs.k8s.io/docs/handbook/)
+- [Releases](https://www.innovation.wiki/de/method/mvp-mmp-und-mlp/)
+- [snyk](https://snyk.io/de/articles/application-security/sast-vs-sca-testing/)
+- [trivy](https://trivy.dev/docs/latest/guide/coverage/iac/kubernetes/)
+- [tbz-devsecops](https://gitlab.com/ch-tbz-wb/Stud/devops/-/blob/main/0_Organisatorisches/Tagesplanungen/Tag11.md?ref_type=heads#integration-von-security-in-die-pipeline-shift-left)
