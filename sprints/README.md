@@ -21,27 +21,27 @@
 
 # Sprint Review
 
-1. **Zielerreichung** `<br>`
-   a. Wurde das Sprint-Ziel erreicht? `<br>`
+1. **Zielerreichung** <br>
+   a. Wurde das Sprint-Ziel erreicht? <br>
    Das Sprint Ziel wurde nicht vollständig erreicht. Leider konnte das Konzept noch nicht ganz fertiggestellt werden.
 
-   b. Welche User Stories wurden vollständig umgesetzt? `<br>`
+   b. Welche User Stories wurden vollständig umgesetzt? <br>
    Alle User-Stories bis auf das Securtiy- und Test Konzept.
-2. **Produktinkrement** `<br>`
-   a. Was wurde im Sprint konkret geliefert? `<br>`
+2. **Produktinkrement** <br>
+   a. Was wurde im Sprint konkret geliefert? <br>
    Die Initialisierung des Projekts konnte erfolgreich abgeschlossen werden. Zudem wurde ein grosser Teil der Konzeptionsphase umgesetzt. Das für die Realisierungsphase notwendige Architekturdiagramm wurde erstellt und liegt in einer finalen Version vor.
 
-   b. Welche Funktionalitäten sind produktiv nutzbar? `<br>`
+   b. Welche Funktionalitäten sind produktiv nutzbar? <br>
    Da es sich bei diesem Sprint primär um einen Dokumentations- und Konzeptionssprint handelt, sind noch keine produktiv nutzbaren Funktionalitäten vorhanden.
-3. **Abweichungen & offene Punkte** `<br>`
-   a. Welche geplanten Inhalte konnten nicht umgesetzt werden? `<br>`
+3. **Abweichungen & offene Punkte** <br>
+   a. Welche geplanten Inhalte konnten nicht umgesetzt werden? <br>
    Zum einen konnte die User Story "Security Konzept" und "Test Konzept erarbeiten" nicht abgeschlossen werden.
 
-   b. Warum wurden diese Inhalte nicht abgeschlossen? `<br>`
+   b. Warum wurden diese Inhalte nicht abgeschlossen? <br>
    Aus zeitlichen Gründen konnte ich die Stories nicht vollständig abschliessen. Es war zu viel im 1. Sprint eingeplant worden.
 
-   c. Müssen Stories in den nächsten Sprint übernommen werden? `<br>`
-   Es gitb einen Spill over von zwei Stories.`<br>`
+   c. Müssen Stories in den nächsten Sprint übernommen werden? <br>
+   Es gitb einen Spill over von zwei Stories.<br>
 
 # Sprint Retrospektive
 
@@ -92,28 +92,28 @@ Die 4L-Feedback-Technik strukturiert die Sprint Retrospektive anhand von vier Le
 
 # Sprint Review
 
-1. **Zielerreichung** `<br>`
-   a. Wurde das Sprint-Ziel erreicht? `<br>`
+1. **Zielerreichung** <br>
+   a. Wurde das Sprint-Ziel erreicht? <br>
    Das Sprint Ziel wurde erreicht. Alle Stories konnten, wie geplant erledigt werden.
 
-   b. Welche User Stories wurden vollständig umgesetzt? `<br>`
+   b. Welche User Stories wurden vollständig umgesetzt? <br>
    Alle User-Stories wurden erledigt. Es sind keine neuen Aufgaben hinzugekommen.
 
-2. **Produktinkrement** `<br>`
-   a. Was wurde im Sprint konkret geliefert? `<br>`
+2. **Produktinkrement** <br>
+   a. Was wurde im Sprint konkret geliefert? <br>
    In diesem Sprint wurde das Grundgerüst für die Projektarbeit aufgebaut. Das beinhaltet die Initialisierung der Repositories und das VM Setup für den Kubernetes Cluster. Ausserdem konnte bereits mit der CI Pipeline gestartet werden.
 
-   b. Welche Funktionalitäten sind produktiv nutzbar? `<br>`
+   b. Welche Funktionalitäten sind produktiv nutzbar? <br>
    Momentan steht der K8s Cluster mit dem ArgoCD Service. Das Main Repo ist im ArgoCD hinterlegt und wird aktiv gesynct.
 
-3. **Abweichungen & offene Punkte** `<br>`
-   a. Welche geplanten Inhalte konnten nicht umgesetzt werden? `<br>`
+3. **Abweichungen & offene Punkte** <br>
+   a. Welche geplanten Inhalte konnten nicht umgesetzt werden? <br>
    Keine
 
-   b. Warum wurden diese Inhalte nicht abgeschlossen? `<br>`
+   b. Warum wurden diese Inhalte nicht abgeschlossen? <br>
    -
-   c. Müssen Stories in den nächsten Sprint übernommen werden? `<br>`
-   Es werden keine Stories übernommen.`<br>`
+   c. Müssen Stories in den nächsten Sprint übernommen werden? <br>
+   Es werden keine Stories übernommen.<br>
 
 # Sprint Retrospektive
 
@@ -159,28 +159,28 @@ Die 4L-Feedback-Technik strukturiert die Sprint Retrospektive anhand von vier Le
 
 # Sprint Review
 
-1. **Zielerreichung** `<br>`
-   a. Wurde das Sprint-Ziel erreicht? `<br>`
+1. **Zielerreichung** <br>
+   a. Wurde das Sprint-Ziel erreicht? <br>
    Am Ende des Sprints wurde das Ziel erreicht. Dev wie auch von Main Branch, bekomme ich ein entsprechendes Container-Image mit dem korrekten Tag.  
 
-   b. Welche User Stories wurden vollständig umgesetzt? `<br>`
+   b. Welche User Stories wurden vollständig umgesetzt? <br>
    Alle Stories wurden erfolgreich umgesetzt.
 
-2. **Produktinkrement** `<br>`
-   a. Was wurde im Sprint konkret geliefert? `<br>`
+2. **Produktinkrement** <br>
+   a. Was wurde im Sprint konkret geliefert? <br>
    In diesem Sprint wurden die Sicherheitstests zu der Pipeline integriert und der Kubernetes Cluster wurde um ein Ingress mit TLS Zertifikat erweitert.
 
-   b. Welche Funktionalitäten sind produktiv nutzbar? `<br>`
+   b. Welche Funktionalitäten sind produktiv nutzbar? <br>
    Sicherheits-Checks werden ausgegeben und können im detail analysiert werden.
 
-3. **Abweichungen & offene Punkte** `<br>`
-   a. Welche geplanten Inhalte konnten nicht umgesetzt werden? `<br>`
+3. **Abweichungen & offene Punkte** <br>
+   a. Welche geplanten Inhalte konnten nicht umgesetzt werden? <br>
    Keine
 
-   b. Warum wurden diese Inhalte nicht abgeschlossen? `<br>`
+   b. Warum wurden diese Inhalte nicht abgeschlossen? <br>
    -
-   c. Müssen Stories in den nächsten Sprint übernommen werden? `<br>`
-   Es werden keine Stories übernommen.`<br>`
+   c. Müssen Stories in den nächsten Sprint übernommen werden? <br>
+   Es werden keine Stories übernommen.<br>
 
 # Sprint Retrospektive
 
@@ -225,29 +225,29 @@ Die 4L-Feedback-Technik strukturiert die Sprint Retrospektive anhand von vier Le
 
 # Sprint Review
 
-1. **Zielerreichung** `<br>`
-   a. Wurde das Sprint-Ziel erreicht? `<br>`
+1. **Zielerreichung** <br>
+   a. Wurde das Sprint-Ziel erreicht? <br>
    Am Ende des Sprints wurde das Ziel erreicht. Die Image Version wird automatisch nach einem Merge von dev in main überprüft und durch ein Pull Request zum updaten des K8s Clusters ergäntzt.  
 
-   b. Welche User Stories wurden vollständig umgesetzt? `<br>`
+   b. Welche User Stories wurden vollständig umgesetzt? <br>
    Alle Stories wurden erfolgreich umgesetzt.
 
-2. **Produktinkrement** `<br>`
-   a. Was wurde im Sprint konkret geliefert? `<br>`
+2. **Produktinkrement** <br>
+   a. Was wurde im Sprint konkret geliefert? <br>
    In diesem Sprint wurde die DAST-Integration hinzugefügt und eine weitere Pipeline, welche das aktuelle Image überprüft und durch ein PR den K8s Cluster aktuell hält.
 
-   b. Welche Funktionalitäten sind produktiv nutzbar? `<br>`
+   b. Welche Funktionalitäten sind produktiv nutzbar? <br>
    Von nun an können die Entwicker an ihrem Code arbeiten und gleichzeitig werden sie über Sicherheitsschwachstellen informiert. Das Deployment auf eine produktive Umgebung ist ganz einfach automatisiert, sodass es nur noch über einen PR apporved werden muss.
 
 
-3. **Abweichungen & offene Punkte** `<br>`
-   a. Welche geplanten Inhalte konnten nicht umgesetzt werden? `<br>`
+3. **Abweichungen & offene Punkte** <br>
+   a. Welche geplanten Inhalte konnten nicht umgesetzt werden? <br>
    Keine
 
-   b. Warum wurden diese Inhalte nicht abgeschlossen? `<br>`
+   b. Warum wurden diese Inhalte nicht abgeschlossen? <br>
    -
-   c. Müssen Stories in den nächsten Sprint übernommen werden? `<br>`
-   Es werden keine Stories übernommen.`<br>`
+   c. Müssen Stories in den nächsten Sprint übernommen werden? <br>
+   Es werden keine Stories übernommen.<br>
 
 # Sprint Retrospektive
 
