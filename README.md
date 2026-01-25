@@ -198,7 +198,7 @@ das Ziel konkret und überprüfbar zu beschreiben.
 - **Spezifisch**: Aufbau eines GitOps-basierten Deployment-Workflows inkl. Sicherheitsprüfungen.
 - **Messbar**: Deployment erfolgt über Kubernetes, und die Sicherheitsanalyse ist durch die DVWA klar erkennbar.
 - **Akzeptiert**: Die Ziele entsprechen den Vorgaben der Semesterarbeit und sind realistisch umsetzbar.
-- **Anspruchsvoll**: Integration mehrerer Tools (GitHub Actions, ArgoCD, Trivy, Snyk, Kubernetes).
+- **Realistisch**: Integration mehrerer Tools (GitHub Actions, ArgoCD, Trivy, Snyk, Kubernetes) sind DevOps Konform.
 - **Terminiert**: Die Umsetzung der Arbeit erfolgt in drei Sprints und ist am 27.01.2026 abzugeben.
 
 ## Abwicklungsziele
