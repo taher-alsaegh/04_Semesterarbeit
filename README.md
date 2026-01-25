@@ -1282,7 +1282,7 @@ So würde das Proof of Concept zu einer realitätsnahen Produktionsarchitektur w
 
 # Quellenverzeichnis
 
-- [product_vision](https://www.romanpichler.com/blog/the-product-vision-board/)
+- [](https://www.romanpichler.com/blog/the-product-vision-board/)
 - [vulnerability_database](https://avd.aquasec.com/)
 - [dsvwa](https://medium.com/@sonalipriyankasamantaray/penetration-testing-with-dvwa-damn-vulnerable-web-application-e61f5ac9cb24)
 - [SemVer](https://clickup.com/de/blog/222797/punkte-der-fibonacci-geschichte) 
