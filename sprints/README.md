@@ -178,7 +178,8 @@ Die 4L-Feedback-Technik strukturiert die Sprint Retrospektive anhand von vier Le
    Keine
 
    b. Warum wurden diese Inhalte nicht abgeschlossen? <br>
-   -
+   Keine
+   
    c. Müssen Stories in den nächsten Sprint übernommen werden? <br>
    Es werden keine Stories übernommen.<br>
 
@@ -245,7 +246,8 @@ Die 4L-Feedback-Technik strukturiert die Sprint Retrospektive anhand von vier Le
    Keine
 
    b. Warum wurden diese Inhalte nicht abgeschlossen? <br>
-   -
+   Keine
+   
    c. Müssen Stories in den nächsten Sprint übernommen werden? <br>
    Es werden keine Stories übernommen.<br>
 
