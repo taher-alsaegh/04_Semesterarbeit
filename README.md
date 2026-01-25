@@ -19,6 +19,7 @@
   - [Abwicklungsziele](#abwicklungsziele)
     - [Definition of Done (DoD)](#definition-of-done-dod)
     - [Meilensteine](#meilensteine)
+    - [Story-Points](#story-points)
   - [Roadmap](#roadmap)
     - [Minimum Viable Product (MVP)](#minimum-viable-product-mvp)
     - [Minimum Marketable Product (MMP)](#minimum-marketable-product-mmp)
@@ -233,7 +234,7 @@ In den unten beschriebenen Punkten werden die nötigen Schritte definiert, die d
    Ziel: Fazit, Reflexion, Lessons Learned
    Erledigt: 24.01.2025
 
-### Story Point Schätzung
+### Story-Points
 
 Zur Aufwandsschätzung der User Stories wurde in diesem Projekt die Story-Point-Methode auf Basis der Fibonacci-Sequenz eingesetzt. Story Points dienen dabei nicht zur Zeitmessung, sondern zur relativen Bewertung von Komplexität, Risiko und Arbeitsaufwand einer Aufgabe im Vergleich zu anderen Stories.
 
