@@ -1263,6 +1263,8 @@ Im Bereich des Projektmanagements gab es einige Rüttelpunkte. Was zunächst den
 
 Im Grossen und Ganzen habe ich meine persönlichen Erwartungen an das Projekt sowie an meine eigene Leistung realistisch eingeschätzt. Das spannende, zeitnahe und relevante Thema konnte sauber umgesetzt werden und ist als Proof of Concept durchaus sehenswert. Für ein nächstes Projekt würde ich das Projektmanagement stärker und direkter in die Realisierung einfliessen lassen und die Trennung zur technischen Umsetzung nicht so statisch halten. Ein konkretes Beispiel wäre, bewusst die Rolle des Scrum Masters oder Product Owners einzunehmen und während der Umsetzung deren Perspektiven einzubeziehen. Ich war zu stark in meiner Rolle als Engineer festgefahren.
 
+Zusammenfassend hat mir dieses Projekt klar aufgezeigt, wo meine Stärken liegen und wo noch Entwicklungspotenzial besteht. Insbesondere wurde mir bewusst, dass technische Kompetenz allein nicht ausreicht, um ein Projekt ganzheitlich erfolgreich umzusetzen. Die gemachten Fehler waren notwendig, um Prozesse und Rollen besser zu verstehen und künftig bewusster anzuwenden. Rückblickend hätte eine frühere und konsequentere Reflexion während der Umsetzung zu besseren Entscheidungen geführt. Diese Erkenntnisse nehme ich gezielt für zukünftige Projekte mit, um sowohl technisch als auch methodisch strukturierter vorzugehen.
+
 ## Mögliche Erweiterungen
 
 Natürlich lässt sich die Arbeit nach belieben ausarbeiten und erweitern. Hier sind zwei potenzielle Erweiterungsmöglichkeiten/-Ideen, um das Produkt weiterzuentwickeln.
