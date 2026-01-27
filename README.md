@@ -70,6 +70,7 @@
       - [Deployment](#deployment)
       - [Service](#service)
       - [Certificates](#certificates)
+        - [CertManager](#certmanager)
           - [Installation](#installation-1)
         - [SelfSigned ClusterIssuer](#selfsigned-clusterissuer)
         - [Root-CA erzeugen](#root-ca-erzeugen)
@@ -864,7 +865,7 @@ In dieser Arbeit wird ausschliesslich ein lokales Setup aufgebaut. Daher ist die
 
 Wir initialisieren eine interne CA mit einem self-signed Issuer, erzeugen daraus einen CA-basierten ClusterIssuer und lassen cert-manager daraus automatisch TLS-Zertifikate für Services erstellen. So integrieren wir TLS vollständig in den Kubernetes-Lifecycle.
 
-##### Cert-Manager
+##### CertManager
 
 Der Cert-Manager ist zwingend nötig, um Zertifikate automatisiert über Kubernetes zu erstellen. Ausserdem ist er zuständig für die Erneuerung der Zertifikate und speichert die TLS-Dateien in den Secrets. Ohne Cert-Manager müsste man bei jeder Änderung manuell ein neues Zertifikat über OpenSSL erzeugen und es zu den Secrets hinzufügen.
 
@@ -1204,8 +1205,7 @@ In diesem Bereich des Codes wird sichergestellt, dass die Änderung mittels Pull
 | Testbeschreibung       | Image mit korrektem Versions-Tag wird erstellt und in der Container Registry abgelegt                                                                                                                                                                                                             |
 | Erwartetes Ergebnis    | Der Befehl `git push origin tag vX.X.X` triggert die CI-Pipeline und erstellt das neue Image mit der korrekten Versionierung. Die Pipeline ignoriert die zuvor durchlaufenen Steps, die nach einem Commit in `dev` getriggert werden, um unnötige Wiederholungen zu vermeiden und Zeit zu sparen. |
 | Tatsächliches Ergebnis | ![result_ci-main](image/result_ci-main.png) [GHCR](https://github.com/taher-alsaegh/DSVPWA/pkgs/container/dsvpwa)                                                                                                                                                                                 |
-| Status                 | Erfolgreich                                                                                                                                                                                                                                                                                       |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-
+| Status                 | Erfolgreich                                                                                                                                                                                                                                                                                       |
 #### 3. Test: Automated Image Verification
 
 | Testfall               | Automated Image Verification                                                                                                                                                                                                                                                   |
@@ -1254,6 +1254,14 @@ Die Integration von Sicherheitsprüfungen direkt in die CI-Pipeline stellt siche
 Zusammenfassend zeigt die Arbeit, dass die Kombination aus GitOps (Argo CD), automatisierten Sicherheitsprüfungen und Kubernetes-basierter Bereitstellung einen robusten, auditierbaren und skalierbaren Deployment-Prozess ermöglicht, der den Anforderungen moderner cloud-nativer Anwendungen gerecht wird.
 
 ## Reflexion
+
+Diese Semesterarbeit war für mich mit Abstand eine der lehrreichsten Arbeiten seit meiner Zeit an der höheren Fachschule. Zum einen konnte ich bereits erlernte Fachkenntnisse aus vorherigen Semestern gezielt anwenden, zum anderen liess sich das aufgebaute Wissen aus dem DevOps-Modul hervorragend in Kombination mit Kubernetes einsetzen.
+
+Dieser beachtliche Wissensaufbau ermöglicht es mir, die Ausbildung mit einem zufriedenen Gewissen abzuschliessen.
+
+Im Bereich des Projektmanagements gab es einige Rüttelpunkte. Was zunächst den Anschein machte, als hätte ich etwas komplett falsch gemacht, stellte sich im Nachhinein als gar nicht so tragisch heraus. Ich hatte die Projektinitialisierung als Sprint deklariert, was aus Scrum-Sicht nicht korrekt ist. Dank der kompetenten Begleitung meines Projektmanagement-Experten wurde ich darauf hingewiesen. Dadurch konnte schnell eine saubere Lösung erarbeitet und ein Sprint 0 korrekt initialisiert werden. Ich bin froh, dass ich neben der Technik auch mein Scrum-Know-how erweitern konnte.
+
+Im Grossen und Ganzen habe ich meine persönlichen Erwartungen an das Projekt sowie an meine eigene Leistung realistisch eingeschätzt. Das spannende, zeitnahe und relevante Thema konnte sauber umgesetzt werden und ist als Proof of Concept durchaus sehenswert. Für ein nächstes Projekt würde ich das Projektmanagement stärker und direkter in die Realisierung einfliessen lassen und die Trennung zur technischen Umsetzung nicht so statisch halten. Ein konkretes Beispiel wäre, bewusst die Rolle des Scrum Masters oder Product Owners einzunehmen und während der Umsetzung deren Perspektiven einzubeziehen. Ich war zu stark in meiner Rolle als Engineer festgefahren.
 
 ## Mögliche Erweiterungen
 
