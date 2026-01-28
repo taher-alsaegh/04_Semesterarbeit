@@ -1287,7 +1287,7 @@ Das Projekt nutzt aktuell Minikube als lokale Kubernetes-Umgebung. Ein logischer
 - Nutzung eines echten Ingress Controllers mit öffentlichem DNS
 - Einsatz von Let’s Encrypt für öffentlich gültige TLS-Zertifikate
 
-So würde das Proof of Concept zu einer realitätsnahen Produktionsarchitektur werden.
+So würde das Proof of Concept zu einer realitätsnahen Produktionsarchitektur werden. 
 
 # Quellenverzeichnis
 
